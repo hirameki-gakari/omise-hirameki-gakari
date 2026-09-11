@@ -8,34 +8,33 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600&display=swap">
 <style>
 :root{
-  --bg:#F3EDE1;
+  --bg:#F7F3ED;
   --surface:#FFFFFF;
-  --surface-soft:#EAE2D2;
-  --ink:#2A241D;
-  --ink-soft:#6E6455;
-  --ink-faint:#9C927E;
-  --accent:#BD5A24;
-  --accent-deep:#8A3F16;
-  --accent-soft:#F0D9BE;
+  --surface-2:#F0EAE1;
+  --text:#2B2722;
+  --text-muted:#8C8172;
+  --accent:#B5643C;
+  --accent-strong:#96502F;
+  --accent-soft:#F1E1D4;
   --indigo:#23384A;
   --indigo-soft:#3E5871;
   --indigo-ink:#E7EEF3;
-  --line:rgba(42,36,29,0.14);
-  --shadow:0 14px 32px -18px rgba(42,36,29,0.4);
+  --border:rgba(43,39,34,0.14);
+  --shadow:0 14px 32px -18px rgba(43,39,34,0.4);
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#191510; --surface:#221C15; --surface-soft:#2B2319;
-    --ink:#F1E9DC; --ink-soft:#C2B6A2; --ink-faint:#8B7F6C;
-    --accent:#E58A47; --accent-deep:#F3AC77; --accent-soft:#402A18;
+    --bg:#1B1712; --surface:#221E19; --surface-2:#2A2520;
+    --text:#EDE7DD; --text-muted:#A79A88;
+    --accent:#D99468; --accent-strong:#E8AC85; --accent-soft:#3D2C22;
     --indigo:#16232E; --indigo-soft:#2E4457; --indigo-ink:#EAF0F4;
-    --line:rgba(241,233,220,0.16); --shadow:0 14px 32px -18px rgba(0,0,0,0.6);
+    --border:rgba(237,231,221,0.16); --shadow:0 14px 32px -18px rgba(0,0,0,0.6);
   }
 }
 *{box-sizing:border-box;}
 html,body{margin:0;}
 body{
-  background:var(--bg); color:var(--ink);
+  background:var(--bg); color:var(--text);
   font-family:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
   line-height:1.75; padding:0 18px 60px;
 }
@@ -50,14 +49,14 @@ img{max-width:100%;}
 header.top{padding:36px 0 18px;}
 .eyebrow{
   font-family:"Shippori Mincho",serif; font-size:.76rem; font-weight:600;
-  letter-spacing:.18em; color:var(--accent-deep);
+  letter-spacing:.18em; color:var(--accent-strong);
 }
 header.top h1{font-size:clamp(1.9rem,7vw,2.5rem); font-weight:900; margin-top:12px; line-height:1.3;}
-header.top .sub{color:var(--ink-soft); font-size:1rem; margin-top:12px; max-width:30em;}
+header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-width:30em;}
 
 /* select screen */
 .select-card{
-  background:var(--surface); border:1px solid var(--line); border-radius:20px;
+  background:var(--surface); border:1px solid var(--border); border-radius:20px;
   padding:26px 22px; margin-top:18px; box-shadow:var(--shadow);
 }
 .q-block{margin-bottom:26px;}
@@ -65,14 +64,14 @@ header.top .sub{color:var(--ink-soft); font-size:1rem; margin-top:12px; max-widt
 .q-label{font-size:.92rem; font-weight:700; margin-bottom:12px; display:block;}
 .chips{display:flex; flex-wrap:wrap; gap:9px;}
 .chip{
-  border:1px solid var(--line); border-radius:999px; padding:11px 18px;
-  font-size:.9rem; background:var(--bg); color:var(--ink);
+  border:1px solid var(--border); border-radius:999px; padding:11px 18px;
+  font-size:.9rem; background:var(--bg); color:var(--text);
   min-height:44px; display:inline-flex; align-items:center;
   transition:background .15s, border-color .15s, color .15s, transform .1s;
 }
 .chip:hover{border-color:var(--accent);}
 .chip:active{transform:scale(.97);}
-.chip.on{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:700;}
+.chip.on{background:var(--accent-soft); border-color:var(--accent); color:var(--accent-strong); font-weight:700;}
 .chip:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
 .btn-primary{
@@ -81,15 +80,15 @@ header.top .sub{color:var(--ink-soft); font-size:1rem; margin-top:12px; max-widt
   min-height:52px; display:flex; align-items:center; justify-content:center;
   transition:background .15s, opacity .15s;
 }
-.btn-primary:hover{background:var(--accent-deep);}
+.btn-primary:hover{background:var(--accent-strong);}
 .btn-primary:disabled{opacity:.4; cursor:not-allowed;}
 .hint{
-  text-align:center; font-size:.8rem; color:var(--ink-faint); margin-top:10px;
+  text-align:center; font-size:.8rem; color:var(--text-muted); margin-top:10px;
 }
 
 /* result screen */
 .result-eyebrow{
-  font-family:"Shippori Mincho",serif; font-size:.8rem; color:var(--accent-deep);
+  font-family:"Shippori Mincho",serif; font-size:.8rem; color:var(--accent-strong);
   letter-spacing:.1em; margin-top:22px;
 }
 .result-title{font-size:1.5rem; font-weight:900; margin-top:6px;}
@@ -140,7 +139,7 @@ header.top .sub{color:var(--ink-soft); font-size:1rem; margin-top:12px; max-widt
   display:flex; align-items:center; justify-content:center; text-align:center; text-decoration:none; background:var(--accent);
   color:#fff; border-radius:12px; padding:15px; font-weight:700; font-size:.95rem; min-height:50px;
 }
-.btn-go:hover{background:var(--accent-deep);}
+.btn-go:hover{background:var(--accent-strong);}
 .btn-reroll{
   display:flex; align-items:center; justify-content:center; gap:8px;
   background:transparent; border:1px dashed rgba(231,238,243,.35); color:var(--indigo-ink);
@@ -151,34 +150,64 @@ header.top .sub{color:var(--ink-soft); font-size:1rem; margin-top:12px; max-widt
 .btn-reroll .spin{display:inline-block; transition:transform .35s ease;}
 .btn-reroll.spinning .spin{transform:rotate(340deg);}
 
-.nearby{margin-top:30px; padding-top:20px; border-top:1px solid var(--line);}
-.nearby .nh{font-size:.82rem; font-weight:700; margin-bottom:4px; color:var(--ink-faint);}
+.nearby{margin-top:30px; padding-top:20px; border-top:1px solid var(--border);}
+.nearby .nh{font-size:.82rem; font-weight:700; margin-bottom:4px; color:var(--text-muted);}
 .nearby-list{display:flex; flex-direction:column;}
 .nearby-card{
   display:flex; justify-content:space-between; align-items:center; gap:10px;
-  min-height:44px; padding:10px 2px; border-bottom:1px solid var(--line);
-  text-decoration:none; color:var(--ink);
+  min-height:44px; padding:10px 2px; border-bottom:1px solid var(--border);
+  text-decoration:none; color:var(--text);
 }
 .nearby-card:last-child{border-bottom:none;}
-.nearby-card:hover .nm{color:var(--accent-deep);}
+.nearby-card:hover .nm{color:var(--accent-strong);}
 .nearby-card .nm{font-size:.88rem; font-weight:700;}
-.nearby-card .gn{font-size:.76rem; color:var(--ink-soft);}
-.nearby-card .pr{font-size:.76rem; color:var(--accent-deep); white-space:nowrap;}
+.nearby-card .gn{font-size:.76rem; color:var(--text-muted);}
+.nearby-card .pr{font-size:.76rem; color:var(--accent-strong); white-space:nowrap;}
 
 .restart{
-  display:block; text-align:center; margin-top:26px; font-size:.82rem; color:var(--ink-faint);
+  display:block; text-align:center; margin-top:26px; font-size:.82rem; color:var(--text-muted);
   text-decoration:underline; background:none; border:none; width:100%; padding:8px;
 }
-.restart:hover{color:var(--accent-deep);}
+.restart:hover{color:var(--accent-strong);}
 
-footer{margin-top:50px; font-size:.74rem; color:var(--ink-faint); text-align:center;}
-footer a{text-decoration:underline;}
-.sister-link{
-  margin-top:16px; padding-top:16px; border-top:1px dashed var(--line);
-  display:flex; align-items:center; justify-content:center; gap:7px; font-size:.8rem; color:var(--ink-soft);
+footer.site-footer{
+  text-align:center;
+  margin-top:50px;
+  padding-top:28px;
+  border-top:1px solid var(--border);
 }
-.sister-link .spark{flex:none; color:var(--accent-deep);}
-.sister-link a{color:var(--ink); font-weight:700;}
+footer.site-footer .footer-name{
+  font-family:"Shippori Mincho",serif;
+  font-size:1rem;
+  font-weight:600;
+  color:var(--text);
+  margin:0 0 4px;
+}
+footer.site-footer .footer-tagline{
+  font-size:.85rem;
+  color:var(--text-muted);
+  margin:0 0 14px;
+}
+footer.site-footer .footer-note{
+  font-size:.74rem;
+  color:var(--text-muted);
+  opacity:.85;
+  margin:0 0 10px;
+}
+footer.site-footer .footer-links{
+  font-size:.78rem;
+  margin:0 0 10px;
+}
+footer.site-footer .footer-links a{
+  color:var(--accent-strong);
+  text-decoration:underline;
+}
+footer.site-footer .footer-copyright{
+  font-size:.72rem;
+  color:var(--text-muted);
+  opacity:.6;
+  margin:0;
+}
 
 @media (prefers-reduced-motion: reduce){
   .btn-reroll .spin{transition:none;}
@@ -243,12 +272,12 @@ footer a{text-decoration:underline;}
     <button class="restart" id="r-restart">はじめから選び直す</button>
   </section>
 
-  <footer>
-    店舗情報は公開情報をもとに手作業でまとめた試験公開版です。最新の営業時間・価格は各店舗の公式情報でご確認ください。
-    <div class="sister-link">
-      <svg class="spark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.5 12h3M16.5 12h3M6.5 6.5l2 2M15.5 15.5l2 2M17.5 6.5l-2 2M8.5 15.5l-2 2"/><circle cx="12" cy="12" r="3.2"/></svg>
-      家で食べる日は → <a href="https://hirameki-gakari.github.io/gohan-hirameki-gakari/">ごはんのひらめき係</a>
-    </div>
+  <footer class="site-footer">
+    <p class="footer-name">お店のひらめき係</p>
+    <p class="footer-tagline">今日は、誰と、どこで。</p>
+    <p class="footer-note">店舗情報は公開情報をもとに手作業でまとめた試験公開版です。最新の営業時間・価格は各店舗の公式情報でご確認ください。</p>
+    <p class="footer-links"><a href="https://hirameki-gakari.github.io/gohan-hirameki-gakari/">姉妹サービス「ごはんのひらめき係」(今日の夕飯を決める)</a></p>
+    <p class="footer-copyright">© ひらめき係</p>
   </footer>
 </div>
 
