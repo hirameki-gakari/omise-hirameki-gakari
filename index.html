@@ -173,6 +173,12 @@ header.top .sub{color:var(--ink-soft); font-size:1rem; margin-top:12px; max-widt
 
 footer{margin-top:50px; font-size:.74rem; color:var(--ink-faint); text-align:center;}
 footer a{text-decoration:underline;}
+.sister-link{
+  margin-top:16px; padding-top:16px; border-top:1px dashed var(--line);
+  display:flex; align-items:center; justify-content:center; gap:7px; font-size:.8rem; color:var(--ink-soft);
+}
+.sister-link .spark{flex:none; color:var(--accent-deep);}
+.sister-link a{color:var(--ink); font-weight:700;}
 
 @media (prefers-reduced-motion: reduce){
   .btn-reroll .spin{transition:none;}
@@ -238,8 +244,11 @@ footer a{text-decoration:underline;}
   </section>
 
   <footer>
-    店舗情報は公開情報をもとに手作業でまとめた試験公開版です。最新の営業時間・価格は各店舗の公式情報でご確認ください。<br>
-    姉妹サービス:「ごはんのひらめき係」(今日の夕飯を決める)
+    店舗情報は公開情報をもとに手作業でまとめた試験公開版です。最新の営業時間・価格は各店舗の公式情報でご確認ください。
+    <div class="sister-link">
+      <svg class="spark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.5 12h3M16.5 12h3M6.5 6.5l2 2M15.5 15.5l2 2M17.5 6.5l-2 2M8.5 15.5l-2 2"/><circle cx="12" cy="12" r="3.2"/></svg>
+      家で食べる日は → <a href="https://hirameki-gakari.github.io/gohan-hirameki-gakari/">ごはんのひらめき係</a>
+    </div>
   </footer>
 </div>
 
