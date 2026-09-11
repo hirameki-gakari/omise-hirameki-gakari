@@ -373,4 +373,139 @@ const NEW_ROWS = [
     tags:["格安食堂","地元の常連"], reasonSeeds:{budget:["驚くほど手頃な、地元で愛される食堂"], solo:["地元で愛される、ひとりでも入りやすい食堂"], quick:["食堂らしい、さっと食べられる気軽さ"]}}
 ];
 
-const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant));
+/* =========================================================
+   追加店舗(第3弾: ジャンルを絞らず横断的に50件)
+   ※Google/食べログ等の評価・口コミが確認できる実在店から、
+     未収録ジャンル(カフェ・韓国・カレー・うなぎ・お好み焼き・
+     スペイン/ビストロ・タイ・洋食・バー・立ち飲み 等)を中心に選定。
+     焼き鳥・居酒屋・中華は評価の高い店を追加で厚みを持たせた。
+   ========================================================= */
+const NEW_ROWS2 = [
+  // ── カフェ(4) ──
+  {id:"koenji-hattifnatt", name:"HATTIFNATT", genre:"カフェ", area:"高円寺", price:[1500,2500], vibe:"adventurousUnique",
+    tags:["パイケーキ","絵本のような内装"], reasonSeeds:{adventurous:["絵本の中みたいな内装で、いつもと違う気分に浸れる"], friends:["パイケーキが名物で、写真も話題も弾む"]}},
+  {id:"asagaya-violon", name:"名曲喫茶ヴィオロン", genre:"喫茶店", area:"阿佐ヶ谷", price:[800,1500], vibe:"dateQuiet",
+    tags:["名曲喫茶","41年の老舗"], reasonSeeds:{calm:["クラシックが流れる、41年続く老舗喫茶での静かな時間"], couple:["会話を急かされない、ゆったりした喫茶店の時間"]}},
+  {id:"koenji-yonchome-cafe", name:"Yonchome Cafe", genre:"カフェ", area:"高円寺", price:[1500,2500], vibe:"groupCasual",
+    tags:["アメリカンダイナー","高円寺駅南口徒歩1分"], reasonSeeds:{friends:["アメリカンなフードでわいわい、駅からすぐの気軽さ"]}},
+  {id:"koenji-jules-verne", name:"JULES VERNE COFFEE", genre:"カフェ", area:"高円寺", price:[800,1500], vibe:"dateQuiet",
+    tags:["スペシャルティコーヒー","フルーツサンド"], reasonSeeds:{calm:["フルーツサンドと一杯のコーヒーで、静かにひと息つける"]}},
+
+  // ── 韓国料理(2) ──
+  {id:"asagaya-ajiton", name:"味豚 アジトン 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["サムギョプサル","石焼きチュクミ"], reasonSeeds:{friends:["アツアツのサムギョプサルを焼きながらわいわい"], drinking:["肉と一緒にマッコリも進む一軒"]}},
+  {id:"asagaya-samshiseok", name:"韓国料理サムシセキ 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["韓国家庭料理","チーズタッカルビ"], reasonSeeds:{friends:["取り分けて楽しむ韓国料理は、大人数でも盛り上がる"]}},
+
+  // ── カレー(8) ──
+  {id:"asagaya-curry-jikan", name:"カレーの時間", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["スパイスカレー"], reasonSeeds:{quick:["ひとりでもさっと入れる、スパイスカレーの一軒"]}},
+  {id:"asagaya-spice-curry-toca", name:"SpiceCurryToca", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["スパイスカレー","個性派"], reasonSeeds:{adventurous:["スパイスの配合に個性があり、いつもと違う一皿に"]}},
+  {id:"asagaya-curry-kyu", name:"カレーの店 KYU-", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["スパイスカレー","安め"], reasonSeeds:{budget:["1000円以下から、気軽に立ち寄れるカレー屋"]}},
+  {id:"asagaya-beniya", name:"紅屋", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"budgetCasual",
+    tags:["スパイスカレー"], reasonSeeds:{budget:["スパイスの効いた一皿を、気張らない値段で"]}},
+  {id:"asagaya-namaste-himal", name:"ナマステヒマール", genre:"インドカレー", area:"阿佐ヶ谷", price:[700,999], vibe:"budgetCasual",
+    tags:["インドカレー","ナン"], reasonSeeds:{budget:["ナン付きインドカレーが、この価格でお腹いっぱいに"]}},
+  {id:"asagaya-spice-and-co", name:"スパイス アンド コー", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["スパイスカレー"], reasonSeeds:{adventurous:["いつものカレーとはひと味違うスパイス使い"]}},
+  {id:"asagaya-hinoya-curry", name:"日乃屋カレー 阿佐ヶ谷店", genre:"欧風カレー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["欧風カレー","安め"], reasonSeeds:{quick:["欧風の濃いカレーを、さっと一杯"], budget:["1000円以下で満足感のある欧風カレー"]}},
+  {id:"asagaya-shekeba-curry", name:"SHEKEBA CURRY", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["スパイスカレー","個性派"], reasonSeeds:{adventurous:["名前からして気になる、個性派スパイスカレー"]}},
+
+  // ── うなぎ(2) ──
+  {id:"asagaya-azumaya", name:"阿づ満や", genre:"うなぎ", area:"阿佐ヶ谷", price:[4000,6000], vibe:"dateSpecial",
+    tags:["うなぎ専門","戦前からの老舗"], reasonSeeds:{indulgent:["戦前から続く老舗の、柔らかく仕上げたうなぎ"], couple:["少し特別な日に、老舗のうなぎでゆっくり"]}},
+  {id:"asagaya-unagi-naruse", name:"鰻の成瀬 阿佐ヶ谷店", genre:"うなぎ", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    tags:["厳選ニホンウナギ"], reasonSeeds:{indulgent:["生育環境にこだわった、上質なうなぎを味わえる"]}},
+
+  // ── お好み焼き・鉄板(4) ──
+  {id:"asagaya-enya", name:"縁家", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2200,4000], vibe:"groupCasual",
+    tags:["関西風お好み焼き","もんじゃ","食べ放題プラン"], reasonSeeds:{friends:["鉄板を囲んでわいわい、食べ放題プランもある"], drinking:["2時間飲み放題付きコースもあり、飲みにも使える"]}},
+  {id:"asagaya-bansho", name:"鉄板焼ダイニング 万松", genre:"鉄板焼き", area:"阿佐ヶ谷", price:[4000,6000], vibe:"dateQuiet",
+    tags:["隠れ家鉄板焼き"], reasonSeeds:{calm:["駅前にありながら隠れ家的な、落ち着いた鉄板焼き"]}},
+  {id:"asagaya-tachimachi", name:"広島お好み焼 TachiMachi", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    tags:["広島風お好み焼き","お酒が安い"], reasonSeeds:{budget:["広島風お好み焼きとお酒が、どちらも手頃な値段で"]}},
+  {id:"asagaya-iron-diner", name:"IRON DINER 阿佐ヶ谷店", genre:"お好み焼き", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    tags:["上質なお好み焼き"], reasonSeeds:{indulgent:["お好み焼きを、少し特別な一皿として楽しめる一軒"]}},
+
+  // ── スペイン・ビストロ(3) ──
+  {id:"koenji-gaucho", name:"スペインバル ガウチョ", genre:"スペイン料理", area:"高円寺", price:[3000,4500], vibe:"stylishDrink",
+    tags:["タパス","イカの墨煮","評価4.32"], reasonSeeds:{stylish:["本場スペインバルの空間で、タパスとワインを"], drinking:["アヒージョや肉料理をつまみに、ワインが進む"]}},
+  {id:"asagaya-kocco", name:"スペインバル Kocco", genre:"スペイン料理", area:"阿佐ヶ谷", price:[3000,4500], vibe:"dateQuiet",
+    tags:["本格パエリア","イカスミリゾット"], reasonSeeds:{couple:["本格パエリアを、ふたりでゆっくり分け合う夜に"]}},
+  {id:"koenji-iiiio", name:"iiiio", genre:"ビストロ", area:"高円寺", price:[4000,6000], vibe:"dateQuiet",
+    tags:["ビストロ"], reasonSeeds:{calm:["気取りすぎない、大人のビストロの落ち着き"]}},
+
+  // ── タイ・洋食(2) ──
+  {id:"asagaya-daothai", name:"タイ屋台居酒屋 ダオタイ 阿佐ヶ谷本店", genre:"タイ・ベトナム料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["トムヤムクン","ガイヤーン","宴会コース"], reasonSeeds:{adventurous:["本場のタイ料理で、いつもと違う一夜に"], friends:["宴会コースもあり、大人数で盛り上がりやすい"]}},
+  {id:"asagaya-rasenya", name:"西洋食堂 らせん屋 阿佐ヶ谷店", genre:"洋食", area:"阿佐ヶ谷", price:[3000,4500], vibe:"dateQuiet",
+    tags:["手づくり洋食","隠れ家"], reasonSeeds:{calm:["手づくりにこだわった洋食を、隠れ家的な空間で"]}},
+
+  // ── ワイン・上質な焼き鳥(3) ──
+  {id:"koenji-akka", name:"高円寺アッカ", genre:"イタリアンワインバー", area:"高円寺", price:[4000,6000], vibe:"stylishDrink",
+    tags:["ソムリエ常駐","イタリアワイン受賞歴"], reasonSeeds:{stylish:["ソムリエ監修のワインを、グラスで気軽に飲み比べ"], couple:["ワインを選ぶ時間も含めて、大人の夜を楽しめる"]}},
+  {id:"asagaya-birdland", name:"阿佐ヶ谷バードランド", genre:"焼き鳥・ワイン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    tags:["銀座の名店直系","備長炭","希少部位"], reasonSeeds:{indulgent:["銀座仕込みの焼き鳥を、備長炭でじっくりと"], couple:["希少部位も揃う、少し贅沢な焼き鳥の夜に"]}},
+  {id:"koenji-and-beer", name:"アンドビール", genre:"クラフトビール", area:"高円寺", price:[2000,3500], vibe:"adventurousUnique",
+    tags:["クラフトビール","カレー"], reasonSeeds:{adventurous:["クラフトビールとカレーという、珍しい組み合わせ"]}},
+
+  // ── 焼き鳥もっと(7) ──
+  {id:"asagaya-yamamoto-cellar", name:"焼鳥 山もと 阿佐ヶ谷cellar", genre:"焼き鳥", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    tags:["評価上位の名店"], reasonSeeds:{indulgent:["地域でも評価の高い、焼き鳥の名店で特別な夜を"]}},
+  {id:"asagaya-katsu", name:"克ッ 阿佐ヶ谷", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
+    tags:["焼き鳥"], reasonSeeds:{friends:["焼き鳥をつまみに、気取らずわいわい飲める"]}},
+  {id:"asagaya-beard", name:"焼鳥BEARD(ベアード) 南阿佐ヶ谷店", genre:"焼き鳥", area:"南阿佐ヶ谷", price:[4000,5000], vibe:"stylishDrink",
+    tags:["焼き鳥"], reasonSeeds:{stylish:["焼き鳥屋にしては洒落た空間で、飲みを楽しめる"]}},
+  {id:"asagaya-kushishinbo", name:"串しん坊", genre:"焼き鳥", area:"阿佐ヶ谷", price:[2000,3000], vibe:"budgetCasual",
+    tags:["焼き鳥","安め"], reasonSeeds:{budget:["焼き鳥中心で、価格も気張らない一軒"]}},
+  {id:"asagaya-torinari", name:"とり成", genre:"焼き鳥", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["焼き鳥"], reasonSeeds:{friends:["焼き鳥をシェアしながら、わいわい過ごせる"]}},
+  {id:"asagaya-toridokoro", name:"炭火台所 鶏丸", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
+    tags:["炭火焼き"], reasonSeeds:{drinking:["炭火の香りを楽しみながら、じっくり飲める"]}},
+  {id:"asagaya-toriya-suzunari", name:"とりや鈴なり", genre:"焼き鳥", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    tags:["焼き鳥","少し贅沢"], reasonSeeds:{indulgent:["少し贅沢な焼き鳥のコースで、特別な夜に"]}},
+
+  // ── 立ち飲み(3) ──
+  {id:"koenji-banpaiya", name:"高円寺晩杯屋", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
+    tags:["センベロ","日替わり海鮮"], reasonSeeds:{budget:["千円ちょっとでほろ酔いになれる、センベロの定番"], quick:["ふらっと立ち寄って、さっと一杯だけでもいい"]}},
+  {id:"asagaya-futakun", name:"立呑風太くん", genre:"立ち飲み", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["20年続く立ち飲み","北口すぐ"], reasonSeeds:{solo:["ひとりでふらっと寄れる、20年続く立ち飲みの定番"]}},
+  {id:"koenji-shichisuke", name:"立ち飲み七助", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["貝刺し","熱燗"], reasonSeeds:{quick:["貝刺しと熱燗を、立ったままさくっと"]}},
+
+  // ── バー(2) ──
+  {id:"koenji-bar-tail", name:"Bar tail", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+    tags:["ウイスキー","自家製果実酒"], reasonSeeds:{calm:["年季の入った空間で、静かにウイスキーを傾ける"], solo:["ひとりでもテラス席でゆっくりできる"]}},
+  {id:"koenji-bar-dop", name:"bar dop", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"stylishDrink",
+    tags:["カクテル"], reasonSeeds:{stylish:["カクテルを片手に、少し大人な夜を過ごせる"]}},
+
+  // ── 中華もっと(2) ──
+  {id:"asagaya-chinkoen", name:"珍香園", genre:"中華", area:"阿佐ヶ谷", price:[1000,2500], vibe:"groupCasual",
+    tags:["約100種の本格中華","駅徒歩1分"], reasonSeeds:{budget:["100種近いメニューから選べて、安くて満足感がある"], friends:["メニューが多いから、大人数でも choices に困らない"]}},
+  {id:"koenji-ichiban", name:"一番", genre:"中華", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["中華・ラーメン"], reasonSeeds:{quick:["ラーメンから中華の一品まで、さっと済ませられる"]}},
+
+  // ── 追加(多様性の穴埋め・8) ──
+  {id:"asagaya-uchikaoritei", name:"打ち薫る亭", genre:"日本料理", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    tags:["日本料理"], reasonSeeds:{indulgent:["丁寧な日本料理のコースで、特別な夜を演出"]}},
+  {id:"koenji-kemuri", name:"けむり 高円寺店", genre:"焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["焼き鳥"], reasonSeeds:{drinking:["煙の向こうで焼く焼き鳥を、じっくり飲みながら"]}},
+  {id:"koenji-yacchan", name:"名物やきとん やっちゃん", genre:"やきとん", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["やきとん","串焼き"], reasonSeeds:{friends:["やきとんをつつきながら、気取らず盛り上がれる"]}},
+  {id:"koenji-daruma", name:"だるま高円寺", genre:"もつ焼き", area:"高円寺", price:[2000,3000], vibe:"budgetCasual",
+    tags:["もつ焼き","安め"], reasonSeeds:{budget:["もつ焼き中心で、財布にやさしい飲みができる"]}},
+  {id:"koenji-mara", name:"山形料理と地酒 まら", genre:"郷土料理", area:"高円寺", price:[5000,6000], vibe:"adventurousUnique",
+    tags:["山形料理","地酒"], reasonSeeds:{adventurous:["山形の郷土料理と地酒で、いつもと違う一夜に"]}},
+  {id:"asagaya-halleluya", name:"サカバ ハレルヤ", genre:"居酒屋", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["総合居酒屋"], reasonSeeds:{friends:["メニューの幅が広く、みんなの好みに合わせやすい"]}},
+  {id:"asagaya-kaerushokudo", name:"かえる食堂", genre:"定食", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["朝7時から営業"], reasonSeeds:{quick:["朝早くから開いているから、時間を気にせず入れる"]}},
+  {id:"koenji-marunaga", name:"丸長食堂", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
+    tags:["老舗食堂","安め"], reasonSeeds:{budget:["昔ながらの食堂らしい、控えめな値段設定"]}}
+];
+
+const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant));

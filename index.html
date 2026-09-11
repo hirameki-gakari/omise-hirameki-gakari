@@ -312,6 +312,16 @@ function genreVisual(genre){
     [/イタリアン/, {kanji:"伊", theme:"amber"}],
     [/焼き鳥|鶏/, {kanji:"鶏", theme:"amber"}],
     [/海鮮|貝|魚/, {kanji:"魚", theme:"wine"}],
+    [/カフェ|喫茶/, {kanji:"茶", theme:"olive"}],
+    [/韓国/, {kanji:"韓", theme:"clay"}],
+    [/カレー/, {kanji:"香", theme:"umber"}],
+    [/うなぎ/, {kanji:"鰻", theme:"umber"}],
+    [/お好み焼き|鉄板焼き|もんじゃ/, {kanji:"鉄", theme:"clay"}],
+    [/スペイン|ビストロ/, {kanji:"洋", theme:"indigo"}],
+    [/タイ|ベトナム/, {kanji:"南", theme:"wine"}],
+    [/洋食/, {kanji:"洋", theme:"indigo"}],
+    [/立ち飲み/, {kanji:"立", theme:"olive"}],
+    [/バー/, {kanji:"杯", theme:"indigo"}],
     [/日本酒|ワイン|バル|ビール|酒場|居酒屋|もつ/, {kanji:"酒", theme:"olive"}]
   ];
   for(const [re, val] of rules){ if(re.test(genre)) return val; }
