@@ -632,4 +632,142 @@ const NEW_ROWS3 = [
     tags:["食堂"], reasonSeeds:{quick:["さっと入って、さっと食べられる定食屋"]}}
 ];
 
-const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant));
+/* =========================================================
+   追加店舗(第5弾: 口コミ件数の多さも重視して56件)
+   ※食べログの「口コミ件数」「予約件数」が具体的に確認できた
+     店を優先(例: 成都高円寺本店=口コミ10,255件、
+     ジェラテリアシンチェリータ=口コミ1,772件 等)。
+   ========================================================= */
+const NEW_ROWS4 = [
+  // ── 中華(9) ──
+  {id:"asagaya-agariko-gyozaro", name:"アガリコ餃子楼 阿佐ヶ谷店", genre:"中華(餃子)", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    tags:["餃子","口コミ56件"], reasonSeeds:{friends:["餃子を何皿もシェアしながら、わいわい飲める"]}},
+  {id:"asagaya-chugoku-meisai-son", name:"中國名菜 孫 阿佐ヶ谷店", genre:"中華", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["口コミ105件"], reasonSeeds:{friends:["口コミの多さも納得の、本格中華をみんなで"]}},
+  {id:"asagaya-wantantei", name:"阿佐ヶ谷 わんたん亭", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloQuick",
+    tags:["ワンタン","口コミ79件"], reasonSeeds:{quick:["ワンタンを中心に、さっと食べられる中華"]}},
+  {id:"asagaya-suikai", name:"中国料理 翠海", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    tags:["口コミ153件・評価3.42"], reasonSeeds:{friends:["このエリアの中華の中でも評価の高い一軒"]}},
+  {id:"koenji-chengdu-honten", name:"中華料理 成都 高円寺本店", genre:"中華", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["口コミ10,255件","圧倒的な人気"], reasonSeeds:{friends:["口コミ1万件超という圧倒的な人気を誇る中華の名店"], drinking:["中華とお酒の組み合わせで、盛り上がる夜に"]}},
+  {id:"koenji-byanbyan-chengdu", name:"ビャンビャン麺 火鍋 成都", genre:"中華(麺・火鍋)", area:"高円寺", price:[3000,4000], vibe:"adventurousUnique",
+    tags:["ビャンビャン麺","火鍋"], reasonSeeds:{adventurous:["ビャンビャン麺や火鍋という、いつもと違う中華体験"]}},
+  {id:"koenji-dapaidan105", name:"ダパイダン105 高円寺東京本店", genre:"台湾料理", area:"高円寺", price:[2000,3000], vibe:"adventurousUnique",
+    tags:["台湾料理"], reasonSeeds:{adventurous:["台湾料理という、いつもとは違う選択肢"]}},
+  {id:"koenji-chinki-sakaba", name:"中華料理 陳記酒場", genre:"中華", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
+    tags:["中華酒場"], reasonSeeds:{budget:["中華のつまみを、気張らない値段で"]}},
+  {id:"koenji-shou-u", name:"中華創作料理 祥宇", genre:"中華(創作)", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+    tags:["創作中華"], reasonSeeds:{calm:["創作中華を、落ち着いた雰囲気でゆっくり"]}},
+
+  // ── 寿司(1・超高級) ──
+  {id:"asagaya-sushi-souten", name:"鮨 蒼天", genre:"寿司", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
+    tags:["超高級寿司","記念日"], reasonSeeds:{indulgent:["一生の思い出になるような、特別な寿司の夜に"], couple:["とっておきの記念日に、思い切って選びたい寿司店"]}},
+
+  // ── とんかつ(3) ──
+  {id:"koenji-futaba", name:"とんかつ二葉", genre:"とんかつ", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["オロシトンカツ定食"], reasonSeeds:{budget:["1000円以下から食べられる、気軽なとんかつ"]}},
+  {id:"koenji-matsunaga", name:"とんかつ 松永", genre:"とんかつ", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["高円寺の老舗"], reasonSeeds:{solo:["高円寺で長く愛される、老舗のとんかつ屋"]}},
+  {id:"koenji-fuji-tonkatsu", name:"富士", genre:"とんかつ・居酒屋", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["居酒屋併設"], reasonSeeds:{friends:["とんかつだけでなく、飲みにも使える一軒"]}},
+
+  // ── バー・高円寺(10) ──
+  {id:"koenji-bakushukobo", name:"高円寺麦酒工房", genre:"ビアバー", area:"高円寺", price:[3000,4000], vibe:"stylishDrink",
+    tags:["クラフトビール"], reasonSeeds:{stylish:["自家醸造にこだわるビアバーで、飲み比べを楽しむ"]}},
+  {id:"koenji-watashi", name:"私", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+    tags:["隠れ家バー"], reasonSeeds:{calm:["名前も佇まいも静かな、隠れ家的バー"]}},
+  {id:"koenji-sake-kokon", name:"Sake bar KoKoN", genre:"日本酒バー", area:"高円寺", price:[5000,6000], vibe:"dateQuiet",
+    tags:["日本酒専門"], reasonSeeds:{couple:["日本酒を選びながら、ふたりで静かに過ごす夜に"]}},
+  {id:"koenji-substance", name:"サブスタンス", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"stylishDrink",
+    tags:["バー"], reasonSeeds:{stylish:["洗練された空間で、大人の一杯を"]}},
+  {id:"koenji-tsukemono-bar", name:"漬物BAR4328 参号店", genre:"バー", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["漬物×お酒"], reasonSeeds:{adventurous:["漬物をアテに飲むという、他にはない発想のバー"]}},
+  {id:"koenji-hako-bar", name:"ハコ バー", genre:"ワインバー", area:"高円寺", price:[3000,4000], vibe:"stylishDrink",
+    tags:["ワイン"], reasonSeeds:{stylish:["箱のような小さな空間で、ワインを気軽に"]}},
+  {id:"koenji-beaujolais-mura", name:"ボジョレー村", genre:"ワインバー", area:"高円寺", price:[4000,5000], vibe:"dateQuiet",
+    tags:["ワイン専門"], reasonSeeds:{couple:["ワインを選ぶ時間も含めて、ふたりで楽しめる"]}},
+  {id:"koenji-doggie-boogie", name:"ドギーブギー", genre:"バー", area:"高円寺", price:[2000,3000], vibe:"adventurousUnique",
+    tags:["個性的な名前のバー"], reasonSeeds:{adventurous:["名前からして気になる、遊び心のあるバー"]}},
+  {id:"koenji-bia-engine", name:"ビア エンジン", genre:"ビアバー", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["クラフトビール"], reasonSeeds:{friends:["ビールの種類が豊富で、みんなで飲み比べできる"]}},
+  {id:"koenji-mowa", name:"MOWA", genre:"日本酒バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+    tags:["日本酒"], reasonSeeds:{calm:["日本酒を静かに味わう、落ち着いたバー"]}},
+
+  // ── バー・阿佐ヶ谷(10) ──
+  {id:"asagaya-olla", name:"olla", genre:"ビアバー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"stylishDrink",
+    tags:["クラフトビール"], reasonSeeds:{stylish:["おしゃれなビアバーで、気の利いた一杯を"]}},
+  {id:"asagaya-sakenomitsuya", name:"酒ノみつや", genre:"日本酒バー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["立ち飲み日本酒","安め"], reasonSeeds:{budget:["1000円以下からの日本酒立ち飲みで、気軽に一杯"]}},
+  {id:"asagaya-cafe-bar-rigid", name:"CAFE&BAR RIGID", genre:"バー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"stylishDrink",
+    tags:["カフェ&バー"], reasonSeeds:{stylish:["昼はカフェ、夜はバーという二つの顔を持つ空間"]}},
+  {id:"asagaya-misty-opus", name:"ミスティー オーパース", genre:"バー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    tags:["バー"], reasonSeeds:{calm:["落ち着いた大人の時間を過ごせるバー"]}},
+  {id:"asagaya-supersub", name:"スーパーサブ", genre:"ワインバー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"adventurousUnique",
+    tags:["ワイン"], reasonSeeds:{adventurous:["個性的な名前の、気取らないワインバー"]}},
+  {id:"asagaya-loft-a", name:"阿佐ヶ谷ロフトA", genre:"バー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    tags:["ライブ感のある空間"], reasonSeeds:{friends:["賑やかな雰囲気の中で、友達とわいわい飲める"]}},
+  {id:"asagaya-under-the-tree", name:"アンダーザツリー", genre:"日本酒バー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    tags:["日本酒"], reasonSeeds:{calm:["木陰にいるような、落ち着いた日本酒バー"]}},
+  {id:"asagaya-shukou-fufufu", name:"酒肴 ふふふ", genre:"日本酒バー", area:"阿佐ヶ谷", price:[4000,5000], vibe:"dateQuiet",
+    tags:["酒肴"], reasonSeeds:{couple:["酒肴を楽しみながら、ふたりでゆっくり飲める"]}},
+  {id:"asagaya-claviere", name:"クラヴィーア", genre:"バー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"stylishDrink",
+    tags:["バー"], reasonSeeds:{stylish:["音楽的な名前の、洒落た雰囲気のバー"]}},
+  {id:"asagaya-kinokura", name:"木の蔵", genre:"ワインバー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"dateQuiet",
+    tags:["木の温もり"], reasonSeeds:{calm:["木の温もりを感じる空間で、静かにワインを"]}},
+
+  // ── 焼き鳥・高円寺(8) ──
+  {id:"koenji-odoridori", name:"高円寺おどり鳥", genre:"焼き鳥", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
+    tags:["少し贅沢な焼き鳥"], reasonSeeds:{indulgent:["名物の焼き鳥を、少し贅沢な夜のメインに"]}},
+  {id:"koenji-torisuke", name:"とりすけ", genre:"焼き鳥", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
+    tags:["焼き鳥"], reasonSeeds:{friends:["焼き鳥をつまみに、気取らず飲める"]}},
+  {id:"koenji-daichi-sushi-yakitori", name:"寿司と焼き鳥 大地 高円寺店", genre:"焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["寿司と焼き鳥","予約3,000件超の人気"], reasonSeeds:{friends:["寿司も焼き鳥もある、選択肢の広さが嬉しい"]}},
+  {id:"koenji-wine-yakitori", name:"ワインとやきとり 東高円寺", genre:"焼き鳥・ワイン", area:"高円寺", price:[4000,5000], vibe:"stylishDrink",
+    tags:["焼き鳥×ワイン"], reasonSeeds:{stylish:["焼き鳥にワインを合わせる、新しい組み合わせ"]}},
+  {id:"koenji-shutsujin-higashi", name:"炭火焼きとん焼鶏 出陣 東高円寺店", genre:"やきとん・焼き鳥", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
+    tags:["炭火"], reasonSeeds:{drinking:["炭火で焼く肉をつまみに、じっくり飲める"]}},
+  {id:"koenji-tomimaru", name:"焼きとり おでん 富まる", genre:"焼き鳥・おでん", area:"高円寺", price:[2000,3000], vibe:"budgetCasual",
+    tags:["おでん"], reasonSeeds:{budget:["焼き鳥とおでん、両方楽しめて価格も手頃"]}},
+  {id:"koenji-tori-jiro", name:"炭火串焼 鶏ジロー 新高円寺店", genre:"焼き鳥", area:"高円寺", price:[2000,3000], vibe:"budgetCasual",
+    tags:["炭火串焼き"], reasonSeeds:{budget:["炭火の串焼きを、気張らない価格で"]}},
+  {id:"koenji-shutsujin", name:"炭火 焼とん 焼鳥 出陣", genre:"やきとん・焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    tags:["炭火"], reasonSeeds:{friends:["焼とんと焼き鳥、両方をつまみにわいわい"]}},
+
+  // ── スイーツ(7・口コミ数重視) ──
+  {id:"asagaya-cincirella", name:"ジェラテリア シンチェリータ", genre:"ジェラート", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["口コミ1,772件","圧倒的人気"], reasonSeeds:{quick:["口コミ1,700件超、このエリア随一の人気ジェラート"], solo:["食後にひとりでふらっと寄れるジェラート店"]}},
+  {id:"asagaya-tomoean", name:"ともえ庵", genre:"たい焼き", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["たい焼き","口コミ384件"], reasonSeeds:{quick:["食後の締めに、たい焼きをひとつ"]}},
+  {id:"asagaya-gyunyuya-soft", name:"牛乳屋さんのソフトクリーム", genre:"ソフトクリーム", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["口コミ174件"], reasonSeeds:{quick:["濃厚なソフトクリームで、軽く締めくくる"]}},
+  {id:"koenji-lapre-cochere", name:"パティスリー ラブリコチエ", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["口コミ912件"], reasonSeeds:{couple:["評判のケーキを、ふたりで分け合う締めくくりに"]}},
+  {id:"koenji-trianon", name:"トリアノン洋菓子店 高円寺本店", genre:"洋菓子", area:"高円寺", price:[700,999], vibe:"familyHearty",
+    tags:["老舗","口コミ472件"], reasonSeeds:{family:["地元で長く愛される洋菓子店、家族の締めくくりに"]}},
+  {id:"koenji-florestas", name:"フロレスタ 高円寺店", genre:"ドーナツ", area:"高円寺", price:[700,999], vibe:"groupCasual",
+    tags:["自然素材ドーナツ"], reasonSeeds:{friends:["ドーナツを何個か選んで、みんなでシェア"]}},
+  {id:"koenji-beta-stand", name:"β STAND", genre:"クレープ", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["クレープ・ガレット"], reasonSeeds:{adventurous:["いつものデザートとはひと味違うクレープ・ガレット"]}},
+
+  // ── フレンチ(5) ──
+  {id:"asagaya-bistrot33", name:"Bistrot33 santrois", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+    tags:["ビストロ"], reasonSeeds:{couple:["ビストロらしい気取らない雰囲気で、ふたりの夜を"]}},
+  {id:"asagaya-le-terroir", name:"ビストロ ル・テロワール 阿佐ヶ谷", genre:"フレンチ(ビストロ)", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+    tags:["ビストロ"], reasonSeeds:{calm:["土地の恵みを生かした料理を、落ち着いて味わう"]}},
+  {id:"asagaya-ruvi", name:"RUVI", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateSpecial",
+    tags:["フレンチ"], reasonSeeds:{indulgent:["少し特別な日のフレンチとして選びたい一軒"]}},
+  {id:"asagaya-meat-kitchen-harmers", name:"Meat Kitchen HARMER's GRILL", genre:"洋食・グリル", area:"阿佐ヶ谷", price:[5000,6000], vibe:"groupCasual",
+    tags:["肉料理","グリル"], reasonSeeds:{friends:["肉料理を中心に、みんなでシェアしながら楽しめる"]}},
+  {id:"asagaya-101-anzeroan", name:"101アンゼロアン", genre:"フレンチ", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    tags:["フレンチ"], reasonSeeds:{calm:["手が届く価格帯のフレンチで、ゆっくり過ごせる"]}},
+
+  // ── 韓国料理・高円寺(3) ──
+  {id:"koenji-millineyangkopchang", name:"ミリネヤンコプチャン 高円寺店", genre:"韓国料理", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
+    tags:["京都ミシュラン掲載の技","予約6,531件"], reasonSeeds:{friends:["ミシュラン掲載店仕込みの技を、みんなで楽しめる"], drinking:["ホルモンをつまみに、じっくり飲める夜に"]}},
+  {id:"koenji-omnimatt", name:"おむにまっ", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
+    tags:["韓国料理"], reasonSeeds:{friends:["取り分けて楽しむ韓国料理で、わいわい過ごせる"]}},
+  {id:"koenji-halhal", name:"ハルハル", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
+    tags:["韓国料理"], reasonSeeds:{friends:["気軽な韓国料理店で、友達との時間を"]}}
+];
+
+const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant)).concat(NEW_ROWS4.map(buildRestaurant));
