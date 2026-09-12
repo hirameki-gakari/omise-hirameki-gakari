@@ -260,7 +260,12 @@ function buildRestaurant(row){
     quality:Object.assign({}, v.quality),
     audienceFit:Object.assign({}, v.audienceFit),
     tags:row.tags,
-    reasonSeeds:row.reasonSeeds
+    reasonSeeds:row.reasonSeeds,
+    // 収益化・写真拡張用(現状は全店nullで挙動に影響なし)
+    image:row.image || null,
+    officialUrl:row.officialUrl || null,
+    reservationUrl:row.reservationUrl || null,
+    notice:row.notice || null
   };
 }
 
@@ -1014,4 +1019,14 @@ const NEW_ROWS6 = [
     tags:["酒とごはん"], reasonSeeds:{calm:["お酒もごはんも両方楽しめる、落ち着いた一軒"]}}
 ];
 
-const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant)).concat(NEW_ROWS4.map(buildRestaurant)).concat(NEW_ROWS5.map(buildRestaurant)).concat(NEW_ROWS6.map(buildRestaurant));
+function withExtensionDefaults(r){
+  return Object.assign({image:null, officialUrl:null, reservationUrl:null, notice:null}, r);
+}
+
+const RESTAURANTS = BASE_RESTAURANTS.map(withExtensionDefaults)
+  .concat(NEW_ROWS.map(buildRestaurant))
+  .concat(NEW_ROWS2.map(buildRestaurant))
+  .concat(NEW_ROWS3.map(buildRestaurant))
+  .concat(NEW_ROWS4.map(buildRestaurant))
+  .concat(NEW_ROWS5.map(buildRestaurant))
+  .concat(NEW_ROWS6.map(buildRestaurant));

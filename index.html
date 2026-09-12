@@ -121,6 +121,18 @@ header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-wi
 .plate-wine{background-image:linear-gradient(160deg,#4C2226,#7A3A3E);}
 .plate-indigo{background-image:linear-gradient(160deg,#16232E,#33506A);}
 .plate-clay{background-image:linear-gradient(160deg,#63351F,#A5623C);}
+.r-photo{
+  width:100%; height:200px; object-fit:cover; border-radius:16px; display:block;
+}
+.store-notice{
+  margin-top:14px; border:1px dashed var(--border); border-radius:12px;
+  padding:12px 14px; background:rgba(231,238,243,.05);
+}
+.store-notice .notice-label{
+  display:block; font-size:.72rem; font-weight:700; color:var(--text-muted);
+  letter-spacing:.04em; margin-bottom:4px;
+}
+.store-notice p{margin:0; font-size:.82rem; color:#DCE4E9;}
 .r-body{margin-top:18px;}
 .r-name{font-size:1.28rem; font-weight:900;}
 .r-copy{font-family:"Shippori Mincho",serif; font-size:.98rem; color:#E7C9A0; margin-top:6px;}
@@ -249,6 +261,7 @@ footer.site-footer .footer-copyright{
         <span class="kanji" id="r-kanji"></span>
         <span class="pl-label" id="r-pl-label"></span>
       </div>
+      <img class="r-photo" id="r-photo" alt="" hidden>
       <div class="r-body">
         <div class="r-name" id="r-name"></div>
         <div class="r-copy" id="r-copy"></div>
@@ -260,6 +273,10 @@ footer.site-footer .footer-copyright{
         <div class="actions">
           <a class="btn-go" id="r-go" href="#" target="_blank" rel="noopener">ここに行ってみる</a>
           <button class="btn-reroll" id="r-reroll"><span class="spin">↻</span> 別のお店をひらめく</button>
+        </div>
+        <div class="store-notice" id="store-notice" hidden>
+          <span class="notice-label">お店からのお知らせ</span>
+          <p id="notice-text"></p>
         </div>
       </div>
     </div>
@@ -474,6 +491,12 @@ function mapsUrl(r){
   return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(r.name + " " + r.area);
 }
 
+function goUrl(r){
+  if(r.reservationUrl) return r.reservationUrl;
+  if(r.officialUrl) return r.officialUrl;
+  return mapsUrl(r);
+}
+
 function priceLabel(r){
   const [lo,hi] = r.priceRange.dinner;
   return "¥" + lo.toLocaleString() + "〜" + hi.toLocaleString();
@@ -522,9 +545,19 @@ function renderResult(){
 
   const visual = genreVisual(r.genre);
   const plateEl = document.getElementById("r-plate");
-  plateEl.className = "plate plate-" + visual.theme;
-  document.getElementById("r-kanji").textContent = visual.kanji;
-  document.getElementById("r-pl-label").textContent = r.genre + " ・ " + r.area;
+  const photoEl = document.getElementById("r-photo");
+  if(r.image && r.image.url){
+    photoEl.src = r.image.url;
+    photoEl.alt = r.name;
+    photoEl.hidden = false;
+    plateEl.hidden = true;
+  } else {
+    photoEl.hidden = true;
+    plateEl.hidden = false;
+    plateEl.className = "plate plate-" + visual.theme;
+    document.getElementById("r-kanji").textContent = visual.kanji;
+    document.getElementById("r-pl-label").textContent = r.genre + " ・ " + r.area;
+  }
   document.getElementById("r-name").textContent = r.name;
   document.getElementById("r-copy").textContent = companion.particle + mood.copy;
 
@@ -544,7 +577,15 @@ function renderResult(){
     reasonsEl.appendChild(li);
   });
 
-  document.getElementById("r-go").href = mapsUrl(r);
+  document.getElementById("r-go").href = goUrl(r);
+
+  const noticeEl = document.getElementById("store-notice");
+  if(r.notice){
+    document.getElementById("notice-text").textContent = r.notice;
+    noticeEl.hidden = false;
+  } else {
+    noticeEl.hidden = true;
+  }
 
   const nearby = currentPool
     .filter(x => x.r.id !== r.id)
@@ -554,7 +595,7 @@ function renderResult(){
   nearby.forEach(x => {
     const a = document.createElement("a");
     a.className = "nearby-card";
-    a.href = mapsUrl(x.r);
+    a.href = goUrl(x.r);
     a.target = "_blank";
     a.rel = "noopener";
     a.innerHTML =
