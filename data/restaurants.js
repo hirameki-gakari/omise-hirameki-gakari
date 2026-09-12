@@ -508,4 +508,128 @@ const NEW_ROWS2 = [
     tags:["老舗食堂","安め"], reasonSeeds:{budget:["昔ながらの食堂らしい、控えめな値段設定"]}}
 ];
 
-const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant));
+/* =========================================================
+   追加店舗(第4弾: 評価点・レビュー数を重視して50件)
+   ※食べログの「評価点」(=口コミ件数と評価の両方を反映した
+     指標)およびランキング順位(=ネット予約数・人気の代理指標)
+     が高いものを優先して選定。Google独自の星・口コミ数は
+     API連携していないため直接参照できず、食べログの指標を
+     実務上の代替指標として使用している。
+   ========================================================= */
+const NEW_ROWS3 = [
+  // ── ラーメン(13・評価点上位から) ──
+  {id:"asagaya-ramen-cique", name:"RAMEN CiQUE", genre:"ラーメン", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["鶏と魚介ベース","評価3.77"], reasonSeeds:{quick:["評価の高い一杯を、さっと食べてさっと出られる"], solo:["鶏と魚介のスープが染みる、ひとりの一杯に"]}},
+  {id:"koenji-nakasu-yatai", name:"中洲屋台長浜ラーメン初代 健太 東京高円寺本店", genre:"ラーメン", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["博多屋台系豚骨","評価3.77"], reasonSeeds:{quick:["屋台仕込みの豚骨を、さっと替え玉までいける気軽さ"]}},
+  {id:"koenji-tonkotsu-souten", name:"豚骨 蒼翔", genre:"ラーメン", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["透明感のある豚骨","評価3.74"], reasonSeeds:{quick:["透明感のある上品な豚骨で、するっと一杯"]}},
+  {id:"koenji-hayashimaru", name:"麺屋 はやしまる", genre:"ラーメン", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["評価3.73"], reasonSeeds:{solo:["スープと麺の評判がよく、ひとりでも満足感がある"]}},
+  {id:"asagaya-asagakita", name:"アサガキタ", genre:"ラーメン", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["塩ラーメン系","評価3.72"], reasonSeeds:{quick:["すっきりした塩ラーメンを、さっと一杯"]}},
+  {id:"asagaya-menjo-issho", name:"麺処 一笑", genre:"ラーメン", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["評価3.71"], reasonSeeds:{solo:["王道のラーメンを、ひとりでじっくり味わう"]}},
+  {id:"koenji-chuka-isshin", name:"中華蕎麦 一心", genre:"ラーメン", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["評価3.71"], reasonSeeds:{quick:["中華蕎麦らしい澄んだスープを、さっと一杯"]}},
+  {id:"koenji-dried-sardine", name:"DRIED SARDINE BROTHERS", genre:"つけ麺", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["チャーシュー評判","評価3.64"], reasonSeeds:{adventurous:["個性的な店名の通り、いつもと違うつけ麺を試したい日に"]}},
+  {id:"asagaya-irohaya", name:"らーめん いろはや", genre:"ラーメン", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["評価3.61"], reasonSeeds:{budget:["標準的なラーメンを、手頃な価格でしっかりと"]}},
+  {id:"koenji-abura-fukuho", name:"濃口背脂味噌らーめんと餃子 大福帳", genre:"ラーメン", area:"高円寺", price:[700,999], vibe:"familyHearty",
+    tags:["背脂味噌","餃子","評価3.60"], reasonSeeds:{hearty:["背脂の効いた濃厚味噌で、しっかりお腹を満たせる"], family:["餃子もセットで頼めるから、家族での一杯にも"]}},
+  {id:"koenji-rokkumen", name:"六九麺", genre:"ラーメン", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["鶏白湯","評価3.59"], reasonSeeds:{quick:["鶏白湯のやさしいスープを、さっと一杯"]}},
+  {id:"koenji-taroken", name:"タロー軒", genre:"ラーメン", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["評価3.57"], reasonSeeds:{solo:["昔ながらの一杯を、ひとりでふらっと"]}},
+  {id:"koenji-uchida", name:"らーめん うち田", genre:"つけ麺", area:"高円寺", price:[1000,2000], vibe:"familyHearty",
+    tags:["つけ麺","評価3.52"], reasonSeeds:{hearty:["つけ麺のボリュームで、がっつり満足できる"]}},
+
+  // ── 焼肉(7・評価点上位含む) ──
+  {id:"asagaya-sato-brillant-honten", name:"SATOブリアン 本店", genre:"焼肉", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
+    tags:["最高評価クラスの焼肉","希少部位","評価3.99"], reasonSeeds:{indulgent:["地域随一の評価を誇る、特別な日のための焼肉"], couple:["一生に一度クラスの記念日に、思い切って選びたい一軒"]}},
+  {id:"asagaya-sato-brillant-nigou", name:"SATOブリアン にごう", genre:"焼肉", area:"阿佐ヶ谷", price:[15000,19999], vibe:"dateSpecial",
+    tags:["高評価焼肉","評価3.91"], reasonSeeds:{indulgent:["本店に迫る評価の高さで、特別な焼肉の夜に"]}},
+  {id:"asagaya-sanpoen", name:"炭火焼肉 三宝苑 阿佐ヶ谷店", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
+    tags:["炭火焼き","評価3.51"], reasonSeeds:{hearty:["炭火でじっくり焼く肉を、家族でしっかり楽しめる"], family:["評価の高い炭火焼肉を、みんなで囲む"]}},
+  {id:"koenji-araiya-honten", name:"焼肉ホルモン 新井屋 高円寺本店", genre:"焼肉", area:"高円寺", price:[6000,7999], vibe:"dateSpecial",
+    tags:["ホルモン","評価3.53"], reasonSeeds:{indulgent:["評価の高いホルモン焼肉で、少し贅沢な夜に"]}},
+  {id:"asagaya-hasegawa", name:"ほるもんと焼肉屋 はせ川", genre:"焼肉", area:"阿佐ヶ谷", price:[5000,5999], vibe:"groupCasual",
+    tags:["ホルモン","評価3.43"], reasonSeeds:{friends:["ホルモンと焼肉、両方楽しめて盛り上がれる"]}},
+  {id:"koenji-tamaniha-yakiniku", name:"たまには焼肉 高円寺店", genre:"焼肉", area:"高円寺", price:[3000,3800], vibe:"budgetCasual",
+    tags:["コスパの良い肉質","評価3.43"], reasonSeeds:{budget:["「たまには」の名の通り、気張らずコスパよく焼肉を"]}},
+  {id:"asagaya-oniku-chan", name:"人情焼肉ONIKUちゃん", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
+    tags:["人情味のある接客"], reasonSeeds:{family:["名前の通り人情味あふれる、あたたかい焼肉屋"]}},
+
+  // ── イタリアン(2) ──
+  {id:"asagaya-delceppo", name:"デルチェッポ", genre:"イタリアン(パスタ)", area:"阿佐ヶ谷", price:[2000,3000], vibe:"budgetCasual",
+    tags:["パスタ専門","ランチ評価が高い"], reasonSeeds:{budget:["パスタ専門店らしい価格で、気軽にイタリアンを"]}},
+  {id:"asagaya-haochai", name:"ハオツァイ", genre:"イタリアン", area:"阿佐ヶ谷", price:[3000,3999], vibe:"adventurousUnique",
+    tags:["ベジタリアン対応おまかせ"], reasonSeeds:{adventurous:["ベジタリアン対応のおまかせ料理で、いつもと違う一皿に"]}},
+
+  // ── カレー(3) ──
+  {id:"asagaya-spice-and-booze", name:"SPICE AND BOOZE", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["カレーとお酒"], reasonSeeds:{adventurous:["カレーとお酒を一緒に楽しむ、珍しいスタイル"]}},
+  {id:"asagaya-curry-kankan", name:"curry Kan-Kan", genre:"カレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["カレー"], reasonSeeds:{quick:["さっと一皿、カレーで済ませたい日に"]}},
+  {id:"asagaya-asian-diamond", name:"アジアンキッチンダイヤモンド", genre:"インドカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"groupCasual",
+    tags:["インドカレー"], reasonSeeds:{friends:["ナンをシェアしながら、みんなでわいわい食べられる"]}},
+
+  // ── 居酒屋(阿佐ヶ谷・9) ──
+  {id:"asagaya-tsurufuku", name:"つる福 阿佐ヶ谷店", genre:"居酒屋", area:"阿佐ヶ谷", price:[3000,3999], vibe:"groupCasual",
+    tags:["総合居酒屋"], reasonSeeds:{friends:["メニューの幅が広く、みんなの好みに合わせやすい"]}},
+  {id:"asagaya-toriyoshi-second", name:"とり吉 セカンド", genre:"鶏料理", area:"阿佐ヶ谷", price:[3000,3999], vibe:"groupCasual",
+    tags:["鶏料理"], reasonSeeds:{drinking:["鶏料理をつまみに、じっくり飲める一軒"]}},
+  {id:"asagaya-seiten-jou", name:"魚肴 青天上", genre:"海鮮居酒屋", area:"阿佐ヶ谷", price:[3000,3999], vibe:"dateQuiet",
+    tags:["海鮮・魚介"], reasonSeeds:{calm:["魚を肴に、落ち着いて杯を重ねられる"]}},
+  {id:"asagaya-donki", name:"呑輝", genre:"居酒屋", area:"阿佐ヶ谷", price:[4000,4999], vibe:"groupCasual",
+    tags:["総合居酒屋"], reasonSeeds:{friends:["賑やかに飲みたい夜にちょうどいい総合居酒屋"]}},
+  {id:"asagaya-hachinohe", name:"旅サロン海っ子八戸 阿佐ヶ谷店", genre:"青森料理", area:"阿佐ヶ谷", price:[3000,3999], vibe:"adventurousUnique",
+    tags:["青森料理","ご当地"], reasonSeeds:{adventurous:["青森の郷土料理で、いつもと違う土地の味に触れる"]}},
+  {id:"asagaya-dendenkushi", name:"でんでん串", genre:"串揚げ", area:"阿佐ヶ谷", price:[2000,2999], vibe:"budgetCasual",
+    tags:["串揚げ"], reasonSeeds:{budget:["串揚げを何本かつまむだけでも、気軽に楽しめる"]}},
+  {id:"asagaya-sakurai", name:"阿佐ヶ谷 さくら井", genre:"和食系居酒屋", area:"阿佐ヶ谷", price:[5000,5999], vibe:"dateSpecial",
+    tags:["和食系居酒屋"], reasonSeeds:{indulgent:["和食を軸にした、少し落ち着いた大人の居酒屋"]}},
+  {id:"asagaya-sandal-kitchen", name:"お酒とごはん サンダルキッチン", genre:"居酒屋", area:"阿佐ヶ谷", price:[2000,2999], vibe:"budgetCasual",
+    tags:["料理も充実"], reasonSeeds:{budget:["お酒もごはんも両方楽しめて、値段も気張らない"]}},
+  {id:"asagaya-aoutei-gyoza", name:"青卯餃子", genre:"餃子", area:"阿佐ヶ谷", price:[3000,3999], vibe:"groupCasual",
+    tags:["餃子"], reasonSeeds:{friends:["餃子を何皿も頼んでシェアするのが楽しい"]}},
+
+  // ── 居酒屋(高円寺・7) ──
+  {id:"koenji-3b", name:"焼き鳥とワイン ビストロおでん 3B 高円寺", genre:"焼き鳥・おでん", area:"高円寺", price:[4000,4999], vibe:"stylishDrink",
+    tags:["焼き鳥とワイン","おでん"], reasonSeeds:{stylish:["焼き鳥やおでんに、ワインを合わせる新しい飲み方"]}},
+  {id:"koenji-yamiichi", name:"ヤミイチ 高円寺", genre:"居酒屋", area:"高円寺", price:[3000,4999], vibe:"groupCasual",
+    tags:["居酒屋"], reasonSeeds:{friends:["わいわい飲みたい夜に合う、気取らない居酒屋"]}},
+  {id:"koenji-tanyaki-kozara", name:"たん焼きと小皿", genre:"牛タン焼き", area:"高円寺", price:[3000,3999], vibe:"dateQuiet",
+    tags:["牛タン焼き"], reasonSeeds:{calm:["牛タンを炙る音を聞きながら、静かに飲める"]}},
+  {id:"koenji-manmajima", name:"まんまじぃま", genre:"藁炙り料理", area:"高円寺", price:[3000,4999], vibe:"adventurousUnique",
+    tags:["藁炙り"], reasonSeeds:{adventurous:["藁で炙るという、他ではあまり見ない調理法"]}},
+  {id:"koenji-ajito", name:"地下酒場 亜時戸", genre:"居酒屋", area:"高円寺", price:[3000,3999], vibe:"groupCasual",
+    tags:["地下の隠れ家"], reasonSeeds:{friends:["地下の隠れ家的空間で、腰を据えて飲める"]}},
+  {id:"koenji-debeko", name:"食堂でべこ。", genre:"海鮮居酒屋", area:"高円寺", price:[1000,3999], vibe:"budgetCasual",
+    tags:["海鮮居酒屋"], reasonSeeds:{budget:["価格の幅が広く、財布に合わせて選べる海鮮居酒屋"]}},
+  {id:"koenji-bakadoshi", name:"高円寺 ばか同士。", genre:"創作料理", area:"高円寺", price:[2000,4999], vibe:"adventurousUnique",
+    tags:["創作料理"], reasonSeeds:{adventurous:["名前からして気になる、創作料理の一軒"]}},
+
+  // ── 食堂・定食(9) ──
+  {id:"asagaya-amaterasu", name:"あまてらす 南阿佐ヶ谷", genre:"食堂", area:"南阿佐ヶ谷", price:[1000,1999], vibe:"soloQuick",
+    tags:["鳥取系","スナック風食堂"], reasonSeeds:{solo:["肩肘張らずに入れる、スナック風の食堂"]}},
+  {id:"asagaya-shinya-shokudo", name:"しんや食堂", genre:"食堂", area:"阿佐ヶ谷", price:[1000,1999], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{quick:["昔ながらの食堂で、さっと済ませたい日に"]}},
+  {id:"koenji-nagafuji", name:"ながふじ", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
+    tags:["日替わり定食700円"], reasonSeeds:{budget:["日替わり定食が700円という、驚きの価格設定"]}},
+  {id:"koenji-agemonya", name:"あげもんや", genre:"食堂", area:"高円寺", price:[1000,1999], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{quick:["揚げ物中心の定食で、さっと満足感を得られる"]}},
+  {id:"koenji-saikyozuke", name:"西京漬け専門店 魚き食堂", genre:"食堂", area:"高円寺", price:[2000,2999], vibe:"dateQuiet",
+    tags:["西京漬け専門"], reasonSeeds:{calm:["西京漬けの上品な味わいを、落ち着いて楽しめる"]}},
+  {id:"koenji-yashiro", name:"定食のヤシロ", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
+    tags:["定食"], reasonSeeds:{budget:["定食一筋の、値段も気取らない一軒"]}},
+  {id:"koenji-warajiya", name:"わらじや", genre:"食堂", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{solo:["ひとりでもさっと座れる、昔ながらの食堂"]}},
+  {id:"koenji-daichan", name:"大ちゃん", genre:"食堂", area:"高円寺", price:[1000,1999], vibe:"familyHearty",
+    tags:["食堂"], reasonSeeds:{hearty:["ボリュームのある定食で、家族でもしっかり満たされる"]}},
+  {id:"koenji-sansei-shokudo", name:"三晴食堂", genre:"食堂", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{quick:["さっと入って、さっと食べられる定食屋"]}}
+];
+
+const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant));
