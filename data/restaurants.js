@@ -770,4 +770,119 @@ const NEW_ROWS4 = [
     tags:["韓国料理"], reasonSeeds:{friends:["気軽な韓国料理店で、友達との時間を"]}}
 ];
 
-const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant)).concat(NEW_ROWS4.map(buildRestaurant));
+/* =========================================================
+   追加店舗(第6弾: カフェ・洋食・定食・ラーメン残り 49件)
+   ========================================================= */
+const NEW_ROWS5 = [
+  // ── カフェ・阿佐ヶ谷(10) ──
+  {id:"asagaya-gion", name:"ギオン", genre:"喫茶店", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["口コミ592件","老舗喫茶"], reasonSeeds:{calm:["口コミ600件近い、地元で愛される老舗喫茶"]}},
+  {id:"asagaya-hachicafe", name:"ハチカフェ 阿佐ヶ谷店", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"groupCasual",
+    tags:["口コミ225件"], reasonSeeds:{friends:["気軽に入れるカフェで、ランチ後のひと休みに"]}},
+  {id:"asagaya-penguin-cafe", name:"ペンギン カフェ", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["口コミ106件"], reasonSeeds:{calm:["名前の通り、ほっとひと息つける空間"]}},
+  {id:"asagaya-dodonaea", name:"ドドナエア", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["個性的な名前のカフェ"], reasonSeeds:{adventurous:["珍しい名前の通り、個性のあるカフェ体験"]}},
+  {id:"asagaya-coffee-bake-achoo", name:"COFFEE&BAKE achoo!", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["コーヒー&焼き菓子"], reasonSeeds:{quick:["コーヒーと焼き菓子で、さっとひと休み"]}},
+  {id:"asagaya-panda-coffee", name:"ぱんだ珈琲店", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["口コミ206件"], reasonSeeds:{solo:["ひとりでふらっと寄れる、地域で人気の珈琲店"]}},
+  {id:"asagaya-fresco-coffee", name:"フレスコ コーヒーロースターズ", genre:"コーヒースタンド", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["自家焙煎"], reasonSeeds:{quick:["自家焙煎のコーヒーを、立ち寄りでさっと"]}},
+  {id:"asagaya-cafe-de-wing", name:"カフェ・ド・ウィング", genre:"喫茶店", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["喫茶店"], reasonSeeds:{calm:["昔ながらの喫茶店らしい、落ち着いた時間"]}},
+  {id:"asagaya-kuroneko-sabo", name:"黒猫茶房", genre:"喫茶店", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["喫茶店"], reasonSeeds:{calm:["猫の名を冠した、静かで居心地のいい茶房"]}},
+  {id:"asagaya-parlor-l", name:"パーラーエル", genre:"喫茶店", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["喫茶店"], reasonSeeds:{quick:["昔ながらのパーラーで、さっとひと休み"]}},
+
+  // ── カフェ・高円寺(10) ──
+  {id:"koenji-nanatsumori", name:"七つ森", genre:"喫茶店", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["口コミ663件"], reasonSeeds:{calm:["口コミ600件超、地域屈指の人気喫茶店"]}},
+  {id:"koenji-poeme-mano", name:"ぽえむ マノ ア マノ コーヒー 高円寺南口店", genre:"喫茶店", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+    tags:["口コミ660件"], reasonSeeds:{couple:["じっくり淹れるコーヒーを、ふたりでゆっくり"]}},
+  {id:"koenji-rad-bros", name:"RAD BROS CAFE", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"groupCasual",
+    tags:["口コミ334件"], reasonSeeds:{friends:["賑やかな雰囲気で、友達との時間にちょうどいい"]}},
+  {id:"koenji-aruza-dokushokan", name:"アール座読書館", genre:"カフェ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["読書がテーマ"], reasonSeeds:{calm:["本に囲まれて、静かに過ごせる読書カフェ"]}},
+  {id:"koenji-nostalgia-cafe", name:"NOSTALGIA CAFE", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["ノスタルジックな内装"], reasonSeeds:{adventurous:["ノスタルジックな内装で、いつもと違う時間旅行を"]}},
+  {id:"koenji-aimu", name:"AIMU", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["口コミ239件"], reasonSeeds:{calm:["落ち着いた空間で、静かに会話を楽しめる"]}},
+  {id:"koenji-neyo", name:"NEYO", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"groupCasual",
+    tags:["口コミ259件"], reasonSeeds:{friends:["友達と気軽に立ち寄れる人気カフェ"]}},
+  {id:"koenji-tabisuru-kissa", name:"旅する喫茶", genre:"喫茶店", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["旅がテーマ"], reasonSeeds:{adventurous:["旅をテーマにした空間で、いつもと違う気分に"]}},
+  {id:"koenji-taw", name:"TAW.", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["口コミ210件"], reasonSeeds:{calm:["シンプルで洗練された空間で、ゆっくり過ごせる"]}},
+  {id:"koenji-nerken", name:"ネルケン", genre:"喫茶店", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["喫茶店"], reasonSeeds:{quick:["昔ながらの喫茶店で、さっとひと息"]}},
+
+  // ── 洋食(4) ──
+  {id:"asagaya-tando-tan", name:"洋食 タンドタン", genre:"洋食", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    tags:["洋食"], reasonSeeds:{friends:["洋食の定番メニューを、気軽にみんなで"]}},
+  {id:"koenji-kuronbo", name:"クロンボ", genre:"洋食", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["口コミ322件","エリア最安値帯"], reasonSeeds:{budget:["このエリアの洋食では最安値クラス、ひとりでもさっと"]}},
+  {id:"koenji-kitchen-fuji", name:"キッチン フジ", genre:"洋食", area:"高円寺", price:[700,999], vibe:"familyHearty",
+    tags:["高円寺の老舗"], reasonSeeds:{family:["高円寺で長く愛される、老舗洋食の味"]}},
+  {id:"koenji-light-side-cafe", name:"light side cafe", genre:"洋食", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+    tags:["洋食カフェ"], reasonSeeds:{calm:["カフェのような雰囲気で、洋食をゆっくり楽しめる"]}},
+
+  // ── 食堂・定食(14) ──
+  {id:"asagaya-chawan-beans", name:"chawan ビーンズ阿佐ヶ谷店", genre:"食堂", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["駅近"], reasonSeeds:{quick:["駅近ですぐ入れる、気軽な食堂"]}},
+  {id:"asagaya-bancho-shokudo", name:"食堂ばんちょう", genre:"食堂", area:"阿佐ヶ谷", price:[1000,2000], vibe:"familyHearty",
+    tags:["羽釜炊きご飯"], reasonSeeds:{hearty:["羽釜で炊いたご飯が自慢の、しっかり系食堂"]}},
+  {id:"asagaya-asagaya-shokudo", name:"あさがや食堂", genre:"食堂", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["焼き魚定食"], reasonSeeds:{solo:["焼き魚定食を、ひとりでほっと味わえる"]}},
+  {id:"asagaya-mammy-menchi", name:"マミーメンチ", genre:"食堂", area:"阿佐ヶ谷", price:[1000,2000], vibe:"budgetCasual",
+    tags:["メンチカツ"], reasonSeeds:{budget:["メンチカツが名物の、気取らない食堂"]}},
+  {id:"koenji-kitchen-nankai", name:"キッチン 南海 高円寺店", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"familyHearty",
+    tags:["洋食系食堂"], reasonSeeds:{hearty:["ボリュームのある洋食系メニューで満足感"]}},
+  {id:"koenji-yanagiya", name:"定食ハウス やなぎや", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
+    tags:["定食"], reasonSeeds:{budget:["定食一本で、値段も気取らない一軒"]}},
+  {id:"koenji-kadoichi", name:"門一", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{quick:["ひとりでもさっと入れる、地元の食堂"]}},
+  {id:"koenji-maruchan", name:"お食事 まるちゃん", genre:"食堂", area:"高円寺", price:[1000,1999], vibe:"budgetCasual",
+    tags:["食堂"], reasonSeeds:{budget:["気取らない値段で、しっかりごはんが食べられる"]}},
+  {id:"koenji-washokudo-fudo", name:"和食堂 風土", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["和食"], reasonSeeds:{calm:["和食を中心に、落ち着いて食事ができる"]}},
+  {id:"koenji-oshokuji-iida", name:"御食事 飯田", genre:"食堂", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{quick:["昔ながらの食堂で、さっと済ませたい日に"]}},
+  {id:"koenji-murata", name:"むらた", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["食堂"], reasonSeeds:{solo:["ひとりでも入りやすい、落ち着いた食堂"]}},
+  {id:"koenji-gohan-cafe-kimito", name:"ごはん＆カフェ きみと", genre:"カフェ食堂", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["カフェのようなごはん屋"], reasonSeeds:{calm:["カフェのような空気感で、ごはんをゆっくり"]}},
+  {id:"koenji-osakana-teishoku", name:"おさかな定食屋さん", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["魚料理中心"], reasonSeeds:{solo:["魚中心の定食を、ひとりでほっと味わえる"]}},
+  {id:"koenji-kosugiyu-tonari", name:"小杉湯となり", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["銭湯併設のカフェ"], reasonSeeds:{calm:["銭湯のとなりという、他にはない癒やしの立地"]}},
+
+  // ── ラーメン(7) ──
+  {id:"asagaya-nidaime-genkotsuya", name:"二代目げんこつ屋 阿佐ヶ谷南口店", genre:"家系ラーメン", area:"阿佐ヶ谷", price:[1000,2000], vibe:"familyHearty",
+    tags:["家系"], reasonSeeds:{hearty:["家系らしいがっつりスープで満足感"]}},
+  {id:"asagaya-kurosuke", name:"らーめん処 くろ助", genre:"ラーメン", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["醤油ラーメン"], reasonSeeds:{solo:["醤油の効いた一杯を、ひとりでじっくり"]}},
+  {id:"asagaya-manpukuhonpo", name:"萬福本舗", genre:"ラーメン", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["ラーメン"], reasonSeeds:{quick:["標準的な一杯を、さっと食べたい日に"]}},
+  {id:"asagaya-waganahaneko", name:"吾ガ輩ハネコ", genre:"ラーメン", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["個性的な店名"], reasonSeeds:{adventurous:["個性的な店名の通り、気になる一杯"]}},
+  {id:"asagaya-tokyo-gurecchi", name:"中華そば 東京ぐれっち", genre:"ラーメン", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+    tags:["中華そば"], reasonSeeds:{solo:["中華そばらしい澄んだスープを、ひとりで"]}},
+  {id:"koenji-niboshi-ginsei", name:"煮干し中華そば 麺屋 銀星 高円寺", genre:"つけ麺", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["煮干し系"], reasonSeeds:{quick:["煮干しの効いたつけ麺を、さっと一杯"]}},
+  {id:"koenji-ichizo", name:"らーめん一蔵", genre:"味噌ラーメン", area:"高円寺", price:[1000,2000], vibe:"familyHearty",
+    tags:["辛味噌"], reasonSeeds:{hearty:["辛味噌のガツンとくる一杯で満足感"]}},
+
+  // ── スイーツ追加(4) ──
+  {id:"asagaya-toraya-tsubakiyama", name:"とらや椿山", genre:"和菓子", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["和菓子","口コミ115件"], reasonSeeds:{quick:["食後の甘味に、和菓子をひとつ"]}},
+  {id:"koenji-patissier-junhomma", name:"パティシエ ジュン ホンマ 高円寺", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["口コミ201件"], reasonSeeds:{couple:["評判のケーキを、ふたりで分け合う締めくくりに"]}},
+  {id:"koenji-san-crepe", name:"サン・くれーぷ", genre:"クレープ", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["クレープ"], reasonSeeds:{quick:["食後にクレープをひとつ、軽い締めくくりに"]}},
+  {id:"koenji-shimizuya", name:"清水屋", genre:"和菓子", area:"高円寺", price:[1000,2000], vibe:"familyHearty",
+    tags:["和菓子"], reasonSeeds:{family:["地元で長く愛される和菓子店、手土産にも"]}}
+];
+
+const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant)).concat(NEW_ROWS4.map(buildRestaurant)).concat(NEW_ROWS5.map(buildRestaurant));
