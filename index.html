@@ -443,12 +443,54 @@ function addShownGenre(genre){
   }
 }
 
+/* =========================================================
+   Hard Filter(Must条件)
+   「気分」の高スコアが「誰と」のミスマッチを打ち消してしまう
+   問題(例: ひとり×飲みたい でグループ向け居酒屋が出る)を防ぐ。
+   Phase 1: companion Must + mood Must の両方を満たす店だけに絞る。
+   0件なら mood Must だけを緩和する(companion Mustは最後まで死守)。
+   ========================================================= */
+const NON_ALCOHOL_GENRE_RE = /ラーメン|つけ麺|まぜそば|家系|カレー|定食|食堂|とんかつ|そば|うどん|天ぷら|うなぎ|カフェ|喫茶|コーヒー|ジェラート|ケーキ|和菓子|洋菓子|たい焼き|ドーナツ|クレープ|かき氷|ソフトクリーム|プリン|担々麺/;
+
+const MOOD_MUST = {
+  drinking: r => r.moodFit.drinking >= 3 && !NON_ALCOHOL_GENRE_RE.test(r.genre),
+  calm: r => r.atmosphere.quietLevel >= 3,
+  lively: r => r.atmosphere.casualLevel >= 3,
+  indulgent: r => r.atmosphere.specialLevel >= 3 || r.atmosphere.luxuryLevel >= 3,
+  budget: r => r.quality.costPerformance >= 3,
+  hearty: r => r.quality.volume >= 3,
+  familyFun: r => r.audienceFit.childrenFriendly >= 3
+  // stylish / adventurous / quick は Must なし(Wantのみでスコアに反映)
+};
+
+function satisfiesCompanionMust(r, companionId){
+  return r.companionFit[companionId] >= 3;
+}
+function satisfiesMoodMust(r, moodId){
+  const check = MOOD_MUST[moodId];
+  return !check || check(r);
+}
+
 function computePool(companionId, moodId){
   const history = getHistory();
   const lastId = history[0] ? history[0].id : null;
   const shownGenres = new Set(getShownGenres());
-  return RESTAURANTS
-    .filter(r => r.id !== lastId)
+
+  const base = RESTAURANTS.filter(r => r.id !== lastId);
+
+  // Phase 1: Hard Filter(誰とMust + 気分Must)
+  let candidates = base.filter(r => satisfiesCompanionMust(r, companionId) && satisfiesMoodMust(r, moodId));
+  if(candidates.length === 0){
+    // 気分Mustだけを緩和(誰とMustは死守)
+    candidates = base.filter(r => satisfiesCompanionMust(r, companionId));
+  }
+  if(candidates.length === 0){
+    // データが極端に薄いエリア/条件向けの最終手段
+    candidates = base;
+  }
+
+  // Phase 2: Compatibility Score
+  return candidates
     .map(r => {
       let s = scoreRestaurant(r, companionId, moodId);
       const bucket = priceBucket(r);
@@ -458,7 +500,7 @@ function computePool(companionId, moodId){
         if(h.priceBucket === bucket) s -= 1.5 * penalty;
       });
       if(shownGenres.has(r.genre) && !history.some(h => h.genre === r.genre)){
-        s -= 1; // セッション内で既出のジャンルは、直近履歴とは別に軽くペナルティ
+        s -= 1; // Phase 3: セッション内で既出のジャンルは、直近履歴とは別に軽くペナルティ
       }
       return {r, score:s, bucket};
     })

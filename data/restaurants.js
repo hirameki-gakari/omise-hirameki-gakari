@@ -244,6 +244,16 @@ const VIBES = {
     atmosphere:{quietLevel:3,casualLevel:3,specialLevel:4,luxuryLevel:3},
     quality:{costPerformance:2,foodQuality:4,volume:2},
     audienceFit:{dateFriendly:4,childrenFriendly:1,teenagerFriendly:1,largeGroupFriendly:2}
+  },
+  soloDrink:{
+    // 「ひとりで飲みたい」専用(立ち飲み・カウンターバー等)。
+    // soloQuickは「サクッと系」用でdrinking評価が低いため、
+    // 「ひとり×飲みたい」ではgroupCasual等に負けてしまう問題があった。
+    companionFit:{solo:5,couple:2,family:1,friends:2,colleagues:2},
+    moodFit:{hearty:1,drinking:5,indulgent:2,budget:4,stylish:2,calm:3,adventurous:2,familyFun:1,quick:3,lively:2},
+    atmosphere:{quietLevel:3,casualLevel:4,specialLevel:1,luxuryLevel:1},
+    quality:{costPerformance:4,foodQuality:3,volume:1},
+    audienceFit:{dateFriendly:1,childrenFriendly:1,teenagerFriendly:1,largeGroupFriendly:1}
   }
 };
 
@@ -313,6 +323,11 @@ const VIBE_FILLERS = {
     "少し気分を上げたい夜に合う、こだわりの空間",
     "お酒の種類や見せ方にこだわりが感じられる",
     "写真映えも意識された、今どきの空間"
+  ],
+  soloDrink: [
+    "ひとりでもすっと入れる、カウンター中心の作り",
+    "隣を気にせず、自分のペースで飲める空気感",
+    "長居しすぎず、ふらっと一杯だけでも自然"
   ]
 };
 
@@ -384,11 +399,11 @@ const NEW_ROWS = [
     tags:["刺身","海鮮"], reasonSeeds:{indulgent:["新鮮な刺身をゆっくり味わえる"], couple:["刺身をアテに、ふたりでゆっくり飲める"], calm:["落ち着いて魚と向き合える雰囲気"]}},
   {id:"asagaya-otoriya", name:"音鶏家 阿佐ヶ谷店", genre:"焼き鳥", area:"阿佐ヶ谷", price:[2000,3000], vibe:"budgetCasual",
     tags:["焼き鳥","安め"], reasonSeeds:{budget:["焼き鳥を気軽な値段で"], solo:["ひとりでも気軽に立ち寄れる焼き鳥屋"], quick:["ランチ帯の実績もあり、提供も早そう"]}},
-  {id:"asagaya-kushibar", name:"阿佐ヶ谷串バル", genre:"串料理バル", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloQuick",
+  {id:"asagaya-kushibar", name:"阿佐ヶ谷串バル", genre:"串料理バル", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
     tags:["串料理","ランチも安い"], reasonSeeds:{quick:["串をつまみながら、軽く立ち寄れる"], solo:["串を数本つまむだけでもいい、身軽さ"], budget:["ランチも安いから、価格の安心感がある"]}},
   {id:"asagaya-nihonshu-zero", name:"にほんしゅ ぜろ", genre:"日本酒バル", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
     tags:["日本酒","落ち着いた飲み"], reasonSeeds:{calm:["日本酒を静かに選びながら飲める"], couple:["日本酒を選びながら、静かに語り合える"], drinking:["総合居酒屋としての品揃えの広さも魅力"]}},
-  {id:"asagaya-24-gyoza", name:"24時間 餃子酒場 阿佐ヶ谷店", genre:"餃子・深夜酒場", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloQuick",
+  {id:"asagaya-24-gyoza", name:"24時間 餃子酒場 阿佐ヶ谷店", genre:"餃子・深夜酒場", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
     tags:["24時間営業","餃子"], reasonSeeds:{quick:["24時間営業だから、時間を気にせず入れる"], solo:["深夜でもひとりでふらっと入れる"], budget:["餃子中心で、価格も気取らない"]}},
   {id:"koenji-doki", name:"動悸", genre:"隠れ家居酒屋", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
     tags:["隠れ家","少し贅沢"], reasonSeeds:{indulgent:["隠れ家感のある特別な一軒"], couple:["隠れ家だからこそ、ふたりだけの時間に集中できる"], stylish:["少し背伸びしたい夜にちょうどいい佇まい"]}},
@@ -523,15 +538,15 @@ const NEW_ROWS2 = [
     tags:["焼き鳥","少し贅沢"], reasonSeeds:{indulgent:["少し贅沢な焼き鳥のコースで、特別な夜に"]}},
 
   // ── 立ち飲み(3) ──
-  {id:"koenji-banpaiya", name:"高円寺晩杯屋", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
+  {id:"koenji-banpaiya", name:"高円寺晩杯屋", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"soloDrink",
     tags:["センベロ","日替わり海鮮"], reasonSeeds:{budget:["千円ちょっとでほろ酔いになれる、センベロの定番"], quick:["ふらっと立ち寄って、さっと一杯だけでもいい"]}},
-  {id:"asagaya-futakun", name:"立呑風太くん", genre:"立ち飲み", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+  {id:"asagaya-futakun", name:"立呑風太くん", genre:"立ち飲み", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloDrink",
     tags:["20年続く立ち飲み","北口すぐ"], reasonSeeds:{solo:["ひとりでふらっと寄れる、20年続く立ち飲みの定番"]}},
-  {id:"koenji-shichisuke", name:"立ち飲み七助", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+  {id:"koenji-shichisuke", name:"立ち飲み七助", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"soloDrink",
     tags:["貝刺し","熱燗"], reasonSeeds:{quick:["貝刺しと熱燗を、立ったままさくっと"]}},
 
   // ── バー(2) ──
-  {id:"koenji-bar-tail", name:"Bar tail", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+  {id:"koenji-bar-tail", name:"Bar tail", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"soloDrink",
     tags:["ウイスキー","自家製果実酒"], reasonSeeds:{calm:["年季の入った空間で、静かにウイスキーを傾ける"], solo:["ひとりでもテラス席でゆっくりできる"]}},
   {id:"koenji-bar-dop", name:"bar dop", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"stylishDrink",
     tags:["カクテル"], reasonSeeds:{stylish:["カクテルを片手に、少し大人な夜を過ごせる"]}},
@@ -727,7 +742,7 @@ const NEW_ROWS4 = [
   // ── バー・高円寺(10) ──
   {id:"koenji-bakushukobo", name:"高円寺麦酒工房", genre:"ビアバー", area:"高円寺", price:[3000,4000], vibe:"stylishDrink",
     tags:["クラフトビール"], reasonSeeds:{stylish:["自家醸造にこだわるビアバーで、飲み比べを楽しむ"]}},
-  {id:"koenji-watashi", name:"私", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+  {id:"koenji-watashi", name:"私", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"soloDrink",
     tags:["隠れ家バー"], reasonSeeds:{calm:["名前も佇まいも静かな、隠れ家的バー"]}},
   {id:"koenji-sake-kokon", name:"Sake bar KoKoN", genre:"日本酒バー", area:"高円寺", price:[5000,6000], vibe:"dateQuiet",
     tags:["日本酒専門"], reasonSeeds:{couple:["日本酒を選びながら、ふたりで静かに過ごす夜に"]}},
@@ -749,7 +764,7 @@ const NEW_ROWS4 = [
   // ── バー・阿佐ヶ谷(10) ──
   {id:"asagaya-olla", name:"olla", genre:"ビアバー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"stylishDrink",
     tags:["クラフトビール"], reasonSeeds:{stylish:["おしゃれなビアバーで、気の利いた一杯を"]}},
-  {id:"asagaya-sakenomitsuya", name:"酒ノみつや", genre:"日本酒バー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+  {id:"asagaya-sakenomitsuya", name:"酒ノみつや", genre:"日本酒バー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloDrink",
     tags:["立ち飲み日本酒","安め"], reasonSeeds:{budget:["1000円以下からの日本酒立ち飲みで、気軽に一杯"]}},
   {id:"asagaya-cafe-bar-rigid", name:"CAFE&BAR RIGID", genre:"バー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"stylishDrink",
     tags:["カフェ&バー"], reasonSeeds:{stylish:["昼はカフェ、夜はバーという二つの顔を持つ空間"]}},
@@ -991,7 +1006,7 @@ const NEW_ROWS6 = [
     tags:["ワイン"], reasonSeeds:{couple:["ワインを選びながら、ふたりで静かに過ごせる"]}},
   {id:"koenji-a-wine-house", name:"A WINE HOUSE", genre:"ワインバー", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
     tags:["ワイン","手頃な価格"], reasonSeeds:{budget:["手頃な価格でワインを楽しめる、気軽なワインバー"]}},
-  {id:"koenji-bar-chico", name:"バー チコ 高円寺店", genre:"バー", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+  {id:"koenji-bar-chico", name:"バー チコ 高円寺店", genre:"バー", area:"高円寺", price:[1000,2000], vibe:"soloDrink",
     tags:["バー"], reasonSeeds:{solo:["ひとりでもふらっと寄れる、気軽なバー"]}},
   {id:"koenji-post", name:"ポスト", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
     tags:["バー"], reasonSeeds:{calm:["ポストという名の通り、日々の区切りに立ち寄れる"]}},
