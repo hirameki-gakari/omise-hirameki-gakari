@@ -117,6 +117,7 @@ const BASE_RESTAURANTS = [
   },
   {
     id:"koenji-fukuraimon", name:"福来門", genre:"中華", area:"高円寺", vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13054980/",
     priceRange:{dinner:[3000,4500]},
     companionFit:{solo:2,couple:2,family:3,friends:5,colleagues:4},
     moodFit:{hearty:4,drinking:3,indulgent:1,budget:4,stylish:1,calm:1,adventurous:2,familyFun:3,quick:2,lively:5},
@@ -340,12 +341,16 @@ const VIBE_FILLERS = {
 const NEW_ROWS = [
   // ── イタリアン(13) ──
   {id:"koenji-aopi", name:"Aopi", genre:"イタリアン(パスタ)", area:"高円寺", price:[4000,5000], vibe:"budgetCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13319220/",
     tags:["パスタ専門","ランチも人気"], reasonSeeds:{budget:["パスタ専門店らしい、気取らない一皿"], friends:["ふらっと入れる気軽さ"], quick:["ランチ帯の実績もあるから、提供も早そう"]}},
   {id:"koenji-bonjolina", name:"レストラン ボンジョリーナ 高円寺", genre:"イタリアン", area:"高円寺", price:[4000,5000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001093286/",
     tags:["コース仕立て","落ち着いた雰囲気"], reasonSeeds:{calm:["コースでゆったり過ごせる落ち着いた店内"], couple:["ふたりの記念日にも使える佇まい"], indulgent:["コース仕立てだから、特別な一皿がゆっくり続く"]}},
   {id:"koenji-granpa", name:"グラン・パ 東高円寺店", genre:"イタリアン(パスタ)", area:"高円寺", price:[2000,3000], vibe:"budgetCasual",
+    officialUrl:"https://grandpa.tokyo/higashi-koenji.html", reservationUrl:"https://www.hotpepper.jp/strJ000683117/",
     tags:["パスタ","手頃"], reasonSeeds:{budget:["ディナーでも2000円台からと手が届きやすい"], friends:["パスタの種類が豊富で、何人で行っても選びやすい"], solo:["ひとりでふらっと寄れる価格帯"]}},
   {id:"koenji-pizzeria-sol", name:"Pizzeria SOL", genre:"ピザ専門", area:"高円寺", price:[5000,6000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001168003/",
     tags:["ピザ専門","シェアしやすい"], reasonSeeds:{friends:["ピザを何枚も頼んでシェアするのが楽しい"], drinking:["ピザ片手にお酒も進みそう"], colleagues:["取り分けやすいピザは、職場帰りの一軒にも"]}},
   {id:"koenji-dilettante", name:"dilettante", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"dateSpecial",
     officialUrl:"https://dilettante.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003648480/",
@@ -354,11 +359,13 @@ const NEW_ROWS = [
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13255138/",
     tags:["ピザ","ステーキ","酒場"], reasonSeeds:{drinking:["ピザとステーキ、両方つまみに飲める気軽さ"], friends:["ピザとステーキ、好みが違う友達同士でも満足しやすい"], budget:["酒場価格で気軽に楽しめる"]}},
   {id:"koenji-junction", name:"Junction", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"stylishDrink",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003850944/",
     tags:["ディナー限定","おしゃれ"], reasonSeeds:{stylish:["夜だけの営業で落ち着いた大人の時間"], couple:["夜だけの静かな時間、ふたりで過ごすのにも"], drinking:["お酒に合わせた一皿が期待できる"]}},
   {id:"koenji-bocca-lupo", name:"トラットリア ボッカ・ルーポ", genre:"イタリアン", area:"高円寺", price:[10000,15000], vibe:"dateSpecial",
     officialUrl:"https://www.bocca-al-lupo.com/", reservationUrl:"https://www.hotpepper.jp/strJ000641755/",
     tags:["本格トラットリア","記念日向け"], reasonSeeds:{indulgent:["本格イタリアンをコースでじっくり味わう特別な夜に"], couple:["特別な記念日の主役になれる一軒"], stylish:["本格トラットリアらしい、洗練された雰囲気"]}},
   {id:"asagaya-gatto-calico", name:"Gatto Calico", genre:"イタリアン", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ004005125/",
     tags:["ディナー中心","落ち着いた空間"], reasonSeeds:{calm:["派手すぎない、ふたりで話しやすい空間"], couple:["ディナー中心の営業で、夜にじっくり向き合える"], indulgent:["派手さより、料理の質で満足させてくれそう"]}},
   {id:"asagaya-lupi32", name:"Lupi32", genre:"薪窯ピザ", area:"阿佐ヶ谷", price:[10000,15000], vibe:"dateSpecial",
     officialUrl:"http://www.lupi32.com/", reservationUrl:"https://hitosara.com/0032033320/",
@@ -366,8 +373,10 @@ const NEW_ROWS = [
   {id:"asagaya-cafe-italian", name:"阿佐ヶ谷カフェ", genre:"イタリアン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateQuiet",
     tags:["落ち着いた空間","カジュアルながら上質"], reasonSeeds:{calm:["名前は気軽でも、中は落ち着いた大人の空間"], couple:["カフェのような気軽さと、落ち着いた大人の空気を両方持つ"], indulgent:["名前に反して、ゆっくり食事を楽しめる作り"]}},
   {id:"asagaya-ishigamaya", name:"石窯や", genre:"ピザ専門", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:"https://ishigamaya-tobi.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13290876/",
     tags:["石窯ピザ","リーズナブル"], reasonSeeds:{budget:["石窯ピザがこの価格帯で楽しめる"], friends:["石窯ピザを何枚か頼んで、みんなでシェアするのに向いてる"], quick:["ピザ専門店らしい提供の早さも期待できる"]}},
   {id:"asagaya-dining-piatto", name:"Dining Piatto", genre:"イタリアン", area:"阿佐ヶ谷", price:[3000,4000], vibe:"budgetCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13296535/",
     tags:["ランチが人気","気軽なイタリアン"], reasonSeeds:{friends:["気取らずに入れる、普段使いのイタリアン"], budget:["ランチの評価が高いから、コスパも安心"], solo:["ひとりでのふらっと利用もしやすそう"]}},
 
   // ── ラーメン(13) ──
@@ -411,6 +420,7 @@ const NEW_ROWS = [
     officialUrl:"https://asagaya-uotetsu.com/", reservationUrl:"https://www.hotpepper.jp/strJ003649082/",
     tags:["刺身","海鮮"], reasonSeeds:{indulgent:["新鮮な刺身をゆっくり味わえる"], couple:["刺身をアテに、ふたりでゆっくり飲める"], calm:["落ち着いて魚と向き合える雰囲気"]}},
   {id:"asagaya-otoriya", name:"音鶏家 阿佐ヶ谷店", genre:"焼き鳥", area:"阿佐ヶ谷", price:[2000,3000], vibe:"budgetCasual",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001268509/",
     tags:["焼き鳥","安め"], reasonSeeds:{budget:["焼き鳥を気軽な値段で"], solo:["ひとりでも気軽に立ち寄れる焼き鳥屋"], quick:["ランチ帯の実績もあり、提供も早そう"]}},
   {id:"asagaya-kushibar", name:"阿佐ヶ谷串バル", genre:"串料理バル", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
     tags:["串料理","ランチも安い"], reasonSeeds:{quick:["串をつまみながら、軽く立ち寄れる"], solo:["串を数本つまむだけでもいい、身軽さ"], budget:["ランチも安いから、価格の安心感がある"]}},
@@ -423,6 +433,7 @@ const NEW_ROWS = [
     officialUrl:"https://koenji-tokimeki.com/", reservationUrl:"https://www.hotpepper.jp/strJ003582371/",
     tags:["隠れ家","少し贅沢"], reasonSeeds:{indulgent:["隠れ家感のある特別な一軒"], couple:["隠れ家だからこそ、ふたりだけの時間に集中できる"], stylish:["少し背伸びしたい夜にちょうどいい佇まい"]}},
   {id:"koenji-kaisen", name:"貝せん", genre:"貝料理専門", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13191955/",
     tags:["貝料理専門","つまみが豊富"], reasonSeeds:{friends:["貝料理を色々つまみながらわいわい"], drinking:["貝料理は日本酒にもワインにも合わせやすい"], colleagues:["つまみが豊富だから、職場の集まりにも"]}},
   {id:"koenji-citraba", name:"クラフト麦酒酒場 シトラバ 高円寺店", genre:"クラフトビール酒場", area:"高円寺", price:[1000,6000], vibe:"stylishDrink",
     officialUrl:"https://www.citraba.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13233396/",
@@ -432,8 +443,10 @@ const NEW_ROWS = [
 
   // ── 和食(12) ──
   {id:"asagaya-shinkei", name:"神鶏 阿佐ヶ谷店", genre:"焼き鳥", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13196196/",
     tags:["焼き鳥","飲み向き"], reasonSeeds:{drinking:["焼き鳥をつまみに、じっくり飲める"], friends:["焼き鳥を何本もシェアしながら、わいわい飲める"], budget:["焼き鳥中心だから、価格も気張らない"]}},
   {id:"asagaya-sugidama", name:"鮨・酒・肴 杉玉 阿佐ヶ谷", genre:"寿司", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001236107/",
     tags:["寿司","日本酒"], reasonSeeds:{indulgent:["寿司と日本酒で、少し贅沢な気分に"], couple:["寿司と日本酒を、ふたりでゆっくり味わう夜に"], calm:["落ち着いた雰囲気で、静かに語り合える"]}},
   {id:"asagaya-tonkatsu-narikura", name:"とんかつ成蔵", genre:"とんかつ", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:null, reservationUrl:"https://restaurant.ikyu.com/117439",
@@ -444,6 +457,7 @@ const NEW_ROWS = [
     officialUrl:"https://sushiichi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ004444825/",
     tags:["寿司","職人技"], reasonSeeds:{indulgent:["職人が握る寿司で、特別な夜に"], couple:["職人の握りを、特別な記念日に"], stylish:["寿司屋らしい、背筋が伸びる緊張感も魅力"]}},
   {id:"koenji-abusan", name:"あぶさん", genre:"海鮮・貝料理", area:"高円寺", price:[5000,6000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13072778/",
     tags:["海鮮","貝料理"], reasonSeeds:{friends:["海鮮と貝をつまみに、飲みが長引いても飽きない"], drinking:["海鮮と貝、両方あるから飲みが長引いても飽きない"], colleagues:["つまみの種類が多く、職場の集まりにも"]}},
   {id:"koenji-osoubi-kappou", name:"創作割烹おあそび", genre:"創作割烹", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:"https://oasobi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003388022/",
@@ -480,8 +494,10 @@ const NEW_ROWS2 = [
 
   // ── 韓国料理(2) ──
   {id:"asagaya-ajiton", name:"味豚 アジトン 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:"https://asian-asagaya.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ001247064/",
     tags:["サムギョプサル","石焼きチュクミ"], reasonSeeds:{friends:["アツアツのサムギョプサルを焼きながらわいわい"], drinking:["肉と一緒にマッコリも進む一軒"]}},
   {id:"asagaya-samshiseok", name:"韓国料理サムシセキ 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://r.gnavi.co.jp/4hbkp64u0000/",
     tags:["韓国家庭料理","チーズタッカルビ"], reasonSeeds:{friends:["取り分けて楽しむ韓国料理は、大人数でも盛り上がる"]}},
 
   // ── カレー(8) ──
@@ -504,12 +520,15 @@ const NEW_ROWS2 = [
 
   // ── うなぎ(2) ──
   {id:"asagaya-azumaya", name:"阿づ満や", genre:"うなぎ", area:"阿佐ヶ谷", price:[4000,6000], vibe:"dateSpecial",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13048801/",
     tags:["うなぎ専門","戦前からの老舗"], reasonSeeds:{indulgent:["戦前から続く老舗の、柔らかく仕上げたうなぎ"], couple:["少し特別な日に、老舗のうなぎでゆっくり"]}},
   {id:"asagaya-unagi-naruse", name:"鰻の成瀬 阿佐ヶ谷店", genre:"うなぎ", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    officialUrl:"https://unagi-naruse.com/shop/asagaya", reservationUrl:"https://www.hotpepper.jp/strJ004402852/",
     tags:["厳選ニホンウナギ"], reasonSeeds:{indulgent:["生育環境にこだわった、上質なうなぎを味わえる"]}},
 
   // ── お好み焼き・鉄板(4) ──
   {id:"asagaya-enya", name:"縁家", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2200,4000], vibe:"groupCasual",
+    officialUrl:"https://ennya-asagaya.com/", reservationUrl:"https://www.hotpepper.jp/strJ001246475/",
     tags:["関西風お好み焼き","もんじゃ","食べ放題プラン"], reasonSeeds:{friends:["鉄板を囲んでわいわい、食べ放題プランもある"], drinking:["2時間飲み放題付きコースもあり、飲みにも使える"]}},
   {id:"asagaya-bansho", name:"鉄板焼ダイニング 万松", genre:"鉄板焼き", area:"阿佐ヶ谷", price:[4000,6000], vibe:"dateQuiet",
     tags:["隠れ家鉄板焼き"], reasonSeeds:{calm:["駅前にありながら隠れ家的な、落ち着いた鉄板焼き"]}},
@@ -521,25 +540,32 @@ const NEW_ROWS2 = [
 
   // ── スペイン・ビストロ(3) ──
   {id:"koenji-gaucho", name:"スペインバル ガウチョ", genre:"スペイン料理", area:"高円寺", price:[3000,4500], vibe:"stylishDrink",
+    officialUrl:"https://www.spainbar-gaucho.com/", reservationUrl:"https://www.hotpepper.jp/strJ001226433/",
     tags:["タパス","イカの墨煮","評価4.32"], reasonSeeds:{stylish:["本場スペインバルの空間で、タパスとワインを"], drinking:["アヒージョや肉料理をつまみに、ワインが進む"]}},
   {id:"asagaya-kocco", name:"スペインバル Kocco", genre:"スペイン料理", area:"阿佐ヶ谷", price:[3000,4500], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13252886/",
     tags:["本格パエリア","イカスミリゾット"], reasonSeeds:{couple:["本格パエリアを、ふたりでゆっくり分け合う夜に"]}},
   {id:"koenji-iiiio", name:"iiiio", genre:"ビストロ", area:"高円寺", price:[4000,6000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13269858/",
     tags:["ビストロ"], reasonSeeds:{calm:["気取りすぎない、大人のビストロの落ち着き"]}},
 
   // ── タイ・洋食(2) ──
   {id:"asagaya-daothai", name:"タイ屋台居酒屋 ダオタイ 阿佐ヶ谷本店", genre:"タイ・ベトナム料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:"https://daothai.dao-inc.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13042972/",
     tags:["トムヤムクン","ガイヤーン","宴会コース"], reasonSeeds:{adventurous:["本場のタイ料理で、いつもと違う一夜に"], friends:["宴会コースもあり、大人数で盛り上がりやすい"]}},
   {id:"asagaya-rasenya", name:"西洋食堂 らせん屋 阿佐ヶ谷店", genre:"洋食", area:"阿佐ヶ谷", price:[3000,4500], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13215825/",
     tags:["手づくり洋食","隠れ家"], reasonSeeds:{calm:["手づくりにこだわった洋食を、隠れ家的な空間で"]}},
 
   // ── ワイン・上質な焼き鳥(3) ──
   {id:"koenji-akka", name:"高円寺アッカ", genre:"イタリアンワインバー", area:"高円寺", price:[4000,6000], vibe:"stylishDrink",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13141584/",
     tags:["ソムリエ常駐","イタリアワイン受賞歴"], reasonSeeds:{stylish:["ソムリエ監修のワインを、グラスで気軽に飲み比べ"], couple:["ワインを選ぶ時間も含めて、大人の夜を楽しめる"]}},
   {id:"asagaya-birdland", name:"阿佐ヶ谷バードランド", genre:"焼き鳥・ワイン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:"https://www.asagaya-bird-land.com/", reservationUrl:"https://restaurant.ikyu.com/120714",
     tags:["銀座の名店直系","備長炭","希少部位"], reasonSeeds:{indulgent:["銀座仕込みの焼き鳥を、備長炭でじっくりと"], couple:["希少部位も揃う、少し贅沢な焼き鳥の夜に"]}},
   {id:"koenji-and-beer", name:"アンドビール", genre:"クラフトビール", area:"高円寺", price:[2000,3500], vibe:"adventurousUnique",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13212438/",
     tags:["クラフトビール","カレー"], reasonSeeds:{adventurous:["クラフトビールとカレーという、珍しい組み合わせ"]}},
 
   // ── 焼き鳥もっと(7) ──
@@ -547,6 +573,7 @@ const NEW_ROWS2 = [
     officialUrl:null, reservationUrl:"https://yoyaku.toreta.in/asagaya-yamamoto",
     tags:["評価上位の名店"], reasonSeeds:{indulgent:["地域でも評価の高い、焼き鳥の名店で特別な夜を"]}},
   {id:"asagaya-katsu", name:"克ッ 阿佐ヶ谷", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
+    officialUrl:"https://katsu-asagaya.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003806119/",
     tags:["焼き鳥"], reasonSeeds:{friends:["焼き鳥をつまみに、気取らずわいわい飲める"]}},
   {id:"asagaya-beard", name:"焼鳥BEARD(ベアード) 南阿佐ヶ谷店", genre:"焼き鳥", area:"南阿佐ヶ谷", price:[4000,5000], vibe:"stylishDrink",
     tags:["焼き鳥"], reasonSeeds:{stylish:["焼き鳥屋にしては洒落た空間で、飲みを楽しめる"]}},
@@ -576,6 +603,7 @@ const NEW_ROWS2 = [
 
   // ── 中華もっと(2) ──
   {id:"asagaya-chinkoen", name:"珍香園", genre:"中華", area:"阿佐ヶ谷", price:[1000,2500], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13149973/",
     tags:["約100種の本格中華","駅徒歩1分"], reasonSeeds:{budget:["100種近いメニューから選べて、安くて満足感がある"], friends:["メニューが多いから、大人数でも choices に困らない"]}},
   {id:"koenji-ichiban", name:"一番", genre:"中華", area:"高円寺", price:[700,999], vibe:"soloQuick",
     tags:["中華・ラーメン"], reasonSeeds:{quick:["ラーメンから中華の一品まで、さっと済ませられる"]}},
@@ -665,8 +693,10 @@ const NEW_ROWS3 = [
 
   // ── イタリアン(2) ──
   {id:"asagaya-delceppo", name:"デルチェッポ", genre:"イタリアン(パスタ)", area:"阿佐ヶ谷", price:[2000,3000], vibe:"budgetCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13287250/",
     tags:["パスタ専門","ランチ評価が高い"], reasonSeeds:{budget:["パスタ専門店らしい価格で、気軽にイタリアンを"]}},
   {id:"asagaya-haochai", name:"ハオツァイ", genre:"イタリアン", area:"阿佐ヶ谷", price:[3000,3999], vibe:"adventurousUnique",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001215738/",
     tags:["ベジタリアン対応おまかせ"], reasonSeeds:{adventurous:["ベジタリアン対応のおまかせ料理で、いつもと違う一皿に"]}},
 
   // ── カレー(3) ──
@@ -719,6 +749,7 @@ const NEW_ROWS3 = [
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003516239/",
     tags:["海鮮居酒屋"], reasonSeeds:{budget:["価格の幅が広く、財布に合わせて選べる海鮮居酒屋"]}},
   {id:"koenji-bakadoshi", name:"高円寺 ばか同士。", genre:"創作料理", area:"高円寺", price:[2000,4999], vibe:"adventurousUnique",
+    officialUrl:"https://bakadoushi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003850823/",
     tags:["創作料理"], reasonSeeds:{adventurous:["名前からして気になる、創作料理の一軒"]}},
 
   // ── 食堂・定食(9) ──
@@ -751,22 +782,29 @@ const NEW_ROWS3 = [
 const NEW_ROWS4 = [
   // ── 中華(9) ──
   {id:"asagaya-agariko-gyozaro", name:"アガリコ餃子楼 阿佐ヶ谷店", genre:"中華(餃子)", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001281461/",
     tags:["餃子","口コミ56件"], reasonSeeds:{friends:["餃子を何皿もシェアしながら、わいわい飲める"]}},
   {id:"asagaya-chugoku-meisai-son", name:"中國名菜 孫 阿佐ヶ谷店", genre:"中華", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ000795621/",
     tags:["口コミ105件"], reasonSeeds:{friends:["口コミの多さも納得の、本格中華をみんなで"]}},
   {id:"asagaya-wantantei", name:"阿佐ヶ谷 わんたん亭", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloQuick",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13318234/",
     tags:["ワンタン","口コミ79件"], reasonSeeds:{quick:["ワンタンを中心に、さっと食べられる中華"]}},
   {id:"asagaya-suikai", name:"中国料理 翠海", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    officialUrl:"https://suikai.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13052591/",
     tags:["口コミ153件・評価3.42"], reasonSeeds:{friends:["このエリアの中華の中でも評価の高い一軒"]}},
   {id:"koenji-chengdu-honten", name:"中華料理 成都 高円寺本店", genre:"中華", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+    officialUrl:"https://www.seito-koenji.com/", reservationUrl:"https://www.hotpepper.jp/strJ000058142/",
     tags:["口コミ10,255件","圧倒的な人気"], reasonSeeds:{friends:["口コミ1万件超という圧倒的な人気を誇る中華の名店"], drinking:["中華とお酒の組み合わせで、盛り上がる夜に"]}},
   {id:"koenji-byanbyan-chengdu", name:"ビャンビャン麺 火鍋 成都", genre:"中華(麺・火鍋)", area:"高円寺", price:[3000,4000], vibe:"adventurousUnique",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13282964/",
     tags:["ビャンビャン麺","火鍋"], reasonSeeds:{adventurous:["ビャンビャン麺や火鍋という、いつもと違う中華体験"]}},
   {id:"koenji-dapaidan105", name:"ダパイダン105 高円寺東京本店", genre:"台湾料理", area:"高円寺", price:[2000,3000], vibe:"adventurousUnique",
     tags:["台湾料理"], reasonSeeds:{adventurous:["台湾料理という、いつもとは違う選択肢"]}},
   {id:"koenji-chinki-sakaba", name:"中華料理 陳記酒場", genre:"中華", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
     tags:["中華酒場"], reasonSeeds:{budget:["中華のつまみを、気張らない値段で"]}},
   {id:"koenji-shou-u", name:"中華創作料理 祥宇", genre:"中華(創作)", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+    officialUrl:"https://akr6858170396.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13301099/",
     tags:["創作中華"], reasonSeeds:{calm:["創作中華を、落ち着いた雰囲気でゆっくり"]}},
 
   // ── 寿司(1・超高級) ──
@@ -865,23 +903,30 @@ const NEW_ROWS4 = [
 
   // ── フレンチ(5) ──
   {id:"asagaya-bistrot33", name:"Bistrot33 santrois", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+    officialUrl:"https://www.bistrot33.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13226597/",
     tags:["ビストロ"], reasonSeeds:{couple:["ビストロらしい気取らない雰囲気で、ふたりの夜を"]}},
   {id:"asagaya-le-terroir", name:"ビストロ ル・テロワール 阿佐ヶ谷", genre:"フレンチ(ビストロ)", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001044951/",
     tags:["ビストロ"], reasonSeeds:{calm:["土地の恵みを生かした料理を、落ち着いて味わう"]}},
   {id:"asagaya-ruvi", name:"RUVI", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateSpecial",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001139666/",
     tags:["フレンチ"], reasonSeeds:{indulgent:["少し特別な日のフレンチとして選びたい一軒"]}},
   {id:"asagaya-meat-kitchen-harmers", name:"Meat Kitchen HARMER's GRILL", genre:"洋食・グリル", area:"阿佐ヶ谷", price:[5000,6000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13264435/",
     tags:["肉料理","グリル"], reasonSeeds:{friends:["肉料理を中心に、みんなでシェアしながら楽しめる"]}},
   {id:"asagaya-101-anzeroan", name:"101アンゼロアン", genre:"フレンチ", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13147108/",
     tags:["フレンチ"], reasonSeeds:{calm:["手が届く価格帯のフレンチで、ゆっくり過ごせる"]}},
 
   // ── 韓国料理・高円寺(3) ──
   {id:"koenji-millineyangkopchang", name:"ミリネヤンコプチャン 高円寺店", genre:"韓国料理", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
+    officialUrl:"https://akr4117078256.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ004403505/",
     tags:["京都ミシュラン掲載の技","予約6,531件"], reasonSeeds:{friends:["ミシュラン掲載店仕込みの技を、みんなで楽しめる"], drinking:["ホルモンをつまみに、じっくり飲める夜に"]}},
   {id:"koenji-omnimatt", name:"おむにまっ", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ004098002/",
     tags:["韓国料理"], reasonSeeds:{friends:["取り分けて楽しむ韓国料理で、わいわい過ごせる"]}},
   {id:"koenji-halhal", name:"ハルハル", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
+    officialUrl:"https://kankokusakabaharuharu.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003671556/",
     tags:["韓国料理"], reasonSeeds:{friends:["気軽な韓国料理店で、友達との時間を"]}}
 ];
 
@@ -935,12 +980,16 @@ const NEW_ROWS5 = [
 
   // ── 洋食(4) ──
   {id:"asagaya-tando-tan", name:"洋食 タンドタン", genre:"洋食", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13075393/",
     tags:["洋食"], reasonSeeds:{friends:["洋食の定番メニューを、気軽にみんなで"]}},
   {id:"koenji-kuronbo", name:"クロンボ", genre:"洋食", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13141137/",
     tags:["口コミ322件","エリア最安値帯"], reasonSeeds:{budget:["このエリアの洋食では最安値クラス、ひとりでもさっと"]}},
   {id:"koenji-kitchen-fuji", name:"キッチン フジ", genre:"洋食", area:"高円寺", price:[700,999], vibe:"familyHearty",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13086476/",
     tags:["高円寺の老舗"], reasonSeeds:{family:["高円寺で長く愛される、老舗洋食の味"]}},
   {id:"koenji-light-side-cafe", name:"light side cafe", genre:"洋食", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13140116/",
     tags:["洋食カフェ"], reasonSeeds:{calm:["カフェのような雰囲気で、洋食をゆっくり楽しめる"]}},
 
   // ── 食堂・定食(14) ──
