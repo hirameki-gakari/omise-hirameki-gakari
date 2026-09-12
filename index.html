@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>お店のひらめき係</title>
 <meta name="description" content="「今日、どこで食べよう」を検索ではなくひらめきで決める、阿佐ヶ谷・高円寺エリアの外食提案サービス。">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FGCJC3PJ6C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FGCJC3PJ6C');
+</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Shippori+Mincho:wght@500;600&display=swap">
 <style>
 :root{
@@ -614,10 +622,20 @@ function hiramekiOnce(){
 }
 
 /* =========================================================
+   計測(KPI用の軽量イベント送信。GA4未読込でも安全に無視される)
+   ========================================================= */
+function trackEvent(name, params){
+  if(typeof gtag === "function"){
+    gtag("event", name, params || {});
+  }
+}
+
+/* =========================================================
    イベント
    ========================================================= */
 document.getElementById("btn-hirameki").addEventListener("click", () => {
   if(!selectedCompanion || !selectedMood) return;
+  trackEvent("hirameki_start", {companion:selectedCompanion, mood:selectedMood});
   hiramekiOnce();
   document.getElementById("screen-select").hidden = true;
   document.getElementById("screen-result").hidden = false;
@@ -627,6 +645,7 @@ document.getElementById("btn-hirameki").addEventListener("click", () => {
 document.getElementById("r-reroll").addEventListener("click", (e) => {
   const btn = e.currentTarget;
   const card = document.querySelector(".result-card");
+  trackEvent("reroll", {companion:selectedCompanion, mood:selectedMood});
   btn.classList.add("spinning");
   btn.disabled = true;
   card.classList.add("is-swapping");
@@ -638,7 +657,17 @@ document.getElementById("r-reroll").addEventListener("click", (e) => {
   setTimeout(() => btn.classList.remove("spinning"), 400);
 });
 
+document.getElementById("r-go").addEventListener("click", () => {
+  const r = currentPick && currentPick.r;
+  if(!r) return;
+  trackEvent("cta_click", {
+    restaurant_id:r.id, restaurant_name:r.name, genre:r.genre,
+    destination: r.reservationUrl ? "reservation" : (r.officialUrl ? "official" : "maps")
+  });
+});
+
 document.getElementById("r-restart").addEventListener("click", () => {
+  trackEvent("restart", {});
   resetHistory();
   selectedCompanion = null;
   selectedMood = null;
