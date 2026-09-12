@@ -307,9 +307,17 @@ footer.site-footer .footer-copyright{
 </div>
 
 <script src="data/restaurants.js"></script>
+<script src="data/photos.js"></script>
 <script>
 /* 店舗データ(VIBES / BASE_RESTAURANTS / NEW_ROWS / RESTAURANTS)は
    data/restaurants.js に分離済み。ここから先はUIロジックのみ。 */
+/* 自社撮影の写真(data/photos.js、scripts/sync-photos.jsで生成)を
+   店舗データに重ね合わせる。写真が無い店は従来通りブランドプレート表示。 */
+if(typeof RESTAURANT_PHOTOS !== "undefined"){
+  RESTAURANTS.forEach(r => {
+    if(RESTAURANT_PHOTOS[r.id]) r.image = RESTAURANT_PHOTOS[r.id];
+  });
+}
 /* =========================================================
    誰と / 気分 の選択肢と重みづけ(Phase 8 推薦ロジック)
    ========================================================= */
