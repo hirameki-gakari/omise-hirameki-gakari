@@ -885,4 +885,85 @@ const NEW_ROWS5 = [
     tags:["和菓子"], reasonSeeds:{family:["地元で長く愛される和菓子店、手土産にも"]}}
 ];
 
-const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant)).concat(NEW_ROWS4.map(buildRestaurant)).concat(NEW_ROWS5.map(buildRestaurant));
+/* =========================================================
+   追加店舗(第7弾: スイーツ・バー残り 34件、300件到達分)
+   ========================================================= */
+const NEW_ROWS6 = [
+  // ── スイーツ・阿佐ヶ谷(9) ──
+  {id:"asagaya-budo-kamakuraza", name:"ぶどうの木＆鎌倉座 阿佐谷トータルショップ", genre:"ケーキ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"familyHearty",
+    tags:["ケーキ"], reasonSeeds:{family:["手土産にもなるケーキを、家族の締めくくりに"]}},
+  {id:"asagaya-rustica", name:"ルスティカ菓子店", genre:"洋菓子", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["洋菓子"], reasonSeeds:{calm:["丁寧な洋菓子を、静かに味わう締めくくりに"]}},
+  {id:"asagaya-tsukitokurumi", name:"ツキトクルミ", genre:"かき氷", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["かき氷"], reasonSeeds:{adventurous:["季節のかき氷で、いつもと違うデザートの時間"]}},
+  {id:"asagaya-sunset-cookies", name:"サンセット クッキーズ ジャスミン", genre:"ケーキ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"groupCasual",
+    tags:["ケーキ"], reasonSeeds:{friends:["名前も可愛いケーキ店で、みんなでシェア"]}},
+  {id:"asagaya-arindo", name:"ありん堂", genre:"和菓子", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["和菓子"], reasonSeeds:{quick:["食後の和菓子を、さっとひとつ"]}},
+  {id:"asagaya-patisserie-hana", name:"パティスリー華", genre:"ケーキ", area:"阿佐ヶ谷", price:[700,999], vibe:"dateQuiet",
+    tags:["ケーキ"], reasonSeeds:{couple:["繊細なケーキを、ふたりで分け合う締めくくりに"]}},
+  {id:"asagaya-fukukichi", name:"福吉", genre:"和菓子", area:"阿佐ヶ谷", price:[1000,2000], vibe:"familyHearty",
+    tags:["和菓子"], reasonSeeds:{family:["縁起の良い名前の和菓子店、手土産にも"]}},
+  {id:"asagaya-masuya", name:"マスヤ", genre:"和菓子", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["和菓子"], reasonSeeds:{quick:["昔ながらの和菓子を、さっと買って帰れる"]}},
+  {id:"asagaya-cinq-jours", name:"Cinq jours", genre:"洋菓子", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["洋菓子"], reasonSeeds:{calm:["洗練された洋菓子で、静かな締めくくりを"]}},
+
+  // ── スイーツ・高円寺(9) ──
+  {id:"koenji-patisserie-chacoli", name:"カフェ ド パティスリー チャコリ", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["ケーキ"], reasonSeeds:{couple:["カフェ併設のパティスリーで、ふたりでゆっくり"]}},
+  {id:"koenji-kakigori-fuurindo", name:"カキ氷 フウリン堂", genre:"かき氷", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
+    tags:["かき氷"], reasonSeeds:{adventurous:["季節限定のかき氷で、いつもと違う一皿を"]}},
+  {id:"koenji-patisserie-copeau", name:"パティスリー コポー", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["口コミ53件"], reasonSeeds:{calm:["丁寧に作られたケーキで、静かな締めくくりを"]}},
+  {id:"koenji-donut-you-and", name:"ドーナツショップ YOU AND", genre:"ドーナツ", area:"高円寺", price:[700,999], vibe:"groupCasual",
+    tags:["ドーナツ"], reasonSeeds:{friends:["ドーナツを何個か選んで、みんなでシェア"]}},
+  {id:"koenji-shugoro", name:"周五郎", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["ケーキ"], reasonSeeds:{calm:["落ち着いた和の名前の、ケーキの締めくくりに"]}},
+  {id:"koenji-black-mountain", name:"ブラックマウンテン", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"adventurousUnique",
+    tags:["ケーキ"], reasonSeeds:{adventurous:["個性的な店名の通り、ひと味違うケーキ体験"]}},
+  {id:"koenji-shirotokuro", name:"しろとくろ", genre:"ジェラート", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["ジェラート"], reasonSeeds:{quick:["食後にジェラートをひとつ、軽い締めくくりに"]}},
+  {id:"koenji-umemura", name:"梅むら", genre:"和菓子", area:"高円寺", price:[700,999], vibe:"soloQuick",
+    tags:["和菓子"], reasonSeeds:{quick:["昔ながらの和菓子を、さっと買って帰れる"]}},
+  {id:"koenji-mynt", name:"MYNT", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+    tags:["ケーキ"], reasonSeeds:{couple:["シンプルで上品なケーキを、ふたりで"]}},
+
+  // ── バー・高円寺(7) ──
+  {id:"koenji-toiown", name:"十話音 toi-own", genre:"バー", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
+    tags:["バー"], reasonSeeds:{calm:["静かな音の響く空間で、落ち着いて過ごせる"]}},
+  {id:"koenji-ampoule", name:"アンプール", genre:"バー", area:"高円寺", price:[2000,3000], vibe:"stylishDrink",
+    tags:["バー"], reasonSeeds:{stylish:["洗練された一杯を楽しめる、大人のバー"]}},
+  {id:"koenji-uroko", name:"uroko", genre:"ワインバー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+    tags:["ワイン"], reasonSeeds:{couple:["ワインを選びながら、ふたりで静かに過ごせる"]}},
+  {id:"koenji-a-wine-house", name:"A WINE HOUSE", genre:"ワインバー", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
+    tags:["ワイン","手頃な価格"], reasonSeeds:{budget:["手頃な価格でワインを楽しめる、気軽なワインバー"]}},
+  {id:"koenji-bar-chico", name:"バー チコ 高円寺店", genre:"バー", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
+    tags:["バー"], reasonSeeds:{solo:["ひとりでもふらっと寄れる、気軽なバー"]}},
+  {id:"koenji-post", name:"ポスト", genre:"バー", area:"高円寺", price:[3000,4000], vibe:"dateQuiet",
+    tags:["バー"], reasonSeeds:{calm:["ポストという名の通り、日々の区切りに立ち寄れる"]}},
+  {id:"koenji-alba-en", name:"ALBA 圓", genre:"バー", area:"高円寺", price:[2000,3000], vibe:"stylishDrink",
+    tags:["バー"], reasonSeeds:{stylish:["洒落た雰囲気で、大人の時間を過ごせるバー"]}},
+
+  // ── バー・阿佐ヶ谷(9) ──
+  {id:"asagaya-golden-slumber", name:"ゴールデンスランバー", genre:"バー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"adventurousUnique",
+    tags:["音楽的な店名"], reasonSeeds:{adventurous:["音楽好きの心をくすぐる名前のバー"]}},
+  {id:"asagaya-yoru-cafe-popotto", name:"夜カフェ ポポット", genre:"バー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+    tags:["夜カフェ"], reasonSeeds:{solo:["カフェのような気軽さで、夜にひとり立ち寄れる"]}},
+  {id:"asagaya-jazz-bar-donngaraku", name:"ジャズバー鈍我楽", genre:"バー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
+    tags:["ジャズ"], reasonSeeds:{calm:["ジャズが流れる中で、静かにグラスを傾ける"]}},
+  {id:"asagaya-akatsuki-bar", name:"暁", genre:"バー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"dateQuiet",
+    tags:["バー"], reasonSeeds:{calm:["夜が更けていく時間を、静かに楽しめる一軒"]}},
+  {id:"asagaya-sake-to-ate-kamosu", name:"酒とあて 醸す", genre:"日本酒バー", area:"阿佐ヶ谷", price:[4000,5000], vibe:"dateQuiet",
+    tags:["日本酒"], reasonSeeds:{couple:["日本酒とアテを合わせながら、ふたりで静かに"]}},
+  {id:"asagaya-ichi-plus-ichi", name:"1＋1", genre:"日本酒バー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"adventurousUnique",
+    tags:["個性的な店名"], reasonSeeds:{adventurous:["シンプルながら気になる店名の日本酒バー"]}},
+  {id:"asagaya-cocktail-bar-meride", name:"カクテルバー メリデ", genre:"バー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"stylishDrink",
+    tags:["カクテル"], reasonSeeds:{stylish:["カクテルを片手に、少し大人な時間を"]}},
+  {id:"asagaya-wine-bar-saikantei", name:"ワインバー 菜環亭", genre:"ワインバー", area:"阿佐ヶ谷", price:[2000,3000], vibe:"dateQuiet",
+    tags:["野菜料理とワイン"], reasonSeeds:{couple:["野菜料理とワインを合わせて、ふたりでゆっくり"]}},
+  {id:"asagaya-sakegohan-akanegumo", name:"酒ごはん屋 あかね雲", genre:"日本酒バー", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+    tags:["酒とごはん"], reasonSeeds:{calm:["お酒もごはんも両方楽しめる、落ち着いた一軒"]}}
+];
+
+const RESTAURANTS = BASE_RESTAURANTS.concat(NEW_ROWS.map(buildRestaurant)).concat(NEW_ROWS2.map(buildRestaurant)).concat(NEW_ROWS3.map(buildRestaurant)).concat(NEW_ROWS4.map(buildRestaurant)).concat(NEW_ROWS5.map(buildRestaurant)).concat(NEW_ROWS6.map(buildRestaurant));
