@@ -8,6 +8,7 @@
 const BASE_RESTAURANTS = [
   {
     id:"asagaya-impronte", name:"リストランテ impronte", genre:"イタリアン", area:"阿佐ヶ谷", vibe:"dateSpecial",
+    officialUrl:"https://www.impronte.info/", reservationUrl:"https://hitosara.com/0031695404/",
     priceRange:{dinner:[5000,7000]},
     companionFit:{solo:1,couple:5,family:1,friends:2,colleagues:2},
     moodFit:{hearty:1,drinking:3,indulgent:5,budget:1,stylish:4,calm:5,adventurous:2,familyFun:1,quick:1,lively:1},
@@ -158,6 +159,7 @@ const BASE_RESTAURANTS = [
   },
   {
     id:"asagaya-lamaisoncourtine", name:"ラ・メゾン・クルティーヌ", genre:"フレンチ", area:"阿佐ヶ谷", station:"阿佐ヶ谷", walkMinutes:1, vibe:"dateSpecial",
+    officialUrl:"https://www.courtine.jp/", reservationUrl:"https://restaurant.ikyu.com/113821",
     priceRange:{dinner:[7000,10000]},
     companionFit:{solo:1,couple:5,family:1,friends:2,colleagues:2},
     moodFit:{hearty:1,drinking:2,indulgent:5,budget:1,stylish:4,calm:4,adventurous:2,familyFun:1,quick:1,lively:1},
@@ -342,16 +344,19 @@ const NEW_ROWS = [
   {id:"koenji-pizzeria-sol", name:"Pizzeria SOL", genre:"ピザ専門", area:"高円寺", price:[5000,6000], vibe:"groupCasual",
     tags:["ピザ専門","シェアしやすい"], reasonSeeds:{friends:["ピザを何枚も頼んでシェアするのが楽しい"], drinking:["ピザ片手にお酒も進みそう"], colleagues:["取り分けやすいピザは、職場帰りの一軒にも"]}},
   {id:"koenji-dilettante", name:"dilettante", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"dateSpecial",
+    officialUrl:"https://dilettante.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003648480/",
     tags:["ディナー限定","特別感"], reasonSeeds:{indulgent:["ディナーだけの特別な時間に集中できる一軒"], couple:["ディナーのみの営業だから、夜の時間に集中して向き合える"], stylish:["派手すぎない、大人の店構え"]}},
   {id:"koenji-kamatetsu", name:"ピザ&ステーキ酒場 窯鉄", genre:"ピザ・ステーキ酒場", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
     tags:["ピザ","ステーキ","酒場"], reasonSeeds:{drinking:["ピザとステーキ、両方つまみに飲める気軽さ"], friends:["ピザとステーキ、好みが違う友達同士でも満足しやすい"], budget:["酒場価格で気軽に楽しめる"]}},
   {id:"koenji-junction", name:"Junction", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"stylishDrink",
     tags:["ディナー限定","おしゃれ"], reasonSeeds:{stylish:["夜だけの営業で落ち着いた大人の時間"], couple:["夜だけの静かな時間、ふたりで過ごすのにも"], drinking:["お酒に合わせた一皿が期待できる"]}},
   {id:"koenji-bocca-lupo", name:"トラットリア ボッカ・ルーポ", genre:"イタリアン", area:"高円寺", price:[10000,15000], vibe:"dateSpecial",
+    officialUrl:"https://www.bocca-al-lupo.com/", reservationUrl:"https://www.hotpepper.jp/strJ000641755/",
     tags:["本格トラットリア","記念日向け"], reasonSeeds:{indulgent:["本格イタリアンをコースでじっくり味わう特別な夜に"], couple:["特別な記念日の主役になれる一軒"], stylish:["本格トラットリアらしい、洗練された雰囲気"]}},
   {id:"asagaya-gatto-calico", name:"Gatto Calico", genre:"イタリアン", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     tags:["ディナー中心","落ち着いた空間"], reasonSeeds:{calm:["派手すぎない、ふたりで話しやすい空間"], couple:["ディナー中心の営業で、夜にじっくり向き合える"], indulgent:["派手さより、料理の質で満足させてくれそう"]}},
   {id:"asagaya-lupi32", name:"Lupi32", genre:"薪窯ピザ", area:"阿佐ヶ谷", price:[10000,15000], vibe:"dateSpecial",
+    officialUrl:"http://www.lupi32.com/", reservationUrl:"https://hitosara.com/0032033320/",
     tags:["薪窯ピザ","特別な一軒"], reasonSeeds:{indulgent:["薪窯で焼くピザを、特別な夜のメインに"], couple:["特別な日の主役にしたい、薪窯ピザの一軒"], stylish:["薪窯という単語だけで、少し特別な気分に"]}},
   {id:"asagaya-cafe-italian", name:"阿佐ヶ谷カフェ", genre:"イタリアン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateQuiet",
     tags:["落ち着いた空間","カジュアルながら上質"], reasonSeeds:{calm:["名前は気軽でも、中は落ち着いた大人の空間"], couple:["カフェのような気軽さと、落ち着いた大人の空気を両方持つ"], indulgent:["名前に反して、ゆっくり食事を楽しめる作り"]}},
@@ -406,6 +411,7 @@ const NEW_ROWS = [
   {id:"asagaya-24-gyoza", name:"24時間 餃子酒場 阿佐ヶ谷店", genre:"餃子・深夜酒場", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
     tags:["24時間営業","餃子"], reasonSeeds:{quick:["24時間営業だから、時間を気にせず入れる"], solo:["深夜でもひとりでふらっと入れる"], budget:["餃子中心で、価格も気取らない"]}},
   {id:"koenji-doki", name:"動悸", genre:"隠れ家居酒屋", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:"https://koenji-tokimeki.com/", reservationUrl:"https://www.hotpepper.jp/strJ003582371/",
     tags:["隠れ家","少し贅沢"], reasonSeeds:{indulgent:["隠れ家感のある特別な一軒"], couple:["隠れ家だからこそ、ふたりだけの時間に集中できる"], stylish:["少し背伸びしたい夜にちょうどいい佇まい"]}},
   {id:"koenji-kaisen", name:"貝せん", genre:"貝料理専門", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
     tags:["貝料理専門","つまみが豊富"], reasonSeeds:{friends:["貝料理を色々つまみながらわいわい"], drinking:["貝料理は日本酒にもワインにも合わせやすい"], colleagues:["つまみが豊富だから、職場の集まりにも"]}},
@@ -420,14 +426,17 @@ const NEW_ROWS = [
   {id:"asagaya-sugidama", name:"鮨・酒・肴 杉玉 阿佐ヶ谷", genre:"寿司", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
     tags:["寿司","日本酒"], reasonSeeds:{indulgent:["寿司と日本酒で、少し贅沢な気分に"], couple:["寿司と日本酒を、ふたりでゆっくり味わう夜に"], calm:["落ち着いた雰囲気で、静かに語り合える"]}},
   {id:"asagaya-tonkatsu-narikura", name:"とんかつ成蔵", genre:"とんかつ", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:null, reservationUrl:"https://restaurant.ikyu.com/117439",
     tags:["とんかつ","上質な一皿"], reasonSeeds:{indulgent:["じっくり揚げたとんかつを主役に、特別な食事を"], couple:["じっくり揚げる一皿を、特別な日の主役に"], stylish:["とんかつなのに、どこか特別感のある佇まい"]}},
   {id:"asagaya-soba", name:"阿佐ヶ谷SOBA", genre:"そば(創作)", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     tags:["そば","落ち着いた空間"], reasonSeeds:{calm:["そばを肴に、静かに飲みながら話せる"], couple:["そばを肴に、ふたりで静かな時間を"], indulgent:["創作そばという、少し特別な選択肢"]}},
   {id:"asagaya-sushi-ichi", name:"すしいち", genre:"寿司", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateSpecial",
+    officialUrl:"https://sushiichi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ004444825/",
     tags:["寿司","職人技"], reasonSeeds:{indulgent:["職人が握る寿司で、特別な夜に"], couple:["職人の握りを、特別な記念日に"], stylish:["寿司屋らしい、背筋が伸びる緊張感も魅力"]}},
   {id:"koenji-abusan", name:"あぶさん", genre:"海鮮・貝料理", area:"高円寺", price:[5000,6000], vibe:"groupCasual",
     tags:["海鮮","貝料理"], reasonSeeds:{friends:["海鮮と貝をつまみに、飲みが長引いても飽きない"], drinking:["海鮮と貝、両方あるから飲みが長引いても飽きない"], colleagues:["つまみの種類が多く、職場の集まりにも"]}},
   {id:"koenji-osoubi-kappou", name:"創作割烹おあそび", genre:"創作割烹", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:"https://oasobi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003388022/",
     tags:["創作割烹","コース"], reasonSeeds:{indulgent:["コース仕立ての創作料理で、記念日にも使える"], couple:["コース仕立てだから、記念日にちょうどいい流れで楽しめる"], stylish:["創作割烹らしい、丁寧な仕立て"]}},
   {id:"koenji-motsuyaki-byron", name:"もつ焼き Byron", genre:"もつ焼き", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
     tags:["もつ焼き","大衆酒場"], reasonSeeds:{friends:["もつ焼きをつつきながら、気取らず飲める"], drinking:["もつ焼きは安酒にもよく合う"], budget:["大衆酒場価格で、気兼ねなく飲める"]}},
@@ -497,6 +506,7 @@ const NEW_ROWS2 = [
   {id:"asagaya-tachimachi", name:"広島お好み焼 TachiMachi", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
     tags:["広島風お好み焼き","お酒が安い"], reasonSeeds:{budget:["広島風お好み焼きとお酒が、どちらも手頃な値段で"]}},
   {id:"asagaya-iron-diner", name:"IRON DINER 阿佐ヶ谷店", genre:"お好み焼き", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:"https://irondinerasagaya.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13319300/",
     tags:["上質なお好み焼き"], reasonSeeds:{indulgent:["お好み焼きを、少し特別な一皿として楽しめる一軒"]}},
 
   // ── スペイン・ビストロ(3) ──
@@ -517,12 +527,14 @@ const NEW_ROWS2 = [
   {id:"koenji-akka", name:"高円寺アッカ", genre:"イタリアンワインバー", area:"高円寺", price:[4000,6000], vibe:"stylishDrink",
     tags:["ソムリエ常駐","イタリアワイン受賞歴"], reasonSeeds:{stylish:["ソムリエ監修のワインを、グラスで気軽に飲み比べ"], couple:["ワインを選ぶ時間も含めて、大人の夜を楽しめる"]}},
   {id:"asagaya-birdland", name:"阿佐ヶ谷バードランド", genre:"焼き鳥・ワイン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:"https://www.asagaya-bird-land.com/", reservationUrl:"https://restaurant.ikyu.com/120714",
     tags:["銀座の名店直系","備長炭","希少部位"], reasonSeeds:{indulgent:["銀座仕込みの焼き鳥を、備長炭でじっくりと"], couple:["希少部位も揃う、少し贅沢な焼き鳥の夜に"]}},
   {id:"koenji-and-beer", name:"アンドビール", genre:"クラフトビール", area:"高円寺", price:[2000,3500], vibe:"adventurousUnique",
     tags:["クラフトビール","カレー"], reasonSeeds:{adventurous:["クラフトビールとカレーという、珍しい組み合わせ"]}},
 
   // ── 焼き鳥もっと(7) ──
   {id:"asagaya-yamamoto-cellar", name:"焼鳥 山もと 阿佐ヶ谷cellar", genre:"焼き鳥", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:null, reservationUrl:"https://yoyaku.toreta.in/asagaya-yamamoto",
     tags:["評価上位の名店"], reasonSeeds:{indulgent:["地域でも評価の高い、焼き鳥の名店で特別な夜を"]}},
   {id:"asagaya-katsu", name:"克ッ 阿佐ヶ谷", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
     tags:["焼き鳥"], reasonSeeds:{friends:["焼き鳥をつまみに、気取らずわいわい飲める"]}},
@@ -535,6 +547,7 @@ const NEW_ROWS2 = [
   {id:"asagaya-toridokoro", name:"炭火台所 鶏丸", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
     tags:["炭火焼き"], reasonSeeds:{drinking:["炭火の香りを楽しみながら、じっくり飲める"]}},
   {id:"asagaya-toriya-suzunari", name:"とりや鈴なり", genre:"焼き鳥", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001251061/",
     tags:["焼き鳥","少し贅沢"], reasonSeeds:{indulgent:["少し贅沢な焼き鳥のコースで、特別な夜に"]}},
 
   // ── 立ち飲み(3) ──
@@ -559,6 +572,7 @@ const NEW_ROWS2 = [
 
   // ── 追加(多様性の穴埋め・8) ──
   {id:"asagaya-uchikaoritei", name:"打ち薫る亭", genre:"日本料理", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001286647/",
     tags:["日本料理"], reasonSeeds:{indulgent:["丁寧な日本料理のコースで、特別な夜を演出"]}},
   {id:"koenji-kemuri", name:"けむり 高円寺店", genre:"焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
     tags:["焼き鳥"], reasonSeeds:{drinking:["煙の向こうで焼く焼き鳥を、じっくり飲みながら"]}},
@@ -615,8 +629,10 @@ const NEW_ROWS3 = [
 
   // ── 焼肉(7・評価点上位含む) ──
   {id:"asagaya-sato-brillant-honten", name:"SATOブリアン 本店", genre:"焼肉", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
+    officialUrl:"https://satobriand.yoyaku.at/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13127046/",
     tags:["最高評価クラスの焼肉","希少部位","評価3.99"], reasonSeeds:{indulgent:["地域随一の評価を誇る、特別な日のための焼肉"], couple:["一生に一度クラスの記念日に、思い切って選びたい一軒"]}},
   {id:"asagaya-sato-brillant-nigou", name:"SATOブリアン にごう", genre:"焼肉", area:"阿佐ヶ谷", price:[15000,19999], vibe:"dateSpecial",
+    officialUrl:"https://satobriand.yoyaku.at/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13159782/",
     tags:["高評価焼肉","評価3.91"], reasonSeeds:{indulgent:["本店に迫る評価の高さで、特別な焼肉の夜に"]}},
   {id:"asagaya-sanpoen", name:"炭火焼肉 三宝苑 阿佐ヶ谷店", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
     tags:["炭火焼き","評価3.51"], reasonSeeds:{hearty:["炭火でじっくり焼く肉を、家族でしっかり楽しめる"], family:["評価の高い炭火焼肉を、みんなで囲む"]}},
@@ -729,6 +745,7 @@ const NEW_ROWS4 = [
 
   // ── 寿司(1・超高級) ──
   {id:"asagaya-sushi-souten", name:"鮨 蒼天", genre:"寿司", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
+    officialUrl:"https://sushi-aoi.com/", reservationUrl:"https://restaurant.ikyu.com/125057",
     tags:["超高級寿司","記念日"], reasonSeeds:{indulgent:["一生の思い出になるような、特別な寿司の夜に"], couple:["とっておきの記念日に、思い切って選びたい寿司店"]}},
 
   // ── とんかつ(3) ──
@@ -823,6 +840,7 @@ const NEW_ROWS4 = [
   {id:"asagaya-le-terroir", name:"ビストロ ル・テロワール 阿佐ヶ谷", genre:"フレンチ(ビストロ)", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     tags:["ビストロ"], reasonSeeds:{calm:["土地の恵みを生かした料理を、落ち着いて味わう"]}},
   {id:"asagaya-ruvi", name:"RUVI", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateSpecial",
+    officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001139666/",
     tags:["フレンチ"], reasonSeeds:{indulgent:["少し特別な日のフレンチとして選びたい一軒"]}},
   {id:"asagaya-meat-kitchen-harmers", name:"Meat Kitchen HARMER's GRILL", genre:"洋食・グリル", area:"阿佐ヶ谷", price:[5000,6000], vibe:"groupCasual",
     tags:["肉料理","グリル"], reasonSeeds:{friends:["肉料理を中心に、みんなでシェアしながら楽しめる"]}},
