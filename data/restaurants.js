@@ -7,7 +7,7 @@
    ========================================================= */
 const BASE_RESTAURANTS = [
   {
-    id:"asagaya-impronte", name:"リストランテ impronte", genre:"イタリアン", area:"阿佐ヶ谷",
+    id:"asagaya-impronte", name:"リストランテ impronte", genre:"イタリアン", area:"阿佐ヶ谷", vibe:"dateSpecial",
     priceRange:{dinner:[5000,7000]},
     companionFit:{solo:1,couple:5,family:1,friends:2,colleagues:2},
     moodFit:{hearty:1,drinking:3,indulgent:5,budget:1,stylish:4,calm:5,adventurous:2,familyFun:1,quick:1,lively:1},
@@ -22,7 +22,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-koshikawa", name:"越川", genre:"和食・居酒屋", area:"阿佐ヶ谷",
+    id:"asagaya-koshikawa", name:"越川", genre:"和食・居酒屋", area:"阿佐ヶ谷", vibe:"dateQuiet",
     priceRange:{dinner:[4000,6000]},
     companionFit:{solo:2,couple:4,family:2,friends:4,colleagues:4},
     moodFit:{hearty:2,drinking:4,indulgent:3,budget:2,stylish:3,calm:4,adventurous:2,familyFun:1,quick:1,lively:3},
@@ -37,7 +37,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-amane", name:"焼肉 あまね", genre:"焼肉", area:"高円寺", station:"高円寺", walkMinutes:2,
+    id:"koenji-amane", name:"焼肉 あまね", genre:"焼肉", area:"高円寺", station:"高円寺", walkMinutes:2, vibe:"familyHearty",
     priceRange:{dinner:[3000,4500]},
     companionFit:{solo:1,couple:2,family:4,friends:4,colleagues:3},
     moodFit:{hearty:5,drinking:3,indulgent:2,budget:4,stylish:1,calm:1,adventurous:1,familyFun:4,quick:2,lively:4},
@@ -52,7 +52,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-nikuichi", name:"肉問屋直営 焼肉 肉一 高円寺店", genre:"焼肉", area:"高円寺",
+    id:"koenji-nikuichi", name:"肉問屋直営 焼肉 肉一 高円寺店", genre:"焼肉", area:"高円寺", vibe:"familyHearty",
     priceRange:{dinner:[2500,3800]},
     companionFit:{solo:1,couple:2,family:4,friends:4,colleagues:3},
     moodFit:{hearty:5,drinking:2,indulgent:1,budget:5,stylish:1,calm:1,adventurous:1,familyFun:4,quick:2,lively:4},
@@ -67,7 +67,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-fujikawa", name:"富士川食堂", genre:"定食", area:"高円寺",
+    id:"koenji-fujikawa", name:"富士川食堂", genre:"定食", area:"高円寺", vibe:"soloQuick",
     priceRange:{dinner:[500,800]},
     companionFit:{solo:5,couple:2,family:2,friends:2,colleagues:2},
     moodFit:{hearty:2,drinking:1,indulgent:1,budget:5,stylish:1,calm:2,adventurous:1,familyFun:1,quick:5,lively:2},
@@ -82,7 +82,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-mensaibou", name:"麺彩房", genre:"ラーメン", area:"高円寺",
+    id:"koenji-mensaibou", name:"麺彩房", genre:"ラーメン", area:"高円寺", vibe:"familyHearty",
     priceRange:{dinner:[900,1400]},
     companionFit:{solo:3,couple:2,family:4,friends:2,colleagues:2},
     moodFit:{hearty:3,drinking:1,indulgent:1,budget:4,stylish:1,calm:2,adventurous:1,familyFun:4,quick:4,lively:3},
@@ -97,7 +97,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-gift", name:"Gift食堂 阿佐ヶ谷", genre:"日本酒バル", area:"阿佐ヶ谷",
+    id:"asagaya-gift", name:"Gift食堂 阿佐ヶ谷", genre:"日本酒バル", area:"阿佐ヶ谷", vibe:"stylishDrink",
     priceRange:{dinner:[3500,5000]},
     companionFit:{solo:2,couple:3,family:1,friends:5,colleagues:3},
     moodFit:{hearty:2,drinking:5,indulgent:2,budget:2,stylish:4,calm:2,adventurous:3,familyFun:1,quick:1,lively:4},
@@ -112,7 +112,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-fukuraimon", name:"福来門", genre:"中華", area:"高円寺",
+    id:"koenji-fukuraimon", name:"福来門", genre:"中華", area:"高円寺", vibe:"groupCasual",
     priceRange:{dinner:[3000,4500]},
     companionFit:{solo:2,couple:2,family:3,friends:5,colleagues:4},
     moodFit:{hearty:4,drinking:3,indulgent:1,budget:4,stylish:1,calm:1,adventurous:2,familyFun:3,quick:2,lively:5},
@@ -127,7 +127,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-kotaro", name:"こたろう", genre:"海鮮居酒屋", area:"南阿佐ヶ谷",
+    id:"asagaya-kotaro", name:"こたろう", genre:"海鮮居酒屋", area:"南阿佐ヶ谷", vibe:"groupCasual",
     priceRange:{dinner:[4000,5500]},
     companionFit:{solo:3,couple:3,family:2,friends:5,colleagues:4},
     moodFit:{hearty:3,drinking:5,indulgent:3,budget:2,stylish:2,calm:2,adventurous:3,familyFun:1,quick:1,lively:4},
@@ -142,7 +142,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-nui", name:"nui", genre:"バル(創作・ワイン)", area:"阿佐ヶ谷",
+    id:"asagaya-nui", name:"nui", genre:"バル(創作・ワイン)", area:"阿佐ヶ谷", vibe:"adventurousUnique",
     priceRange:{dinner:[4000,6000]},
     companionFit:{solo:3,couple:4,family:1,friends:5,colleagues:3},
     moodFit:{hearty:2,drinking:4,indulgent:3,budget:2,stylish:5,calm:3,adventurous:4,familyFun:1,quick:1,lively:3},
@@ -157,7 +157,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-lamaisoncourtine", name:"ラ・メゾン・クルティーヌ", genre:"フレンチ", area:"阿佐ヶ谷", station:"阿佐ヶ谷", walkMinutes:1,
+    id:"asagaya-lamaisoncourtine", name:"ラ・メゾン・クルティーヌ", genre:"フレンチ", area:"阿佐ヶ谷", station:"阿佐ヶ谷", walkMinutes:1, vibe:"dateSpecial",
     priceRange:{dinner:[7000,10000]},
     companionFit:{solo:1,couple:5,family:1,friends:2,colleagues:2},
     moodFit:{hearty:1,drinking:2,indulgent:5,budget:1,stylish:4,calm:4,adventurous:2,familyFun:1,quick:1,lively:1},
@@ -253,6 +253,7 @@ function buildRestaurant(row){
     id:row.id, name:row.name, genre:row.genre, area:row.area,
     station:row.station, walkMinutes:row.walkMinutes,
     priceRange:{dinner:row.price},
+    vibe:row.vibe,
     companionFit:Object.assign({}, v.companionFit),
     moodFit:Object.assign({}, v.moodFit),
     atmosphere:Object.assign({}, v.atmosphere),
@@ -262,6 +263,53 @@ function buildRestaurant(row){
     reasonSeeds:row.reasonSeeds
   };
 }
+
+/* =========================================================
+   vibe別の補足フレーズ(店ごとのreasonSeedsが少ない場合に
+   buildReasons()が自動で補って3つに底上げする)
+   ========================================================= */
+const VIBE_FILLERS = {
+  dateQuiet: [
+    "騒がしすぎない空間で、会話に集中できそう",
+    "ふたりでゆっくり過ごしたい夜に向いている",
+    "落ち着いた雰囲気で、長居しても疲れにくい"
+  ],
+  dateSpecial: [
+    "特別な日の主役にふさわしい、少し背伸びした一軒",
+    "料理にじっくり向き合いたい夜に合う",
+    "記念日や大事な用事にも使える格式がある"
+  ],
+  groupCasual: [
+    "気取らず、みんなでわいわい過ごせる雰囲気",
+    "取り分けやすいメニューが多く、大人数にも向く",
+    "多少にぎやかにしても浮かない、懐の深さがある"
+  ],
+  soloQuick: [
+    "ひとりでもすっと入れる、身構えなくていい空気感",
+    "長居せずさっと済ませたい時にちょうどいい",
+    "カウンターなどひとり利用がしやすい作り"
+  ],
+  familyHearty: [
+    "ボリュームがあり、育ち盛りがいても満足しやすい",
+    "気取らない雰囲気で、子ども連れでも入りやすい",
+    "みんなでしっかり食べたい日に頼れる一軒"
+  ],
+  budgetCasual: [
+    "価格が控えめで、気負わず選びやすい",
+    "普段使いにちょうどいい、気取らない一軒",
+    "財布を気にせず、もう一品頼みやすい"
+  ],
+  adventurousUnique: [
+    "他ではあまり見かけない個性があり、話のネタにもなる",
+    "いつもと違う一軒を試したい日にちょうどいい",
+    "一度行くと印象に残るタイプの店"
+  ],
+  stylishDrink: [
+    "少し気分を上げたい夜に合う、こだわりの空間",
+    "お酒の種類や見せ方にこだわりが感じられる",
+    "写真映えも意識された、今どきの空間"
+  ]
+};
 
 const NEW_ROWS = [
   // ── イタリアン(13) ──

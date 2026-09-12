@@ -461,6 +461,12 @@ function buildReasons(r, companionId, moodId){
   if(list.length === 0 && r.tags && r.tags[0]){
     list.push(r.tags[0] + "が魅力の一軒");
   }
+  if(list.length < 3 && r.vibe && typeof VIBE_FILLERS !== "undefined" && VIBE_FILLERS[r.vibe]){
+    for(const filler of VIBE_FILLERS[r.vibe]){
+      if(list.length >= 3) break;
+      if(!list.includes(filler)) list.push(filler);
+    }
+  }
   return list.slice(0, 3);
 }
 
