@@ -91,8 +91,15 @@ header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-wi
 .btn-primary:hover{background:var(--accent-strong);}
 .btn-primary:disabled{opacity:.4; cursor:not-allowed;}
 .hint{
-  text-align:center; font-size:.8rem; color:var(--text-muted); margin-top:10px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  text-align:left; font-size:.8rem; color:var(--text-muted); margin-top:10px;
 }
+.hint p{margin:0;}
+
+/* ===== ひらり(案内役キャラクター) ===== */
+.mascot{display:block; height:auto; flex:none;}
+.mascot-intro{width:64px;}
+.mascot-inline{width:36px;}
 
 /* result screen */
 .result-eyebrow{
@@ -143,7 +150,8 @@ header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-wi
 .store-notice p{margin:0; font-size:.82rem; color:#DCE4E9;}
 .r-body{margin-top:18px;}
 .r-name{font-size:1.28rem; font-weight:900;}
-.r-copy{font-family:"Shippori Mincho",serif; font-size:.98rem; color:#E7C9A0; margin-top:6px;}
+.r-copy-row{display:flex; align-items:center; gap:8px; margin-top:6px;}
+.r-copy{font-family:"Shippori Mincho",serif; font-size:.98rem; color:#E7C9A0;}
 .r-meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
 .r-meta span{
   border:1px solid rgba(231,238,243,.25); border-radius:8px; padding:5px 11px; font-size:.8rem; color:#CBD6DD;
@@ -292,7 +300,10 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
         <div class="chips" id="mood-chips"></div>
       </div>
       <button class="btn-primary" id="btn-hirameki" disabled>今日のひらめきを見る</button>
-      <p class="hint" id="hint-text">誰と、どんな夜にするか選んでね</p>
+      <div class="hint">
+        <img class="mascot mascot-intro" src="assets/character/hirameki-reveal.webp" width="240" height="244" alt="" loading="lazy">
+        <p id="hint-text">誰と、どんな夜にするか選んでね</p>
+      </div>
     </div>
   </section>
 
@@ -309,7 +320,10 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
       <img class="r-photo" id="r-photo" alt="" hidden>
       <div class="r-body">
         <div class="r-name" id="r-name"></div>
-        <div class="r-copy" id="r-copy"></div>
+        <div class="r-copy-row">
+          <img class="mascot mascot-inline" src="assets/character/hirameki-reveal.webp" width="240" height="244" alt="" loading="lazy">
+          <div class="r-copy" id="r-copy"></div>
+        </div>
         <div class="r-meta" id="r-meta"></div>
         <div class="reasons">
           <div class="rh">ここが今日に合いそうな理由</div>
