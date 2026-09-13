@@ -589,20 +589,80 @@ function weightedPick(pool, topN){
   return top[0];
 }
 
+/* =========================================================
+   推薦理由生成(2026-09 再設計)
+   「誰と×気分」の組み合わせごとに、9パターンの共通文
+   (旧VIBE_FILLERS)で穴埋めしていたのをやめ、必ずその店舗
+   固有のtags/genre/area/priceのいずれかを根拠に含める。
+   優先順位:
+     1. 店舗固有のreasonSeeds(気分キー→誰とキー、従来通り最優先)
+     2. 未使用のtagsを使った「誰と×気分」の組み合わせ文
+     3. genreを使った組み合わせ文(tagsを使い切った場合)
+     4. area+priceを使った組み合わせ文(最終手段。常に存在する
+        店舗自身の実データなので、他店との使い回しにはなるが
+        エリア・価格帯が違えば文言も変わる)
+   詳細な設計根拠は「推薦理由 再設計レポート」参照。
+   ========================================================= */
+const MOOD_DESCRIPTOR = {
+  drinking: "お酒を楽しみたい時",
+  hearty: "がっつり食べたい時",
+  calm: "ゆっくり話したい時",
+  lively: "にぎやかに過ごしたい時",
+  indulgent: "ちょっと贅沢したい時",
+  budget: "気軽に、なるべく安く済ませたい時",
+  stylish: "おしゃれな時間を過ごしたい時",
+  adventurous: "新しい一軒を試したい時",
+  familyFun: "みんなで楽しみたい時",
+  quick: "サクッと済ませたい時"
+};
+
+function factCandidates(r){
+  const list = [];
+  (r.tags || []).forEach(t => list.push({type:"tag", value:t}));
+  // 最終手段(tagsが少ない店舗でも必ず3件に届くよう2段構え):
+  // ジャンル+エリア → 価格帯、の順に、店舗自身の実データだけで補う
+  list.push({type:"genre_area", value:null});
+  list.push({type:"price", value:null});
+  return list;
+}
+
+function factSentence(candidate, r, companionId, moodId){
+  const particle = (COMPANIONS.find(c => c.id === companionId) || {}).particle || "";
+  // familyFun(「家族みんなで楽しみたい」)は「みんなで」を含意するため、
+  // soloや仕事仲間など、みんな=複数人を前提としない誰とと組み合わせた
+  // 時だけ、矛盾が出ない表現に差し替える
+  const descriptor = (moodId === "familyFun" && companionId !== "family" && companionId !== "friends")
+    ? "楽しく過ごしたい時"
+    : (MOOD_DESCRIPTOR[moodId] || "");
+  if(candidate.type === "tag"){
+    return "「" + candidate.value + "」が魅力のお店。" + particle + descriptor + "にも合いそうです。";
+  }
+  if(candidate.type === "genre_area"){
+    return r.area + "の" + r.genre + "のお店なので、" + particle + descriptor + "にも向いていそうです。";
+  }
+  // price: 常に存在する店舗自身の実データ(最終手段)。価格帯だけだと
+  // 同じ価格帯の店同士でぶつかるため、ジャンルも合わせて一意性を保つ
+  const price = priceLabel(r);
+  return r.genre + "で" + price + "という価格帯なら、" + particle + descriptor + "にも合いそうです。";
+}
+
 function buildReasons(r, companionId, moodId){
   const seeds = r.reasonSeeds || {};
   const list = [];
-  (seeds[moodId] || []).forEach(t => list.push(t));
+
+  // 優先順位1: 店舗固有のreasonSeeds(気分キー→誰とキー)
+  (seeds[moodId] || []).forEach(t => { if(!list.includes(t)) list.push(t); });
   (seeds[companionId] || []).forEach(t => { if(!list.includes(t)) list.push(t); });
-  if(list.length === 0 && r.tags && r.tags[0]){
-    list.push(r.tags[0] + "が魅力の一軒");
+
+  // 優先順位2〜4: tags → genre → area+price の順に、
+  // 「誰と×気分」で文言が変わる組み合わせ文を必要な分だけ生成
+  const candidates = factCandidates(r);
+  for(const candidate of candidates){
+    if(list.length >= 3) break;
+    const sentence = factSentence(candidate, r, companionId, moodId);
+    if(!list.includes(sentence)) list.push(sentence);
   }
-  if(list.length < 3 && r.vibe && typeof VIBE_FILLERS !== "undefined" && VIBE_FILLERS[r.vibe]){
-    for(const filler of VIBE_FILLERS[r.vibe]){
-      if(list.length >= 3) break;
-      if(!list.includes(filler)) list.push(filler);
-    }
-  }
+
   return list.slice(0, 3);
 }
 

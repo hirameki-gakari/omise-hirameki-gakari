@@ -50,7 +50,7 @@ const BASE_RESTAURANTS = [
     tags:["黒毛和牛","高円寺駅徒歩2分","コスパ"],
     reasonSeeds:{
       hearty:["黒毛和牛カルビがしっかり食べられるボリューム"],
-      familyFun:["席がゆったりめで、家族でも気兼ねなく囲める"],
+      familyFun:["席がゆったりめで、気兼ねなく囲める"],
       family:["育ち盛りがいても満足できる肉量"]
     }
   },
@@ -288,58 +288,6 @@ function buildRestaurant(row){
   };
 }
 
-/* =========================================================
-   vibe別の補足フレーズ(店ごとのreasonSeedsが少ない場合に
-   buildReasons()が自動で補って3つに底上げする)
-   ========================================================= */
-const VIBE_FILLERS = {
-  dateQuiet: [
-    "騒がしすぎない空間で、会話に集中できそう",
-    "ふたりでゆっくり過ごしたい夜に向いている",
-    "落ち着いた雰囲気で、長居しても疲れにくい"
-  ],
-  dateSpecial: [
-    "特別な日の主役にふさわしい、少し背伸びした一軒",
-    "料理にじっくり向き合いたい夜に合う",
-    "記念日や大事な用事にも使える格式がある"
-  ],
-  groupCasual: [
-    "気取らず、みんなでわいわい過ごせる雰囲気",
-    "取り分けやすいメニューが多く、大人数にも向く",
-    "多少にぎやかにしても浮かない、懐の深さがある"
-  ],
-  soloQuick: [
-    "ひとりでもすっと入れる、身構えなくていい空気感",
-    "長居せずさっと済ませたい時にちょうどいい",
-    "カウンターなどひとり利用がしやすい作り"
-  ],
-  familyHearty: [
-    "ボリュームがあり、育ち盛りがいても満足しやすい",
-    "気取らない雰囲気で、子ども連れでも入りやすい",
-    "みんなでしっかり食べたい日に頼れる一軒"
-  ],
-  budgetCasual: [
-    "価格が控えめで、気負わず選びやすい",
-    "普段使いにちょうどいい、気取らない一軒",
-    "財布を気にせず、もう一品頼みやすい"
-  ],
-  adventurousUnique: [
-    "他ではあまり見かけない個性があり、話のネタにもなる",
-    "いつもと違う一軒を試したい日にちょうどいい",
-    "一度行くと印象に残るタイプの店"
-  ],
-  stylishDrink: [
-    "少し気分を上げたい夜に合う、こだわりの空間",
-    "お酒の種類や見せ方にこだわりが感じられる",
-    "写真映えも意識された、今どきの空間"
-  ],
-  soloDrink: [
-    "ひとりでもすっと入れる、カウンター中心の作り",
-    "隣を気にせず、自分のペースで飲める空気感",
-    "長居しすぎず、ふらっと一杯だけでも自然"
-  ]
-};
-
 const NEW_ROWS = [
   // ── イタリアン(13) ──
   {id:"koenji-aopi", name:"Aopi", genre:"イタリアン(パスタ)", area:"高円寺", price:[4000,5000], vibe:"budgetCasual",
@@ -514,7 +462,7 @@ const NEW_ROWS2 = [
   // ── カレー(8) ──
   {id:"asagaya-curry-jikan", name:"カレーの時間", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13246675/",
-    tags:["スパイスカレー"], reasonSeeds:{quick:["ひとりでもさっと入れる、スパイスカレーの一軒"]}},
+    tags:["スパイスカレー"], reasonSeeds:{quick:["さっと入れる、スパイスカレーの一軒"]}},
   {id:"asagaya-spice-curry-toca", name:"SpiceCurryToca", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13299435/",
     tags:["スパイスカレー","個性派"], reasonSeeds:{adventurous:["スパイスの配合に個性があり、いつもと違う一皿に"]}},
@@ -652,7 +600,7 @@ const NEW_ROWS2 = [
     tags:["山形料理","地酒"], reasonSeeds:{adventurous:["山形の郷土料理と地酒で、いつもと違う一夜に"]}},
   {id:"asagaya-halleluya", name:"サカバ ハレルヤ", genre:"居酒屋", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ004067107/",
-    tags:["総合居酒屋"], reasonSeeds:{friends:["メニューの幅が広く、みんなの好みに合わせやすい"]}},
+    tags:["総合居酒屋"], reasonSeeds:{friends:["総合居酒屋らしい豊富なメニューで、友達それぞれの好みに合わせやすい"]}},
   {id:"asagaya-kaerushokudo", name:"かえる食堂", genre:"定食", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
     tags:["朝7時から営業"], reasonSeeds:{quick:["朝早くから開いているから、時間を気にせず入れる"]}},
   {id:"koenji-marunaga", name:"丸長食堂", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
@@ -705,7 +653,7 @@ const NEW_ROWS3 = [
     tags:["高評価焼肉","評価3.91"], reasonSeeds:{indulgent:["本店に迫る評価の高さで、特別な焼肉の夜に"]}},
   {id:"asagaya-sanpoen", name:"炭火焼肉 三宝苑 阿佐ヶ谷店", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003893067/",
-    tags:["炭火焼き","評価3.51"], reasonSeeds:{hearty:["炭火でじっくり焼く肉を、家族でしっかり楽しめる"], family:["評価の高い炭火焼肉を、みんなで囲む"]}},
+    tags:["炭火焼き","評価3.51"], reasonSeeds:{hearty:["炭火でじっくり焼く肉を、しっかり楽しめる"], family:["評価の高い炭火焼肉を、みんなで囲む"]}},
   {id:"koenji-araiya-honten", name:"焼肉ホルモン 新井屋 高円寺本店", genre:"焼肉", area:"高円寺", price:[6000,7999], vibe:"dateSpecial",
     officialUrl:"https://yakiniku-araiya.com/koenji/", reservationUrl:"https://www.hotpepper.jp/strJ001049734/",
     tags:["ホルモン","評価3.53"], reasonSeeds:{indulgent:["評価の高いホルモン焼肉で、少し贅沢な夜に"]}},
@@ -739,7 +687,7 @@ const NEW_ROWS3 = [
   // ── 居酒屋(阿佐ヶ谷・9) ──
   {id:"asagaya-tsurufuku", name:"つる福 阿佐ヶ谷店", genre:"居酒屋", area:"阿佐ヶ谷", price:[3000,3999], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001293728/",
-    tags:["総合居酒屋"], reasonSeeds:{friends:["メニューの幅が広く、みんなの好みに合わせやすい"]}},
+    tags:["総合居酒屋"], reasonSeeds:{friends:["つる福ならではの幅広いメニューで、友達同士でも好みが割れにくい"]}},
   {id:"asagaya-toriyoshi-second", name:"とり吉 セカンド", genre:"鶏料理", area:"阿佐ヶ谷", price:[3000,3999], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13288148/",
     tags:["鶏料理"], reasonSeeds:{drinking:["鶏料理をつまみに、じっくり飲める一軒"]}},
@@ -803,7 +751,7 @@ const NEW_ROWS3 = [
   {id:"koenji-warajiya", name:"わらじや", genre:"食堂", area:"高円寺", price:[700,999], vibe:"soloQuick",
     tags:["食堂"], reasonSeeds:{solo:["ひとりでもさっと座れる、昔ながらの食堂"]}},
   {id:"koenji-daichan", name:"大ちゃん", genre:"食堂", area:"高円寺", price:[1000,1999], vibe:"familyHearty",
-    tags:["食堂"], reasonSeeds:{hearty:["ボリュームのある定食で、家族でもしっかり満たされる"]}},
+    tags:["食堂"], reasonSeeds:{hearty:["ボリュームのある定食で、しっかり満たされる"]}},
   {id:"koenji-sansei-shokudo", name:"三晴食堂", genre:"食堂", area:"高円寺", price:[700,999], vibe:"soloQuick",
     tags:["食堂"], reasonSeeds:{quick:["さっと入って、さっと食べられる定食屋"]}}
 ];
@@ -940,12 +888,12 @@ const NEW_ROWS4 = [
     tags:["口コミ174件"], reasonSeeds:{quick:["濃厚なソフトクリームで、軽く締めくくる"]}},
   {id:"koenji-lapre-cochere", name:"パティスリー ラブリコチエ", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
     officialUrl:"https://labricotier.net/", reservationUrl:null,
-    tags:["口コミ912件"], reasonSeeds:{couple:["評判のケーキを、ふたりで分け合う締めくくりに"]}},
+    tags:["口コミ912件"], reasonSeeds:{couple:["口コミ912件という評判のケーキを、ふたりで分け合う締めくくりに"]}},
   {id:"koenji-trianon", name:"トリアノン洋菓子店 高円寺本店", genre:"洋菓子", area:"高円寺", price:[700,999], vibe:"familyHearty",
     officialUrl:"https://trianon.co.jp/shop_list/koenji.htm", reservationUrl:null,
     tags:["老舗","口コミ472件"], reasonSeeds:{family:["地元で長く愛される洋菓子店、家族の締めくくりに"]}},
   {id:"koenji-florestas", name:"フロレスタ 高円寺店", genre:"ドーナツ", area:"高円寺", price:[700,999], vibe:"groupCasual",
-    tags:["自然素材ドーナツ"], reasonSeeds:{friends:["ドーナツを何個か選んで、みんなでシェア"]}},
+    tags:["自然素材ドーナツ"], reasonSeeds:{friends:["自然素材にこだわったドーナツを、友達と何個か選んでシェア"]}},
   {id:"koenji-beta-stand", name:"β STAND", genre:"クレープ", area:"高円寺", price:[1000,2000], vibe:"adventurousUnique",
     tags:["クレープ・ガレット"], reasonSeeds:{adventurous:["いつものデザートとはひと味違うクレープ・ガレット"]}},
 
@@ -1034,7 +982,7 @@ const NEW_ROWS5 = [
     tags:["洋食"], reasonSeeds:{friends:["洋食の定番メニューを、気軽にみんなで"]}},
   {id:"koenji-kuronbo", name:"クロンボ", genre:"洋食", area:"高円寺", price:[700,999], vibe:"soloQuick",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13141137/",
-    tags:["口コミ322件","エリア最安値帯"], reasonSeeds:{budget:["このエリアの洋食では最安値クラス、ひとりでもさっと"]}},
+    tags:["口コミ322件","エリア最安値帯"], reasonSeeds:{budget:["このエリアの洋食では最安値クラス、気負わずさっと入れる"]}},
   {id:"koenji-kitchen-fuji", name:"キッチン フジ", genre:"洋食", area:"高円寺", price:[700,999], vibe:"familyHearty",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13086476/",
     tags:["高円寺の老舗"], reasonSeeds:{family:["高円寺で長く愛される、老舗洋食の味"]}},
@@ -1056,7 +1004,7 @@ const NEW_ROWS5 = [
   {id:"koenji-yanagiya", name:"定食ハウス やなぎや", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
     tags:["定食"], reasonSeeds:{budget:["定食一本で、値段も気取らない一軒"]}},
   {id:"koenji-kadoichi", name:"門一", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
-    tags:["食堂"], reasonSeeds:{quick:["ひとりでもさっと入れる、地元の食堂"]}},
+    tags:["食堂"], reasonSeeds:{quick:["さっと入れる、地元の食堂"]}},
   {id:"koenji-maruchan", name:"お食事 まるちゃん", genre:"食堂", area:"高円寺", price:[1000,1999], vibe:"budgetCasual",
     tags:["食堂"], reasonSeeds:{budget:["気取らない値段で、しっかりごはんが食べられる"]}},
   {id:"koenji-washokudo-fudo", name:"和食堂 風土", genre:"食堂", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
@@ -1094,7 +1042,7 @@ const NEW_ROWS5 = [
     tags:["和菓子","口コミ115件"], reasonSeeds:{quick:["食後の甘味に、和菓子をひとつ"]}},
   {id:"koenji-patissier-junhomma", name:"パティシエ ジュン ホンマ 高円寺", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
     officialUrl:"https://jun-honma.com/", reservationUrl:"https://shop.cake-cake.net/jun_honma/",
-    tags:["口コミ201件"], reasonSeeds:{couple:["評判のケーキを、ふたりで分け合う締めくくりに"]}},
+    tags:["口コミ201件"], reasonSeeds:{couple:["口コミ201件でも根強い人気のケーキを、ふたりで分け合う締めくくりに"]}},
   {id:"koenji-san-crepe", name:"サン・くれーぷ", genre:"クレープ", area:"高円寺", price:[700,999], vibe:"soloQuick",
     tags:["クレープ"], reasonSeeds:{quick:["食後にクレープをひとつ、軽い締めくくりに"]}},
   {id:"koenji-shimizuya", name:"清水屋", genre:"和菓子", area:"高円寺", price:[1000,2000], vibe:"familyHearty",
@@ -1133,7 +1081,7 @@ const NEW_ROWS6 = [
   {id:"koenji-patisserie-copeau", name:"パティスリー コポー", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
     tags:["口コミ53件"], reasonSeeds:{calm:["丁寧に作られたケーキで、静かな締めくくりを"]}},
   {id:"koenji-donut-you-and", name:"ドーナツショップ YOU AND", genre:"ドーナツ", area:"高円寺", price:[700,999], vibe:"groupCasual",
-    tags:["ドーナツ"], reasonSeeds:{friends:["ドーナツを何個か選んで、みんなでシェア"]}},
+    tags:["ドーナツ"], reasonSeeds:{friends:["定番のドーナツを何個か選んで、友達とシェアするのも楽しい"]}},
   {id:"koenji-shugoro", name:"周五郎", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
     tags:["ケーキ"], reasonSeeds:{calm:["落ち着いた和の名前の、ケーキの締めくくりに"]}},
   {id:"koenji-black-mountain", name:"ブラックマウンテン", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"adventurousUnique",
