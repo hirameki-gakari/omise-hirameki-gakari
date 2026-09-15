@@ -786,7 +786,11 @@ function renderResult(){
 
   const meta = document.getElementById("r-meta");
   meta.innerHTML = "";
-  [r.area, r.genre, priceLabel(r), distanceLabel(r)].forEach(t => {
+  const metaItems = [r.area, r.genre, priceLabel(r), distanceLabel(r)];
+  if(r.hours) metaItems.push("営業時間 " + r.hours);
+  if(r.closedDays) metaItems.push("定休日 " + r.closedDays);
+  if(r.seats) metaItems.push(r.seats);
+  metaItems.filter(Boolean).forEach(t => {
     const span = document.createElement("span");
     span.textContent = t;
     meta.appendChild(span);

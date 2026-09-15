@@ -7,7 +7,7 @@
    ========================================================= */
 const BASE_RESTAURANTS = [
   {
-    id:"asagaya-impronte", name:"リストランテ impronte", genre:"イタリアン", area:"阿佐ヶ谷", vibe:"dateSpecial",
+    id:"asagaya-impronte", hours:"水〜金 16:00〜23:00(L.O.22:00)、土(月祝の場合は日曜も) 15:00〜23:00(L.O.22:00)、日 15:00〜21:00(L.O.20:00)", closedDays:"月曜・火曜(月祝の場合は火・水曜)", name:"リストランテ impronte", genre:"イタリアン", area:"阿佐ヶ谷", vibe:"dateSpecial",
     officialUrl:"https://www.impronte.info/", reservationUrl:"https://hitosara.com/0031695404/",
     priceRange:{dinner:[5000,7000]},
     companionFit:{solo:1,couple:5,family:1,friends:2,colleagues:2},
@@ -55,7 +55,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-nikuichi", name:"肉問屋直営 焼肉 肉一 高円寺店", genre:"焼肉", area:"高円寺", vibe:"familyHearty",
+    id:"koenji-nikuichi", hours:"月～木: 11:30～15:00 / 17:00～23:30（料理L.O.22:50 ドリンクL.O.23:00）、金～日: 11:30～23:30（料理L.O.22:50 ドリンクL.O.23:00）、祝日・祝前日: 11:30～15:00 / 17:00～23:00（料理L.O.22:50 ドリンクL.O.23:00）", closedDays:"年中無休", seats:"総席数50席", name:"肉問屋直営 焼肉 肉一 高円寺店", genre:"焼肉", area:"高円寺", vibe:"familyHearty",
     officialUrl:"https://www.ensyouji.co.jp/shop/nikuichi-koenji/", reservationUrl:"https://www.hotpepper.jp/strJ000727122/",
     priceRange:{dinner:[2500,3800]},
     companionFit:{solo:1,couple:2,family:4,friends:4,colleagues:3},
@@ -101,7 +101,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-gift", name:"Gift食堂 阿佐ヶ谷", genre:"日本酒バル", area:"阿佐ヶ谷", vibe:"stylishDrink",
+    id:"asagaya-gift", hours:"月〜木 17:30–翌2:00 / 金 17:30–翌3:00 / 土 11:30–14:00・17:00–翌3:00 / 日・祝 11:30–14:00・17:00–翌2:00", closedDays:"無休（毎日営業）", seats:"22席（カウンター・テーブル）", name:"Gift食堂 阿佐ヶ谷", genre:"日本酒バル", area:"阿佐ヶ谷", vibe:"stylishDrink",
     officialUrl:"https://www.giftsyokudou.com/asagaya", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13193823/",
     priceRange:{dinner:[3500,5000]},
     companionFit:{solo:2,couple:3,family:1,friends:5,colleagues:3},
@@ -149,7 +149,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-nui", name:"nui", genre:"バル(創作・ワイン)", area:"阿佐ヶ谷", vibe:"adventurousUnique",
+    id:"asagaya-nui", hours:"[月]17:00〜24:00(L.O.23:00) [日・水〜金・土・祝・祝前]17:00〜26:00(L.O.25:00)", closedDays:"火曜日", seats:"23席(カウンターあり)", name:"nui", genre:"バル(創作・ワイン)", area:"阿佐ヶ谷", vibe:"adventurousUnique",
     officialUrl:"https://nui.foodre.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13314295/",
     priceRange:{dinner:[4000,6000]},
     companionFit:{solo:3,couple:4,family:1,friends:5,colleagues:3},
@@ -165,7 +165,7 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"asagaya-lamaisoncourtine", name:"ラ・メゾン・クルティーヌ", genre:"フレンチ", area:"阿佐ヶ谷", station:"阿佐ヶ谷", walkMinutes:1, vibe:"dateSpecial",
+    id:"asagaya-lamaisoncourtine", hours:"【月・木・金・土】11:30～14:30（ラスト入店13:00）/ 17:30～22:00（ラスト入店19:30）、【日】11:30～15:00（ラスト入店13:30）", closedDays:"火曜日・水曜日、日曜のディナー（祝前日の日曜日は営業）", seats:"18席（個室1室）", name:"ラ・メゾン・クルティーヌ", genre:"フレンチ", area:"阿佐ヶ谷", station:"阿佐ヶ谷", walkMinutes:1, vibe:"dateSpecial",
     officialUrl:"https://www.courtine.jp/", reservationUrl:"https://restaurant.ikyu.com/113821",
     priceRange:{dinner:[7000,10000]},
     companionFit:{solo:1,couple:5,family:1,friends:2,colleagues:2},
@@ -284,7 +284,11 @@ function buildRestaurant(row){
     image:row.image || null,
     officialUrl:row.officialUrl || null,
     reservationUrl:row.reservationUrl || null,
-    notice:row.notice || null
+    notice:row.notice || null,
+    // 店舗情報の網羅性向上用(公式サイト等で確認できた店舗のみ設定、未確認はnull)
+    hours:row.hours || null,
+    closedDays:row.closedDays || null,
+    seats:row.seats || null
   };
 }
 
@@ -296,13 +300,13 @@ const NEW_ROWS = [
   {id:"koenji-bonjolina", name:"レストラン ボンジョリーナ 高円寺", genre:"イタリアン", area:"高円寺", price:[4000,5000], vibe:"dateQuiet",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001093286/",
     tags:["コース仕立て","落ち着いた雰囲気"], reasonSeeds:{calm:["コースでゆったり過ごせる落ち着いた店内"], couple:["ふたりの記念日にも使える佇まい"], indulgent:["コース仕立てだから、特別な一皿がゆっくり続く"]}},
-  {id:"koenji-granpa", name:"グラン・パ 東高円寺店", genre:"イタリアン(パスタ)", area:"高円寺", price:[2000,3000], vibe:"budgetCasual",
+  {id:"koenji-granpa", hours:"月〜日 LUNCH 11:00–16:00 / DINNER 16:00–23:30（16:00–22:30の記載もあり、日によって異なる可能性）", seats:"総席数47席", notice:"公式サイトのDINNER営業時間が「16:00〜23:30 / 16:00〜22:30」と2つ併記されており曜日等の区別が明記されていないため注意。定休日は公式に「年末年始の営業はお店に連絡ください」とのみ記載され通常の定休日の明記なしのため未記載。", name:"グラン・パ 東高円寺店", genre:"イタリアン(パスタ)", area:"高円寺", price:[2000,3000], vibe:"budgetCasual",
     officialUrl:"https://grandpa.tokyo/higashi-koenji.html", reservationUrl:"https://www.hotpepper.jp/strJ000683117/",
     tags:["パスタ","手頃"], reasonSeeds:{budget:["ディナーでも2000円台からと手が届きやすい"], friends:["パスタの種類が豊富で、何人で行っても選びやすい"], solo:["ひとりでふらっと寄れる価格帯"]}},
   {id:"koenji-pizzeria-sol", name:"Pizzeria SOL", genre:"ピザ専門", area:"高円寺", price:[5000,6000], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001168003/",
     tags:["ピザ専門","シェアしやすい"], reasonSeeds:{friends:["ピザを何枚も頼んでシェアするのが楽しい"], drinking:["ピザ片手にお酒も進みそう"], colleagues:["取り分けやすいピザは、職場帰りの一軒にも"]}},
-  {id:"koenji-dilettante", name:"dilettante", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"dateSpecial",
+  {id:"koenji-dilettante", hours:"火〜日・祝日・祝前日 17:00〜翌0:00", closedDays:"月曜", seats:"12席", name:"dilettante", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"dateSpecial",
     officialUrl:"https://dilettante.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003648480/",
     tags:["ディナー限定","特別感"], reasonSeeds:{indulgent:["ディナーだけの特別な時間に集中できる一軒"], couple:["ディナーのみの営業だから、夜の時間に集中して向き合える"], stylish:["派手すぎない、大人の店構え"]}},
   {id:"koenji-kamatetsu", name:"ピザ&ステーキ酒場 窯鉄", genre:"ピザ・ステーキ酒場", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
@@ -311,19 +315,19 @@ const NEW_ROWS = [
   {id:"koenji-junction", name:"Junction", genre:"イタリアン", area:"高円寺", price:[5000,6000], vibe:"stylishDrink",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003850944/",
     tags:["ディナー限定","おしゃれ"], reasonSeeds:{stylish:["夜だけの営業で落ち着いた大人の時間"], couple:["夜だけの静かな時間、ふたりで過ごすのにも"], drinking:["お酒に合わせた一皿が期待できる"]}},
-  {id:"koenji-bocca-lupo", name:"トラットリア ボッカ・ルーポ", genre:"イタリアン", area:"高円寺", price:[10000,15000], vibe:"dateSpecial",
+  {id:"koenji-bocca-lupo", hours:"ランチ 12:00～14:30（13:30L/O）/ ディナー 18:00～22:00（20:00L/O）※平日ランチの営業日は不定期", closedDays:"毎週水曜・月1回火曜日（不定週）", name:"トラットリア ボッカ・ルーポ", genre:"イタリアン", area:"高円寺", price:[10000,15000], vibe:"dateSpecial",
     officialUrl:"https://www.bocca-al-lupo.com/", reservationUrl:"https://www.hotpepper.jp/strJ000641755/",
     tags:["本格トラットリア","記念日向け"], reasonSeeds:{indulgent:["本格イタリアンをコースでじっくり味わう特別な夜に"], couple:["特別な記念日の主役になれる一軒"], stylish:["本格トラットリアらしい、洗練された雰囲気"]}},
   {id:"asagaya-gatto-calico", name:"Gatto Calico", genre:"イタリアン", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ004005125/",
     tags:["ディナー中心","落ち着いた空間"], reasonSeeds:{calm:["派手すぎない、ふたりで話しやすい空間"], couple:["ディナー中心の営業で、夜にじっくり向き合える"], indulgent:["派手さより、料理の質で満足させてくれそう"]}},
-  {id:"asagaya-lupi32", name:"Lupi32", genre:"薪窯ピザ", area:"阿佐ヶ谷", price:[10000,15000], vibe:"dateSpecial",
+  {id:"asagaya-lupi32", hours:"17:30–22:30", closedDays:"不定休", name:"Lupi32", genre:"薪窯ピザ", area:"阿佐ヶ谷", price:[10000,15000], vibe:"dateSpecial",
     officialUrl:"http://www.lupi32.com/", reservationUrl:"https://hitosara.com/0032033320/",
     tags:["薪窯ピザ","特別な一軒"], reasonSeeds:{indulgent:["薪窯で焼くピザを、特別な夜のメインに"], couple:["特別な日の主役にしたい、薪窯ピザの一軒"], stylish:["薪窯という単語だけで、少し特別な気分に"]}},
   {id:"asagaya-cafe-italian", name:"阿佐ヶ谷カフェ", genre:"イタリアン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateQuiet",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13072604/",
     tags:["落ち着いた空間","カジュアルながら上質"], reasonSeeds:{calm:["名前は気軽でも、中は落ち着いた大人の空間"], couple:["カフェのような気軽さと、落ち着いた大人の空気を両方持つ"], indulgent:["名前に反して、ゆっくり食事を楽しめる作り"]}},
-  {id:"asagaya-ishigamaya", name:"石窯や", genre:"ピザ専門", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+  {id:"asagaya-ishigamaya", hours:"12:00〜14:00、17:00〜21:00", closedDays:"月曜日・他不定休あり", name:"石窯や", genre:"ピザ専門", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
     officialUrl:"https://ishigamaya-tobi.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13290876/",
     tags:["石窯ピザ","リーズナブル"], reasonSeeds:{budget:["石窯ピザがこの価格帯で楽しめる"], friends:["石窯ピザを何枚か頼んで、みんなでシェアするのに向いてる"], quick:["ピザ専門店らしい提供の早さも期待できる"]}},
   {id:"asagaya-dining-piatto", name:"Dining Piatto", genre:"イタリアン", area:"阿佐ヶ谷", price:[3000,4000], vibe:"budgetCasual",
@@ -362,40 +366,40 @@ const NEW_ROWS = [
     tags:["混ぜそば","個性派"], reasonSeeds:{quick:["さっと混ぜてさっと食べられる軽快さ"], solo:["ひとりでも入りやすい、混ぜそば専門の身軽さ"], adventurous:["いつもと違う、混ぜそばという選択肢"]}},
 
   // ── 居酒屋(12) ──
-  {id:"asagaya-sakanazakaba-uoboshi", name:"さかな酒場 魚星 阿佐ヶ谷店", genre:"海鮮居酒屋", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+  {id:"asagaya-sakanazakaba-uoboshi", hours:"11:30〜23:00", name:"さかな酒場 魚星 阿佐ヶ谷店", genre:"海鮮居酒屋", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
     officialUrl:"https://sakana-uosei.com/asagaya/", reservationUrl:"https://www.hotpepper.jp/strJ003917204/",
     tags:["海鮮","安め"], reasonSeeds:{budget:["海鮮を気軽な値段でつまみに"], friends:["海鮮を色々つまみながら、わいわい飲むのに向いてる"], drinking:["魚をアテに、じっくり飲める一軒"]}},
   {id:"asagaya-rokukan", name:"六燗", genre:"ジビエ・ナチュールワイン", area:"阿佐ヶ谷", price:[2000,3000], vibe:"adventurousUnique",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13305715/",
     tags:["ジビエ","ナチュールワイン"], reasonSeeds:{adventurous:["ジビエとナチュールワインという、他にはない組み合わせ"], couple:["ナチュールワインを選びながら、ふたりでゆっくり"], stylish:["ジビエという、少し特別な選択肢"]}},
-  {id:"asagaya-fujisan-baniku", name:"阿佐ヶ谷 大衆馬肉酒場 冨士山", genre:"馬肉酒場", area:"阿佐ヶ谷", price:[3000,4000], vibe:"adventurousUnique",
+  {id:"asagaya-fujisan-baniku", hours:"平日 16:00–23:00（料理L.O.22:15、ドリンクL.O.22:30）/ 土日祝 13:00–23:00（同L.O.）", closedDays:"不定休", seats:"カウンター7席+テーブル24席+掘りごたつ21席（計52席）", name:"阿佐ヶ谷 大衆馬肉酒場 冨士山", genre:"馬肉酒場", area:"阿佐ヶ谷", price:[3000,4000], vibe:"adventurousUnique",
     officialUrl:"https://fujiyama-asagaya.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13309702/",
     tags:["馬肉","大衆酒場"], reasonSeeds:{adventurous:["馬肉料理という、いつもと違う一軒"], friends:["馬肉料理を話題にしながら、友達とわいわい"], drinking:["大衆酒場らしい気軽な飲み"]}},
-  {id:"asagaya-uotetsu", name:"阿佐ヶ谷 魚てつ", genre:"海鮮居酒屋", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+  {id:"asagaya-uotetsu", hours:"月〜土 16:00〜翌0:00(フードL.O.23:00/ドリンクL.O.23:30)", closedDays:"日曜日(イベント開催時は営業する場合あり)", seats:"27席(カウンター4席、1階テーブル3卓、2階テーブル4卓)", name:"阿佐ヶ谷 魚てつ", genre:"海鮮居酒屋", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     officialUrl:"https://asagaya-uotetsu.com/", reservationUrl:"https://www.hotpepper.jp/strJ003649082/",
     tags:["刺身","海鮮"], reasonSeeds:{indulgent:["新鮮な刺身をゆっくり味わえる"], couple:["刺身をアテに、ふたりでゆっくり飲める"], calm:["落ち着いて魚と向き合える雰囲気"]}},
   {id:"asagaya-otoriya", name:"音鶏家 阿佐ヶ谷店", genre:"焼き鳥", area:"阿佐ヶ谷", price:[2000,3000], vibe:"budgetCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001268509/",
     tags:["焼き鳥","安め"], reasonSeeds:{budget:["焼き鳥を気軽な値段で"], solo:["ひとりでも気軽に立ち寄れる焼き鳥屋"], quick:["ランチ帯の実績もあり、提供も早そう"]}},
-  {id:"asagaya-kushibar", name:"阿佐ヶ谷串バル", genre:"串料理バル", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
+  {id:"asagaya-kushibar", hours:"月～日、祝日、祝前日: 11:00～23:00（料理L.O.22:00 ドリンクL.O.22:30）", seats:"総席数100席", name:"阿佐ヶ谷串バル", genre:"串料理バル", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
     officialUrl:"https://asagayakushibar.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003411608/",
     tags:["串料理","ランチも安い"], reasonSeeds:{quick:["串をつまみながら、軽く立ち寄れる"], solo:["串を数本つまむだけでもいい、身軽さ"], budget:["ランチも安いから、価格の安心感がある"]}},
   {id:"asagaya-nihonshu-zero", name:"にほんしゅ ぜろ", genre:"日本酒バル", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13237875/",
     tags:["日本酒","落ち着いた飲み"], reasonSeeds:{calm:["日本酒を静かに選びながら飲める"], couple:["日本酒を選びながら、静かに語り合える"], drinking:["総合居酒屋としての品揃えの広さも魅力"]}},
-  {id:"asagaya-24-gyoza", name:"24時間 餃子酒場 阿佐ヶ谷店", genre:"餃子・深夜酒場", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
+  {id:"asagaya-24-gyoza", hours:"05:00–翌5:00（24時間営業）", closedDays:"無休", seats:"100席（2Fカラオケ付、貸切可）", name:"24時間 餃子酒場 阿佐ヶ谷店", genre:"餃子・深夜酒場", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloDrink",
     officialUrl:"https://gyouzasakaba-asagaya.com/", reservationUrl:"https://www.hotpepper.jp/strJ001179469/",
     tags:["24時間営業","餃子"], reasonSeeds:{quick:["24時間営業だから、時間を気にせず入れる"], solo:["深夜でもひとりでふらっと入れる"], budget:["餃子中心で、価格も気取らない"]}},
-  {id:"koenji-doki", name:"動悸", genre:"隠れ家居酒屋", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
+  {id:"koenji-doki", hours:"[月〜木]16:00〜23:00 [金]16:00〜24:00 [土]13:00〜24:00 [日・祝]13:00〜23:00", closedDays:"なし", name:"動悸", genre:"隠れ家居酒屋", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:"https://koenji-tokimeki.com/", reservationUrl:"https://www.hotpepper.jp/strJ003582371/",
     tags:["隠れ家","少し贅沢"], reasonSeeds:{indulgent:["隠れ家感のある特別な一軒"], couple:["隠れ家だからこそ、ふたりだけの時間に集中できる"], stylish:["少し背伸びしたい夜にちょうどいい佇まい"]}},
   {id:"koenji-kaisen", name:"貝せん", genre:"貝料理専門", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13191955/",
     tags:["貝料理専門","つまみが豊富"], reasonSeeds:{friends:["貝料理を色々つまみながらわいわい"], drinking:["貝料理は日本酒にもワインにも合わせやすい"], colleagues:["つまみが豊富だから、職場の集まりにも"]}},
-  {id:"koenji-citraba", name:"クラフト麦酒酒場 シトラバ 高円寺店", genre:"クラフトビール酒場", area:"高円寺", price:[1000,6000], vibe:"stylishDrink",
+  {id:"koenji-citraba", hours:"火・水・木・金 16:00～23:30（L.O.料理22:30 ドリンク23:00）、土・祝日 12:00～23:30（L.O.料理22:30 ドリンク23:00）、日・祝後日 12:00～23:00（L.O.料理22:00 ドリンク22:30）", closedDays:"月曜日", seats:"50席（カウンター14席、テーブル36席）", name:"クラフト麦酒酒場 シトラバ 高円寺店", genre:"クラフトビール酒場", area:"高円寺", price:[1000,6000], vibe:"stylishDrink",
     officialUrl:"https://www.citraba.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13233396/",
     tags:["クラフトビール","種類豊富"], reasonSeeds:{stylish:["クラフトビールの飲み比べが楽しい"], friends:["飲み比べをネタに、みんなで盛り上がれる"], couple:["クラフトビールを選ぶ時間も、ふたりの会話のきっかけに"]}},
-  {id:"koenji-hakata-standard", name:"ハカタスタンダード 高円寺店", genre:"博多料理", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+  {id:"koenji-hakata-standard", hours:"月〜木 15:00–23:00 / 金〜日 14:00–23:30 / 祝日・祝前日 15:00–23:30", closedDays:"無休", seats:"総席数20席", name:"ハカタスタンダード 高円寺店", genre:"博多料理", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
     officialUrl:"https://akr8263445025.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ004402053/",
     tags:["博多料理","もつ鍋"], reasonSeeds:{friends:["もつ鍋を囲んでわいわい飲むのに合う"], hearty:["もつ鍋でしっかりお腹も満たせる"], colleagues:["鍋を囲むから、職場の集まりにも向いてる"]}},
 
@@ -411,13 +415,13 @@ const NEW_ROWS = [
     tags:["とんかつ","上質な一皿"], reasonSeeds:{indulgent:["じっくり揚げたとんかつを主役に、特別な食事を"], couple:["じっくり揚げる一皿を、特別な日の主役に"], stylish:["とんかつなのに、どこか特別感のある佇まい"]}},
   {id:"asagaya-soba", name:"阿佐ヶ谷SOBA", genre:"そば(創作)", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     tags:["そば","落ち着いた空間"], reasonSeeds:{calm:["そばを肴に、静かに飲みながら話せる"], couple:["そばを肴に、ふたりで静かな時間を"], indulgent:["創作そばという、少し特別な選択肢"]}},
-  {id:"asagaya-sushi-ichi", name:"すしいち", genre:"寿司", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateSpecial",
+  {id:"asagaya-sushi-ichi", hours:"ランチ 11:30〜14:30(L.O.14:00)、ディナー[月〜金]17:00〜23:00(L.O.22:00)/[土・日]17:00〜22:00(L.O.21:00)", closedDays:"祝日", name:"すしいち", genre:"寿司", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateSpecial",
     officialUrl:"https://sushiichi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ004444825/",
     tags:["寿司","職人技"], reasonSeeds:{indulgent:["職人が握る寿司で、特別な夜に"], couple:["職人の握りを、特別な記念日に"], stylish:["寿司屋らしい、背筋が伸びる緊張感も魅力"]}},
   {id:"koenji-abusan", name:"あぶさん", genre:"海鮮・貝料理", area:"高円寺", price:[5000,6000], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13072778/",
     tags:["海鮮","貝料理"], reasonSeeds:{friends:["海鮮と貝をつまみに、飲みが長引いても飽きない"], drinking:["海鮮と貝、両方あるから飲みが長引いても飽きない"], colleagues:["つまみの種類が多く、職場の集まりにも"]}},
-  {id:"koenji-osoubi-kappou", name:"創作割烹おあそび", genre:"創作割烹", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
+  {id:"koenji-osoubi-kappou", hours:"[全日]ディナー 17:00～23:00、[火～金]ランチ 12:00～15:00、[日・土・祝]ランチ 12:00～17:00", closedDays:"不定休", seats:"14席（カウンター4席、4名テーブル2席、2名テーブル1席）", name:"創作割烹おあそび", genre:"創作割烹", area:"高円寺", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:"https://oasobi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003388022/",
     tags:["創作割烹","コース"], reasonSeeds:{indulgent:["コース仕立ての創作料理で、記念日にも使える"], couple:["コース仕立てだから、記念日にちょうどいい流れで楽しめる"], stylish:["創作割烹らしい、丁寧な仕立て"]}},
   {id:"koenji-motsuyaki-byron", name:"もつ焼き Byron", genre:"もつ焼き", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
@@ -452,7 +456,7 @@ const NEW_ROWS2 = [
     tags:["スペシャルティコーヒー","フルーツサンド"], reasonSeeds:{calm:["フルーツサンドと一杯のコーヒーで、静かにひと息つける"]}},
 
   // ── 韓国料理(2) ──
-  {id:"asagaya-ajiton", name:"味豚 アジトン 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+  {id:"asagaya-ajiton", hours:"月 11:00–15:00 / 火・水・金〜日 11:00–15:00（L.O.14:30）・17:00–23:00（L.O.22:30）/ 木 11:00–15:00（L.O.14:30）・17:00–23:30（L.O.22:30）", closedDays:"無休", seats:"総席数46席", name:"味豚 アジトン 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
     officialUrl:"https://asian-asagaya.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ001247064/",
     tags:["サムギョプサル","石焼きチュクミ"], reasonSeeds:{friends:["アツアツのサムギョプサルを焼きながらわいわい"], drinking:["肉と一緒にマッコリも進む一軒"]}},
   {id:"asagaya-samshiseok", name:"韓国料理サムシセキ 阿佐ヶ谷店", genre:"韓国料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
@@ -475,10 +479,10 @@ const NEW_ROWS2 = [
   {id:"asagaya-namaste-himal", name:"ナマステヒマール", genre:"インドカレー", area:"阿佐ヶ谷", price:[700,999], vibe:"budgetCasual",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13144286/",
     tags:["インドカレー","ナン"], reasonSeeds:{budget:["ナン付きインドカレーが、この価格でお腹いっぱいに"]}},
-  {id:"asagaya-spice-and-co", name:"スパイス アンド コー", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
+  {id:"asagaya-spice-and-co", hours:"火・水・木・金・土 11:30〜14:00(L.O.13:30)、18:00〜20:30(L.O.20:00)", closedDays:"月曜日・日曜日・祝日", name:"スパイス アンド コー", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
     officialUrl:"https://spiceandco.amebaownd.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13255099/",
     tags:["スパイスカレー"], reasonSeeds:{adventurous:["いつものカレーとはひと味違うスパイス使い"]}},
-  {id:"asagaya-hinoya-curry", name:"日乃屋カレー 阿佐ヶ谷店", genre:"欧風カレー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+  {id:"asagaya-hinoya-curry", hours:"平日11:00～21:00、土日祝11:00～21:00", closedDays:"定休なし（年末年始除く）", name:"日乃屋カレー 阿佐ヶ谷店", genre:"欧風カレー", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
     officialUrl:"https://hinoya.jp/shops/asagaya/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13212084/",
     tags:["欧風カレー","安め"], reasonSeeds:{quick:["欧風の濃いカレーを、さっと一杯"], budget:["1000円以下で満足感のある欧風カレー"]}},
   {id:"asagaya-shekeba-curry", name:"SHEKEBA CURRY", genre:"スパイスカレー", area:"阿佐ヶ谷", price:[1000,2000], vibe:"adventurousUnique",
@@ -488,12 +492,12 @@ const NEW_ROWS2 = [
   {id:"asagaya-azumaya", name:"阿づ満や", genre:"うなぎ", area:"阿佐ヶ谷", price:[4000,6000], vibe:"dateSpecial",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13048801/",
     tags:["うなぎ専門","戦前からの老舗"], reasonSeeds:{indulgent:["戦前から続く老舗の、柔らかく仕上げたうなぎ"], couple:["少し特別な日に、老舗のうなぎでゆっくり"]}},
-  {id:"asagaya-unagi-naruse", name:"鰻の成瀬 阿佐ヶ谷店", genre:"うなぎ", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
+  {id:"asagaya-unagi-naruse", hours:"昼 11:00–15:00 / 夜 17:00–21:00（土日祝日は11:00–21:00通し営業）", closedDays:"不定休", seats:"カウンター6席+2名テーブル8台（計22席）", name:"鰻の成瀬 阿佐ヶ谷店", genre:"うなぎ", area:"阿佐ヶ谷", price:[3000,4000], vibe:"dateQuiet",
     officialUrl:"https://unagi-naruse.com/shop/asagaya", reservationUrl:"https://www.hotpepper.jp/strJ004402852/",
     tags:["厳選ニホンウナギ"], reasonSeeds:{indulgent:["生育環境にこだわった、上質なうなぎを味わえる"]}},
 
   // ── お好み焼き・鉄板(4) ──
-  {id:"asagaya-enya", name:"縁家", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2200,4000], vibe:"groupCasual",
+  {id:"asagaya-enya", hours:"12:00〜24:00(L.O.23:00)", closedDays:"火曜日・第2水曜日(祝日は営業、翌平日が休み)", seats:"48席(テーブル24席、座敷24席)", name:"縁家", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2200,4000], vibe:"groupCasual",
     officialUrl:"https://ennya-asagaya.com/", reservationUrl:"https://www.hotpepper.jp/strJ001246475/",
     tags:["関西風お好み焼き","もんじゃ","食べ放題プラン"], reasonSeeds:{friends:["鉄板を囲んでわいわい、食べ放題プランもある"], drinking:["2時間飲み放題付きコースもあり、飲みにも使える"]}},
   {id:"asagaya-bansho", name:"鉄板焼ダイニング 万松", genre:"鉄板焼き", area:"阿佐ヶ谷", price:[4000,6000], vibe:"dateQuiet",
@@ -501,12 +505,12 @@ const NEW_ROWS2 = [
     tags:["隠れ家鉄板焼き"], reasonSeeds:{calm:["駅前にありながら隠れ家的な、落ち着いた鉄板焼き"]}},
   {id:"asagaya-tachimachi", name:"広島お好み焼 TachiMachi", genre:"お好み焼き", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
     tags:["広島風お好み焼き","お酒が安い"], reasonSeeds:{budget:["広島風お好み焼きとお酒が、どちらも手頃な値段で"]}},
-  {id:"asagaya-iron-diner", name:"IRON DINER 阿佐ヶ谷店", genre:"お好み焼き", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+  {id:"asagaya-iron-diner", hours:"月、火、木、金: 16:00～23:00（料理L.O.22:00 ドリンクL.O.22:30）、土、日: 11:30～23:00（料理L.O.22:00 ドリンクL.O.22:30）", closedDays:"水曜", seats:"総席数27席", name:"IRON DINER 阿佐ヶ谷店", genre:"お好み焼き", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:"https://irondinerasagaya.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13319300/",
     tags:["上質なお好み焼き"], reasonSeeds:{indulgent:["お好み焼きを、少し特別な一皿として楽しめる一軒"]}},
 
   // ── スペイン・ビストロ(3) ──
-  {id:"koenji-gaucho", name:"スペインバル ガウチョ", genre:"スペイン料理", area:"高円寺", price:[3000,4500], vibe:"stylishDrink",
+  {id:"koenji-gaucho", hours:"18:00–23:30", closedDays:"火曜日", seats:"テーブル4席、カウンター6席", name:"スペインバル ガウチョ", genre:"スペイン料理", area:"高円寺", price:[3000,4500], vibe:"stylishDrink",
     officialUrl:"https://www.spainbar-gaucho.com/", reservationUrl:"https://www.hotpepper.jp/strJ001226433/",
     tags:["タパス","イカの墨煮","評価4.32"], reasonSeeds:{stylish:["本場スペインバルの空間で、タパスとワインを"], drinking:["アヒージョや肉料理をつまみに、ワインが進む"]}},
   {id:"asagaya-kocco", name:"スペインバル Kocco", genre:"スペイン料理", area:"阿佐ヶ谷", price:[3000,4500], vibe:"dateQuiet",
@@ -517,7 +521,7 @@ const NEW_ROWS2 = [
     tags:["ビストロ"], reasonSeeds:{calm:["気取りすぎない、大人のビストロの落ち着き"]}},
 
   // ── タイ・洋食(2) ──
-  {id:"asagaya-daothai", name:"タイ屋台居酒屋 ダオタイ 阿佐ヶ谷本店", genre:"タイ・ベトナム料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
+  {id:"asagaya-daothai", hours:"月・日・祝日 17:00〜22:00(L.O.21:00)、水・木・金・土 17:00〜23:00(L.O.22:00)", closedDays:"火曜日", seats:"40席", name:"タイ屋台居酒屋 ダオタイ 阿佐ヶ谷本店", genre:"タイ・ベトナム料理", area:"阿佐ヶ谷", price:[3000,4000], vibe:"groupCasual",
     officialUrl:"https://daothai.dao-inc.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13042972/",
     tags:["トムヤムクン","ガイヤーン","宴会コース"], reasonSeeds:{adventurous:["本場のタイ料理で、いつもと違う一夜に"], friends:["宴会コースもあり、大人数で盛り上がりやすい"]}},
   {id:"asagaya-rasenya", name:"西洋食堂 らせん屋 阿佐ヶ谷店", genre:"洋食", area:"阿佐ヶ谷", price:[3000,4500], vibe:"dateQuiet",
@@ -528,7 +532,7 @@ const NEW_ROWS2 = [
   {id:"koenji-akka", name:"高円寺アッカ", genre:"イタリアンワインバー", area:"高円寺", price:[4000,6000], vibe:"stylishDrink",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13141584/",
     tags:["ソムリエ常駐","イタリアワイン受賞歴"], reasonSeeds:{stylish:["ソムリエ監修のワインを、グラスで気軽に飲み比べ"], couple:["ワインを選ぶ時間も含めて、大人の夜を楽しめる"]}},
-  {id:"asagaya-birdland", name:"阿佐ヶ谷バードランド", genre:"焼き鳥・ワイン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
+  {id:"asagaya-birdland", hours:"17:00〜22:30（ネタが無くなり次第早く閉める事あり）", name:"阿佐ヶ谷バードランド", genre:"焼き鳥・ワイン", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:"https://www.asagaya-bird-land.com/", reservationUrl:"https://restaurant.ikyu.com/120714",
     tags:["銀座の名店直系","備長炭","希少部位"], reasonSeeds:{indulgent:["銀座仕込みの焼き鳥を、備長炭でじっくりと"], couple:["希少部位も揃う、少し贅沢な焼き鳥の夜に"]}},
   {id:"koenji-and-beer", name:"アンドビール", genre:"クラフトビール", area:"高円寺", price:[2000,3500], vibe:"adventurousUnique",
@@ -539,7 +543,7 @@ const NEW_ROWS2 = [
   {id:"asagaya-yamamoto-cellar", name:"焼鳥 山もと 阿佐ヶ谷cellar", genre:"焼き鳥", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:null, reservationUrl:"https://yoyaku.toreta.in/asagaya-yamamoto",
     tags:["評価上位の名店"], reasonSeeds:{indulgent:["地域でも評価の高い、焼き鳥の名店で特別な夜を"]}},
-  {id:"asagaya-katsu", name:"克ッ 阿佐ヶ谷", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
+  {id:"asagaya-katsu", hours:"月〜土 17:00–翌0:00（料理L.O.23:00、ドリンクL.O.23:30）/ 日・祝 16:00–23:00", closedDays:"無休", seats:"総席数24席", name:"克ッ 阿佐ヶ谷", genre:"焼き鳥", area:"阿佐ヶ谷", price:[4000,5000], vibe:"groupCasual",
     officialUrl:"https://katsu-asagaya.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003806119/",
     tags:["焼き鳥"], reasonSeeds:{friends:["焼き鳥をつまみに、気取らずわいわい飲める"]}},
   {id:"asagaya-beard", name:"焼鳥BEARD(ベアード) 南阿佐ヶ谷店", genre:"焼き鳥", area:"南阿佐ヶ谷", price:[4000,5000], vibe:"stylishDrink",
@@ -559,7 +563,7 @@ const NEW_ROWS2 = [
     tags:["焼き鳥","少し贅沢"], reasonSeeds:{indulgent:["少し贅沢な焼き鳥のコースで、特別な夜に"]}},
 
   // ── 立ち飲み(3) ──
-  {id:"koenji-banpaiya", name:"高円寺晩杯屋", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"soloDrink",
+  {id:"koenji-banpaiya", hours:"13:00〜23:00", name:"高円寺晩杯屋", genre:"立ち飲み", area:"高円寺", price:[1000,2000], vibe:"soloDrink",
     officialUrl:"https://active-source.co.jp/location/%E7%AB%8B%E5%91%91%E3%81%BF%E6%99%A9%E6%9D%AF%E5%B1%8B%E3%80%80%E9%AB%98%E5%86%86%E5%AF%BA%E7%B4%94%E6%83%85%E5%BA%97/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13193778/",
     tags:["センベロ","日替わり海鮮"], reasonSeeds:{budget:["千円ちょっとでほろ酔いになれる、センベロの定番"], quick:["ふらっと立ち寄って、さっと一杯だけでもいい"]}},
   {id:"asagaya-futakun", name:"立呑風太くん", genre:"立ち飲み", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloDrink",
@@ -586,7 +590,7 @@ const NEW_ROWS2 = [
   {id:"asagaya-uchikaoritei", name:"打ち薫る亭", genre:"日本料理", area:"阿佐ヶ谷", price:[6000,8000], vibe:"dateSpecial",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001286647/",
     tags:["日本料理"], reasonSeeds:{indulgent:["丁寧な日本料理のコースで、特別な夜を演出"]}},
-  {id:"koenji-kemuri", name:"けむり 高円寺店", genre:"焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+  {id:"koenji-kemuri", hours:"月～金: 17:00～翌0:00（料理L.O.23:00 ドリンクL.O.23:30）、土、日、祝日: 15:00～翌0:00（料理L.O.23:00 ドリンクL.O.23:30）", seats:"総席数50席", name:"けむり 高円寺店", genre:"焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
     officialUrl:"https://kemurikoenji.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13148663/",
     tags:["焼き鳥"], reasonSeeds:{drinking:["煙の向こうで焼く焼き鳥を、じっくり飲みながら"]}},
   {id:"koenji-yacchan", name:"名物やきとん やっちゃん", genre:"やきとん", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
@@ -645,16 +649,16 @@ const NEW_ROWS3 = [
     tags:["つけ麺","評価3.52"], reasonSeeds:{hearty:["つけ麺のボリュームで、がっつり満足できる"]}},
 
   // ── 焼肉(7・評価点上位含む) ──
-  {id:"asagaya-sato-brillant-honten", name:"SATOブリアン 本店", genre:"焼肉", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
+  {id:"asagaya-sato-brillant-honten", hours:"火・水・木・金・土・日・祝日・祝前日・祝後日 14:30–22:00", closedDays:"月曜日", seats:"24席", name:"SATOブリアン 本店", genre:"焼肉", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
     officialUrl:"https://satobriand.yoyaku.at/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13127046/",
     tags:["最高評価クラスの焼肉","希少部位","評価3.99"], reasonSeeds:{indulgent:["地域随一の評価を誇る、特別な日のための焼肉"], couple:["一生に一度クラスの記念日に、思い切って選びたい一軒"]}},
-  {id:"asagaya-sato-brillant-nigou", name:"SATOブリアン にごう", genre:"焼肉", area:"阿佐ヶ谷", price:[15000,19999], vibe:"dateSpecial",
+  {id:"asagaya-sato-brillant-nigou", hours:"火・水・木・金・土・日・祝日・祝前日・祝後日 15:00〜22:00", closedDays:"月曜日", seats:"30席", name:"SATOブリアン にごう", genre:"焼肉", area:"阿佐ヶ谷", price:[15000,19999], vibe:"dateSpecial",
     officialUrl:"https://satobriand.yoyaku.at/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13159782/",
     tags:["高評価焼肉","評価3.91"], reasonSeeds:{indulgent:["本店に迫る評価の高さで、特別な焼肉の夜に"]}},
   {id:"asagaya-sanpoen", name:"炭火焼肉 三宝苑 阿佐ヶ谷店", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003893067/",
     tags:["炭火焼き","評価3.51"], reasonSeeds:{hearty:["炭火でじっくり焼く肉を、しっかり楽しめる"], family:["評価の高い炭火焼肉を、みんなで囲む"]}},
-  {id:"koenji-araiya-honten", name:"焼肉ホルモン 新井屋 高円寺本店", genre:"焼肉", area:"高円寺", price:[6000,7999], vibe:"dateSpecial",
+  {id:"koenji-araiya-honten", hours:"月～金: 17:00～23:00（料理L.O.22:00 ドリンクL.O.22:00）、土、日、祝日: 12:00～23:00（料理L.O.22:00 ドリンクL.O.22:00）", seats:"総席数27席（5名席×1卓、4名席×2卓、6名席×1卓、カウンター8席）", name:"焼肉ホルモン 新井屋 高円寺本店", genre:"焼肉", area:"高円寺", price:[6000,7999], vibe:"dateSpecial",
     officialUrl:"https://yakiniku-araiya.com/koenji/", reservationUrl:"https://www.hotpepper.jp/strJ001049734/",
     tags:["ホルモン","評価3.53"], reasonSeeds:{indulgent:["評価の高いホルモン焼肉で、少し贅沢な夜に"]}},
   {id:"asagaya-hasegawa", name:"ほるもんと焼肉屋 はせ川", genre:"焼肉", area:"阿佐ヶ谷", price:[5000,5999], vibe:"groupCasual",
@@ -663,7 +667,7 @@ const NEW_ROWS3 = [
   {id:"koenji-tamaniha-yakiniku", name:"たまには焼肉 高円寺店", genre:"焼肉", area:"高円寺", price:[3000,3800], vibe:"budgetCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003410539/",
     tags:["コスパの良い肉質","評価3.43"], reasonSeeds:{budget:["「たまには」の名の通り、気張らずコスパよく焼肉を"]}},
-  {id:"asagaya-oniku-chan", name:"人情焼肉ONIKUちゃん", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
+  {id:"asagaya-oniku-chan", hours:"平日 17:00–翌4:00（28:00表記）/ 金・土・祝前日 17:00–翌5:00（29:00表記）", closedDays:"無休（年中無休）", seats:"8名掛け×3席+カウンター4席（計約40席）", name:"人情焼肉ONIKUちゃん", genre:"焼肉", area:"阿佐ヶ谷", price:[4000,4999], vibe:"familyHearty",
     officialUrl:"https://onikutyan1999.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13300511/",
     tags:["人情味のある接客"], reasonSeeds:{family:["名前の通り人情味あふれる、あたたかい焼肉屋"]}},
 
@@ -694,19 +698,19 @@ const NEW_ROWS3 = [
   {id:"asagaya-seiten-jou", name:"魚肴 青天上", genre:"海鮮居酒屋", area:"阿佐ヶ谷", price:[3000,3999], vibe:"dateQuiet",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ001295543/",
     tags:["海鮮・魚介"], reasonSeeds:{calm:["魚を肴に、落ち着いて杯を重ねられる"]}},
-  {id:"asagaya-donki", name:"呑輝", genre:"居酒屋", area:"阿佐ヶ谷", price:[4000,4999], vibe:"groupCasual",
+  {id:"asagaya-donki", hours:"17:30〜23:00", closedDays:"不定休", seats:"35席", name:"呑輝", genre:"居酒屋", area:"阿佐ヶ谷", price:[4000,4999], vibe:"groupCasual",
     officialUrl:"https://nonki-yoyaku.com/", reservationUrl:"https://www.hotpepper.jp/strJ003893820/",
     tags:["総合居酒屋"], reasonSeeds:{friends:["賑やかに飲みたい夜にちょうどいい総合居酒屋"]}},
   {id:"asagaya-hachinohe", name:"旅サロン海っ子八戸 阿佐ヶ谷店", genre:"青森料理", area:"阿佐ヶ谷", price:[3000,3999], vibe:"adventurousUnique",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13254522/",
     tags:["青森料理","ご当地"], reasonSeeds:{adventurous:["青森の郷土料理で、いつもと違う土地の味に触れる"]}},
-  {id:"asagaya-dendenkushi", name:"でんでん串", genre:"串揚げ", area:"阿佐ヶ谷", price:[2000,2999], vibe:"budgetCasual",
+  {id:"asagaya-dendenkushi", hours:"月～金: 17:00～02:00、土: 16:00～02:00", closedDays:"日曜", seats:"17席（カウンター3席、テーブル14席）", name:"でんでん串", genre:"串揚げ", area:"阿佐ヶ谷", price:[2000,2999], vibe:"budgetCasual",
     officialUrl:"https://dendenkushi.com/asagaya/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13158422/",
     tags:["串揚げ"], reasonSeeds:{budget:["串揚げを何本かつまむだけでも、気軽に楽しめる"]}},
-  {id:"asagaya-sakurai", name:"阿佐ヶ谷 さくら井", genre:"和食系居酒屋", area:"阿佐ヶ谷", price:[5000,5999], vibe:"dateSpecial",
+  {id:"asagaya-sakurai", hours:"17:00–23:00", closedDays:"水曜日ほか", seats:"17席（カウンター5席、テーブル12席）", name:"阿佐ヶ谷 さくら井", genre:"和食系居酒屋", area:"阿佐ヶ谷", price:[5000,5999], vibe:"dateSpecial",
     officialUrl:"https://sakurai-asagaya.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13315286/",
     tags:["和食系居酒屋"], reasonSeeds:{indulgent:["和食を軸にした、少し落ち着いた大人の居酒屋"]}},
-  {id:"asagaya-sandal-kitchen", name:"お酒とごはん サンダルキッチン", genre:"居酒屋", area:"阿佐ヶ谷", price:[2000,2999], vibe:"budgetCasual",
+  {id:"asagaya-sandal-kitchen", hours:"[月〜木]19:00〜翌2:00 [金・土]19:00〜翌3:00 [日]15:00〜24:00", closedDays:"不定休(Instagramで告知)", name:"お酒とごはん サンダルキッチン", genre:"居酒屋", area:"阿佐ヶ谷", price:[2000,2999], vibe:"budgetCasual",
     officialUrl:"http://sundal-kitchen.com/asagaya/", reservationUrl:"https://www.hotpepper.jp/strJ001265836/",
     tags:["料理も充実"], reasonSeeds:{budget:["お酒もごはんも両方楽しめて、値段も気張らない"]}},
   {id:"asagaya-aoutei-gyoza", name:"青卯餃子", genre:"餃子", area:"阿佐ヶ谷", price:[3000,3999], vibe:"groupCasual",
@@ -719,7 +723,7 @@ const NEW_ROWS3 = [
   {id:"koenji-yamiichi", name:"ヤミイチ 高円寺", genre:"居酒屋", area:"高円寺", price:[3000,4999], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ004005434/",
     tags:["居酒屋"], reasonSeeds:{friends:["わいわい飲みたい夜に合う、気取らない居酒屋"]}},
-  {id:"koenji-tanyaki-kozara", name:"たん焼きと小皿", genre:"牛タン焼き", area:"高円寺", price:[3000,3999], vibe:"dateQuiet",
+  {id:"koenji-tanyaki-kozara", hours:"月～金・祝前日・祝後日: 16:00～22:00（L.O.料理21:15 ドリンク21:30）、土・日・祝日: 11:30～14:30（L.O.14:00）/ 16:00～22:00（L.O.料理21:15 ドリンク21:30）", closedDays:"不定休", seats:"22席（カウンター10席、テーブル12席）", name:"たん焼きと小皿", genre:"牛タン焼き", area:"高円寺", price:[3000,3999], vibe:"dateQuiet",
     officialUrl:"https://sites.google.com/view/tanyakitokozara8200/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13311835/",
     tags:["牛タン焼き"], reasonSeeds:{calm:["牛タンを炙る音を聞きながら、静かに飲める"]}},
   {id:"koenji-manmajima", name:"まんまじぃま", genre:"藁炙り料理", area:"高円寺", price:[3000,4999], vibe:"adventurousUnique",
@@ -731,7 +735,7 @@ const NEW_ROWS3 = [
   {id:"koenji-debeko", name:"食堂でべこ。", genre:"海鮮居酒屋", area:"高円寺", price:[1000,3999], vibe:"budgetCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ003516239/",
     tags:["海鮮居酒屋"], reasonSeeds:{budget:["価格の幅が広く、財布に合わせて選べる海鮮居酒屋"]}},
-  {id:"koenji-bakadoshi", name:"高円寺 ばか同士。", genre:"創作料理", area:"高円寺", price:[2000,4999], vibe:"adventurousUnique",
+  {id:"koenji-bakadoshi", hours:"月〜金・祝前日 17:00–23:30 / 日・土・祝 12:00–23:30", seats:"26席（カウンターなし）", name:"高円寺 ばか同士。", genre:"創作料理", area:"高円寺", price:[2000,4999], vibe:"adventurousUnique",
     officialUrl:"https://bakadoushi.foodre.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003850823/",
     tags:["創作料理"], reasonSeeds:{adventurous:["名前からして気になる、創作料理の一軒"]}},
 
@@ -773,10 +777,10 @@ const NEW_ROWS4 = [
   {id:"asagaya-wantantei", name:"阿佐ヶ谷 わんたん亭", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"soloQuick",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13318234/",
     tags:["ワンタン","口コミ79件"], reasonSeeds:{quick:["ワンタンを中心に、さっと食べられる中華"]}},
-  {id:"asagaya-suikai", name:"中国料理 翠海", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
+  {id:"asagaya-suikai", hours:"11:30〜14:30(L.O.14:00)、17:30〜22:00(L.O.21:30)", seats:"56席", name:"中国料理 翠海", genre:"中華", area:"阿佐ヶ谷", price:[2000,3000], vibe:"groupCasual",
     officialUrl:"https://suikai.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13052591/",
     tags:["口コミ153件・評価3.42"], reasonSeeds:{friends:["このエリアの中華の中でも評価の高い一軒"]}},
-  {id:"koenji-chengdu-honten", name:"中華料理 成都 高円寺本店", genre:"中華", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
+  {id:"koenji-chengdu-honten", hours:"11:00〜23:00（ラストオーダー22:30）", name:"中華料理 成都 高円寺本店", genre:"中華", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
     officialUrl:"https://www.seito-koenji.com/", reservationUrl:"https://www.hotpepper.jp/strJ000058142/",
     tags:["口コミ10,255件","圧倒的な人気"], reasonSeeds:{friends:["口コミ1万件超という圧倒的な人気を誇る中華の名店"], drinking:["中華とお酒の組み合わせで、盛り上がる夜に"]}},
   {id:"koenji-byanbyan-chengdu", name:"ビャンビャン麺 火鍋 成都", genre:"中華(麺・火鍋)", area:"高円寺", price:[3000,4000], vibe:"adventurousUnique",
@@ -787,12 +791,12 @@ const NEW_ROWS4 = [
     tags:["台湾料理"], reasonSeeds:{adventurous:["台湾料理という、いつもとは違う選択肢"]}},
   {id:"koenji-chinki-sakaba", name:"中華料理 陳記酒場", genre:"中華", area:"高円寺", price:[1000,2000], vibe:"budgetCasual",
     tags:["中華酒場"], reasonSeeds:{budget:["中華のつまみを、気張らない値段で"]}},
-  {id:"koenji-shou-u", name:"中華創作料理 祥宇", genre:"中華(創作)", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+  {id:"koenji-shou-u", hours:"月〜金 11:00–15:00・17:00–23:00 / 土 11:00–15:00・17:00–23:30 / 日・祝 17:00–23:00", closedDays:"無休", seats:"総席数35席（全席テーブル）", name:"中華創作料理 祥宇", genre:"中華(創作)", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
     officialUrl:"https://akr6858170396.owst.jp/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13301099/",
     tags:["創作中華"], reasonSeeds:{calm:["創作中華を、落ち着いた雰囲気でゆっくり"]}},
 
   // ── 寿司(1・超高級) ──
-  {id:"asagaya-sushi-souten", name:"鮨 蒼天", genre:"寿司", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
+  {id:"asagaya-sushi-souten", hours:"木・金・祝日・祝前日・祝後日 17:00〜22:00、土・日 12:00〜14:00/17:00〜22:00", closedDays:"月〜水曜日", name:"鮨 蒼天", genre:"寿司", area:"阿佐ヶ谷", price:[20000,29999], vibe:"dateSpecial",
     officialUrl:"https://sushi-aoi.com/", reservationUrl:"https://restaurant.ikyu.com/125057",
     tags:["超高級寿司","記念日"], reasonSeeds:{indulgent:["一生の思い出になるような、特別な寿司の夜に"], couple:["とっておきの記念日に、思い切って選びたい寿司店"]}},
 
@@ -861,7 +865,7 @@ const NEW_ROWS4 = [
   {id:"koenji-daichi-sushi-yakitori", name:"寿司と焼き鳥 大地 高円寺店", genre:"焼き鳥", area:"高円寺", price:[3000,4000], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13283271/",
     tags:["寿司と焼き鳥","予約3,000件超の人気"], reasonSeeds:{friends:["寿司も焼き鳥もある、選択肢の広さが嬉しい"]}},
-  {id:"koenji-wine-yakitori", name:"ワインとやきとり 東高円寺", genre:"焼き鳥・ワイン", area:"高円寺", price:[4000,5000], vibe:"stylishDrink",
+  {id:"koenji-wine-yakitori", hours:"火・水・木・金・土（平日）16:30～23:00（22:00フードL.O.）、土・祝 16:00～23:00（21:30フードL.O.）", closedDays:"不定休", name:"ワインとやきとり 東高円寺", genre:"焼き鳥・ワイン", area:"高円寺", price:[4000,5000], vibe:"stylishDrink",
     officialUrl:"https://wine-yakitori-higashikouenji.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13307796/",
     tags:["焼き鳥×ワイン"], reasonSeeds:{stylish:["焼き鳥にワインを合わせる、新しい組み合わせ"]}},
   {id:"koenji-shutsujin-higashi", name:"炭火焼きとん焼鶏 出陣 東高円寺店", genre:"やきとん・焼き鳥", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
@@ -880,16 +884,16 @@ const NEW_ROWS4 = [
   // ── スイーツ(7・口コミ数重視) ──
   {id:"asagaya-cincirella", name:"ジェラテリア シンチェリータ", genre:"ジェラート", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
     tags:["口コミ1,772件","圧倒的人気"], reasonSeeds:{quick:["口コミ1,700件超、このエリア随一の人気ジェラート"], solo:["食後にひとりでふらっと寄れるジェラート店"]}},
-  {id:"asagaya-tomoean", name:"ともえ庵", genre:"たい焼き", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+  {id:"asagaya-tomoean", hours:"11:00–19:30", closedDays:"無休", name:"ともえ庵", genre:"たい焼き", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
     officialUrl:"https://tomoean.net/", reservationUrl:null,
     tags:["たい焼き","口コミ384件"], reasonSeeds:{quick:["食後の締めに、たい焼きをひとつ"]}},
-  {id:"asagaya-gyunyuya-soft", name:"牛乳屋さんのソフトクリーム", genre:"ソフトクリーム", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+  {id:"asagaya-gyunyuya-soft", hours:"平日 11:00〜18:00、土日祝 11:00〜18:30", closedDays:"不定休", name:"牛乳屋さんのソフトクリーム", genre:"ソフトクリーム", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
     officialUrl:"https://homemilk.co.jp/softcream/", reservationUrl:null,
     tags:["口コミ174件"], reasonSeeds:{quick:["濃厚なソフトクリームで、軽く締めくくる"]}},
-  {id:"koenji-lapre-cochere", name:"パティスリー ラブリコチエ", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+  {id:"koenji-lapre-cochere", hours:"11:00〜18:00", notice:"公式サイトによると、イートイン（店内飲食）は現在休止中で再開時期は未定。販売自体は営業中とみられる（閉店の記載なし）。", name:"パティスリー ラブリコチエ", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
     officialUrl:"https://labricotier.net/", reservationUrl:null,
     tags:["口コミ912件"], reasonSeeds:{couple:["口コミ912件という評判のケーキを、ふたりで分け合う締めくくりに"]}},
-  {id:"koenji-trianon", name:"トリアノン洋菓子店 高円寺本店", genre:"洋菓子", area:"高円寺", price:[700,999], vibe:"familyHearty",
+  {id:"koenji-trianon", hours:"10:00–20:00（L.O.19:30）", closedDays:"無休", seats:"総席数50席", name:"トリアノン洋菓子店 高円寺本店", genre:"洋菓子", area:"高円寺", price:[700,999], vibe:"familyHearty",
     officialUrl:"https://trianon.co.jp/shop_list/koenji.htm", reservationUrl:null,
     tags:["老舗","口コミ472件"], reasonSeeds:{family:["地元で長く愛される洋菓子店、家族の締めくくりに"]}},
   {id:"koenji-florestas", name:"フロレスタ 高円寺店", genre:"ドーナツ", area:"高円寺", price:[700,999], vibe:"groupCasual",
@@ -898,7 +902,7 @@ const NEW_ROWS4 = [
     tags:["クレープ・ガレット"], reasonSeeds:{adventurous:["いつものデザートとはひと味違うクレープ・ガレット"]}},
 
   // ── フレンチ(5) ──
-  {id:"asagaya-bistrot33", name:"Bistrot33 santrois", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
+  {id:"asagaya-bistrot33", hours:"ディナー 18:00〜23:00(L.O.22:00)、ランチ(金・土・日のみ) 12:00〜15:00(L.O.14:00)", closedDays:"月・火曜日", name:"Bistrot33 santrois", genre:"フレンチ", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
     officialUrl:"https://www.bistrot33.com/", reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13226597/",
     tags:["ビストロ"], reasonSeeds:{couple:["ビストロらしい気取らない雰囲気で、ふたりの夜を"]}},
   {id:"asagaya-le-terroir", name:"ビストロ ル・テロワール 阿佐ヶ谷", genre:"フレンチ(ビストロ)", area:"阿佐ヶ谷", price:[5000,6000], vibe:"dateQuiet",
@@ -915,13 +919,13 @@ const NEW_ROWS4 = [
     tags:["フレンチ"], reasonSeeds:{calm:["手が届く価格帯のフレンチで、ゆっくり過ごせる"]}},
 
   // ── 韓国料理・高円寺(3) ──
-  {id:"koenji-millineyangkopchang", name:"ミリネヤンコプチャン 高円寺店", genre:"韓国料理", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
+  {id:"koenji-millineyangkopchang", hours:"月～金、祝前日: 17:00～23:00（料理L.O.22:15 ドリンクL.O.22:30）、土、日、祝日: 12:00～23:00（料理L.O.22:15 ドリンクL.O.22:30）", seats:"総席数41席（最大宴会収容人数53人）", name:"ミリネヤンコプチャン 高円寺店", genre:"韓国料理", area:"高円寺", price:[4000,5000], vibe:"groupCasual",
     officialUrl:"https://akr4117078256.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ004403505/",
     tags:["京都ミシュラン掲載の技","予約6,531件"], reasonSeeds:{friends:["ミシュラン掲載店仕込みの技を、みんなで楽しめる"], drinking:["ホルモンをつまみに、じっくり飲める夜に"]}},
   {id:"koenji-omnimatt", name:"おむにまっ", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
     officialUrl:null, reservationUrl:"https://www.hotpepper.jp/strJ004098002/",
     tags:["韓国料理"], reasonSeeds:{friends:["取り分けて楽しむ韓国料理で、わいわい過ごせる"]}},
-  {id:"koenji-halhal", name:"ハルハル", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
+  {id:"koenji-halhal", hours:"月〜日・祝 18:00–翌0:00（料理L.O.23:00、ドリンクL.O.23:30）/ 祝前日 18:00–翌0:00（ドリンクL.O.22:30）", closedDays:"第1木曜・第1金曜、1/1・1/2は休業", seats:"総席数28席", name:"ハルハル", genre:"韓国料理", area:"高円寺", price:[2000,3000], vibe:"groupCasual",
     officialUrl:"https://kankokusakabaharuharu.owst.jp/", reservationUrl:"https://www.hotpepper.jp/strJ003671556/",
     tags:["韓国料理"], reasonSeeds:{friends:["気軽な韓国料理店で、友達との時間を"]}}
 ];
@@ -933,7 +937,7 @@ const NEW_ROWS5 = [
   // ── カフェ・阿佐ヶ谷(10) ──
   {id:"asagaya-gion", name:"ギオン", genre:"喫茶店", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
     tags:["口コミ592件","老舗喫茶"], reasonSeeds:{calm:["口コミ600件近い、地元で愛される老舗喫茶"]}},
-  {id:"asagaya-hachicafe", name:"ハチカフェ 阿佐ヶ谷店", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"groupCasual",
+  {id:"asagaya-hachicafe", hours:"10:00〜18:00", closedDays:"火曜日", seats:"カウンター4席+テーブル約16席", name:"ハチカフェ 阿佐ヶ谷店", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"groupCasual",
     officialUrl:"https://hachicafe.jp/aboutus/asagaya/", reservationUrl:null,
     tags:["口コミ225件"], reasonSeeds:{friends:["気軽に入れるカフェで、ランチ後のひと休みに"]}},
   {id:"asagaya-penguin-cafe", name:"ペンギン カフェ", genre:"カフェ", area:"阿佐ヶ谷", price:[1000,2000], vibe:"dateQuiet",
@@ -956,7 +960,7 @@ const NEW_ROWS5 = [
   // ── カフェ・高円寺(10) ──
   {id:"koenji-nanatsumori", name:"七つ森", genre:"喫茶店", area:"高円寺", price:[1000,2000], vibe:"dateQuiet",
     tags:["口コミ663件"], reasonSeeds:{calm:["口コミ600件超、地域屈指の人気喫茶店"]}},
-  {id:"koenji-poeme-mano", name:"ぽえむ マノ ア マノ コーヒー 高円寺南口店", genre:"喫茶店", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
+  {id:"koenji-poeme-mano", hours:"月・水・木・金: 10:00～19:00、土・日・祝日: 09:30～19:00", closedDays:"火曜", seats:"26席（カウンター8席、テーブル席2名掛け×1・4名掛け×4）", name:"ぽえむ マノ ア マノ コーヒー 高円寺南口店", genre:"喫茶店", area:"高円寺", price:[2000,3000], vibe:"dateQuiet",
     officialUrl:"https://manoamanocoffee.jp/", reservationUrl:null,
     tags:["口コミ660件"], reasonSeeds:{couple:["じっくり淹れるコーヒーを、ふたりでゆっくり"]}},
   {id:"koenji-rad-bros", name:"RAD BROS CAFE", genre:"カフェ", area:"高円寺", price:[1000,2000], vibe:"groupCasual",
@@ -1037,10 +1041,10 @@ const NEW_ROWS5 = [
     tags:["辛味噌"], reasonSeeds:{hearty:["辛味噌のガツンとくる一杯で満足感"]}},
 
   // ── スイーツ追加(4) ──
-  {id:"asagaya-toraya-tsubakiyama", name:"とらや椿山", genre:"和菓子", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
+  {id:"asagaya-toraya-tsubakiyama", hours:"09:30–19:00", seats:"総席数34席", name:"とらや椿山", genre:"和菓子", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
     officialUrl:"http://www.toraya-chinzan.com/", reservationUrl:null,
     tags:["和菓子","口コミ115件"], reasonSeeds:{quick:["食後の甘味に、和菓子をひとつ"]}},
-  {id:"koenji-patissier-junhomma", name:"パティシエ ジュン ホンマ 高円寺", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
+  {id:"koenji-patissier-junhomma", hours:"10:00〜20:00", closedDays:"月曜日", name:"パティシエ ジュン ホンマ 高円寺", genre:"ケーキ", area:"高円寺", price:[700,999], vibe:"dateQuiet",
     officialUrl:"https://jun-honma.com/", reservationUrl:"https://shop.cake-cake.net/jun_honma/",
     tags:["口コミ201件"], reasonSeeds:{couple:["口コミ201件でも根強い人気のケーキを、ふたりで分け合う締めくくりに"]}},
   {id:"koenji-san-crepe", name:"サン・くれーぷ", genre:"クレープ", area:"高円寺", price:[700,999], vibe:"soloQuick",
@@ -1131,7 +1135,7 @@ const NEW_ROWS6 = [
 ];
 
 function withExtensionDefaults(r){
-  return Object.assign({image:null, officialUrl:null, reservationUrl:null, notice:null}, r);
+  return Object.assign({image:null, officialUrl:null, reservationUrl:null, notice:null, hours:null, closedDays:null, seats:null}, r);
 }
 
 const RESTAURANTS = BASE_RESTAURANTS.map(withExtensionDefaults)
