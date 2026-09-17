@@ -207,6 +207,31 @@ header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-wi
 .btn-reroll:disabled{opacity:.6;}
 .btn-reroll .spin{display:inline-block; transition:transform .35s ease;}
 .btn-reroll.spinning .spin{transform:rotate(340deg);}
+.cross-link-banner{margin:10px 0 0; font-size:.78rem; text-align:center;}
+.cross-link-banner a{color:var(--accent-strong); font-weight:700; text-decoration:none; border-bottom:1px dashed var(--accent-strong);}
+
+.pick-badge{
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:.72rem; font-weight:700; letter-spacing:.03em;
+  padding:3px 10px; border-radius:999px; margin-bottom:8px;
+}
+.pick-badge-honban{background:rgba(231,238,243,.14); color:#F0E4CE;}
+.pick-badge-anaba{background:var(--accent-soft); color:var(--accent-strong);}
+.pick-badge-boken{background:rgba(35,56,74,.1); color:var(--indigo);}
+@media (prefers-color-scheme: dark){
+  .pick-badge-boken{background:rgba(46,68,87,.35); color:var(--indigo-ink);}
+}
+
+.triad-cards{display:flex; flex-direction:column; gap:10px; margin-top:22px;}
+.triad-card{
+  display:block; text-decoration:none; color:var(--text);
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding:14px 16px; box-shadow:var(--shadow);
+}
+.triad-card:hover .triad-name{color:var(--accent-strong);}
+.triad-card .triad-name{font-size:1rem; font-weight:800;}
+.triad-card .triad-meta{font-size:.76rem; color:var(--text-muted); margin-top:2px;}
+.triad-card .triad-reason{font-size:.82rem; color:var(--text); margin-top:8px; line-height:1.6;}
 
 .nearby{margin-top:30px; padding-top:20px; border-top:1px solid var(--border);}
 .nearby .nh{font-size:.82rem; font-weight:700; margin-bottom:4px; color:var(--text-muted);}
@@ -331,7 +356,7 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
       </div>
       <button class="btn-primary" id="btn-hirameki" disabled>今日のひらめきを見る</button>
       <div class="hint">
-        <img class="mascot mascot-intro" src="assets/character/hirameki-reveal.webp" width="240" height="244" alt="" loading="lazy">
+        <img class="mascot mascot-intro" src="assets/character/hirameki-thinking.webp" width="240" height="244" alt="" loading="lazy">
         <p id="hint-text">誰と、どんな夜にするか選んでね</p>
       </div>
     </div>
@@ -349,6 +374,7 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
       </div>
       <img class="r-photo" id="r-photo" alt="" hidden>
       <div class="r-body">
+        <span class="pick-badge pick-badge-honban">🥇 本命</span>
         <div class="r-name" id="r-name"></div>
         <div class="r-copy-row">
           <img class="mascot mascot-inline" src="assets/character/hirameki-reveal.webp" width="240" height="244" alt="" loading="lazy">
@@ -363,6 +389,9 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
           <a class="btn-go" id="r-go" href="#" target="_blank" rel="noopener">ここに行ってみる</a>
           <button class="btn-reroll" id="r-reroll"><span class="spin">↻</span> 別のお店をひらめく</button>
         </div>
+        <p class="cross-link-banner">
+          <a href="https://hirameki-gakari.github.io/gohan-hirameki-gakari/">🍳 今日はやっぱり家で食べる、も選べます</a>
+        </p>
         <div class="store-notice" id="store-notice" hidden>
           <span class="notice-label">お店からのお知らせ</span>
           <p id="notice-text"></p>
@@ -370,8 +399,10 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
       </div>
     </div>
 
+    <div class="triad-cards" id="triad-cards"></div>
+
     <div class="nearby">
-      <div class="nh">近くでもう少し探す</div>
+      <div class="nh">さらに近くを見る</div>
       <div class="nearby-list" id="nearby-list"></div>
     </div>
 
@@ -634,6 +665,51 @@ function weightedPick(pool, topN){
 }
 
 /* =========================================================
+   本命・穴場・冒険(2026-09 追加)
+   単なるスコア上位N件の並びではなく、それぞれ狙いの異なる3店を選ぶ。
+     🥇 本命: computePool()の上位(=誰と×気分に最も素直に合う)から
+     💎 穴場: 同じMust条件(誰と×気分)は満たすが、スコア上位ゾーンから
+        外れた店。「条件には合うけどちょっと意外」を狙う。
+     🚀 冒険: 誰とMustだけは死守しつつ、気分Mustはあえて満たさない
+        店から選ぶ。「普段のその気分では出てこないタイプ」を狙う。
+   3店とも重複させず、ジャンルもできるだけ被らないようにする。
+   ========================================================= */
+function pickThreePicks(companionId, moodId){
+  const pool = computePool(companionId, moodId);
+  if(pool.length === 0) return null;
+
+  const usedIds = new Set();
+  const usedGenres = new Set();
+  function takeFrom(candidates, topN){
+    const fresh = candidates.filter(x => !usedIds.has(x.r.id));
+    if(fresh.length === 0) return null;
+    const genreFresh = fresh.filter(x => !usedGenres.has(x.r.genre));
+    const source = genreFresh.length > 0 ? genreFresh : fresh;
+    const pick = weightedPick(source, Math.min(topN, source.length));
+    usedIds.add(pick.r.id);
+    usedGenres.add(pick.r.genre);
+    return pick;
+  }
+
+  const honban = takeFrom(pool, 3);
+  if(!honban) return null;
+
+  const skip = Math.ceil(pool.length * 0.4);
+  const anabaZone = pool.slice(skip);
+  const anaba = takeFrom(anabaZone.length > 0 ? anabaZone : pool, 8) || takeFrom(pool, pool.length);
+
+  const lastId = getHistory()[0] ? getHistory()[0].id : null;
+  const wideBase = RESTAURANTS
+    .filter(r => r.id !== lastId && satisfiesCompanionMust(r, companionId))
+    .map(r => ({r, score: scoreRestaurant(r, companionId, moodId), bucket: priceBucket(r)}));
+  const adventurous = wideBase.filter(x => !satisfiesMoodMust(x.r, moodId));
+  const bokenSource = adventurous.length > 0 ? adventurous : pool;
+  const boken = takeFrom(bokenSource, bokenSource.length) || takeFrom(pool, pool.length);
+
+  return {honban, anaba: anaba || honban, boken: boken || honban};
+}
+
+/* =========================================================
    推薦理由生成(2026-09 再設計)
    「誰と×気分」の組み合わせごとに、9パターンの共通文
    (旧VIBE_FILLERS)で穴埋めしていたのをやめ、必ずその店舗
@@ -815,8 +891,45 @@ function renderResult(){
     noticeEl.hidden = true;
   }
 
+  const triadIds = new Set([currentTriad.honban.r.id, currentTriad.anaba.r.id, currentTriad.boken.r.id]);
+
+  const PICK_META = {
+    anaba: {badge: "💎 穴場", cls: "pick-badge-anaba", lede: "条件には合うけど、ちょっと意外な一軒。"},
+    boken: {badge: "🚀 冒険", cls: "pick-badge-boken", lede: "普段は選ばないかもしれない、新しい一軒。"}
+  };
+  const triadCards = document.getElementById("triad-cards");
+  triadCards.innerHTML = "";
+  ["anaba", "boken"].forEach(function(key){
+    const pick = currentTriad[key];
+    if(!pick || pick.r.id === r.id) return; // 極端にデータが薄く本命と同一になった場合は表示しない
+    const meta = PICK_META[key];
+    const reasons = buildReasons(pick.r, selectedCompanion, selectedMood);
+    const a = document.createElement("a");
+    a.className = "triad-card";
+    a.href = goUrl(pick.r);
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.dataset.pickKey = key;
+    a.dataset.restaurantId = pick.r.id;
+    a.innerHTML =
+      '<span class="pick-badge ' + meta.cls + '">' + meta.badge + '</span>' +
+      '<div class="triad-name">' + pick.r.name + '</div>' +
+      '<div class="triad-meta">' + pick.r.genre + ' ・ ' + distanceLabel(pick.r) + ' ・ ' + priceLabel(pick.r) + '</div>' +
+      '<div class="triad-reason">' + meta.lede + (reasons[0] ? '　' + reasons[0] : '') + '</div>';
+    a.addEventListener("click", function(){
+      trackEvent("cta_click", {
+        restaurant_id: pick.r.id, restaurant_name: pick.r.name, genre: pick.r.genre,
+        pick_type: key,
+        destination: pick.r.reservationUrl ? "reservation" : (pick.r.officialUrl ? "official" : "maps")
+      });
+      logStoreEvent(pick.r, "selection");
+    });
+    logStoreEvent(pick.r, "impression");
+    triadCards.appendChild(a);
+  });
+
   const nearby = currentPool
-    .filter(x => x.r.id !== r.id)
+    .filter(x => !triadIds.has(x.r.id))
     .slice(0, 3);
   const nearbyList = document.getElementById("nearby-list");
   nearbyList.innerHTML = "";
@@ -829,15 +942,32 @@ function renderResult(){
     a.innerHTML =
       '<span><span class="nm">' + x.r.name + '</span><br><span class="gn">' + x.r.genre + " ・ " + distanceLabel(x.r) + '</span></span>' +
       '<span class="pr">' + priceLabel(x.r) + "</span>";
+    a.addEventListener("click", function(){
+      trackEvent("cta_click", {
+        restaurant_id: x.r.id, restaurant_name: x.r.name, genre: x.r.genre, pick_type: "nearby",
+        destination: x.r.reservationUrl ? "reservation" : (x.r.officialUrl ? "official" : "maps")
+      });
+      logStoreEvent(x.r, "selection");
+    });
     nearbyList.appendChild(a);
   });
 }
 
+let currentTriad = null;
+
 function hiramekiOnce(){
   currentPool = computePool(selectedCompanion, selectedMood);
-  currentPick = weightedPick(currentPool, 5);
+  currentTriad = pickThreePicks(selectedCompanion, selectedMood);
+  if(!currentTriad){
+    // 極端にデータが薄い場合の最終手段(通常は発生しない)
+    const fallback = weightedPick(currentPool, 5);
+    currentTriad = {honban: fallback, anaba: fallback, boken: fallback};
+  }
+  currentPick = currentTriad.honban;
   pushHistory({id:currentPick.r.id, genre:currentPick.r.genre, priceBucket:currentPick.bucket});
   addShownGenre(currentPick.r.genre);
+  if(currentTriad.anaba.r.id !== currentPick.r.id) addShownGenre(currentTriad.anaba.r.genre);
+  if(currentTriad.boken.r.id !== currentPick.r.id) addShownGenre(currentTriad.boken.r.genre);
   renderResult();
 }
 
