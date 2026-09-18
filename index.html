@@ -833,8 +833,32 @@ function refreshSelectScreen(){
   const ready = selectedCompanion && selectedMood;
   document.getElementById("btn-hirameki").disabled = !ready;
   document.getElementById("hint-text").textContent = ready
-    ? "選んだら、今日のひらめきを見てみよう"
-    : "誰と、どんな夜にするか選んでね";
+    ? "よし、準備できたよ。頭のあかり、ぴかっとさせるね。"
+    : "誰と、どんな夜か、こっそり教えてね。";
+}
+
+/* ひらりの一言(結果画面)。誰と×気分に合わせて、ひらりの口調で話す。
+   「ひとりで家族みんなで」のように不自然になる組み合わせは主語を省く。 */
+const HIRARI_COPY = {
+  drinking: "乾杯したい夜だね。ここ、どう？",
+  hearty: "がっつり食べたい日だね。ここ、頼もしいよ。",
+  calm: "ゆっくりおしゃべりしたい夜だね。ここ、落ち着けそう。",
+  lively: "わいわい楽しみたい日だね。ここ、にぎやかで楽しそう。",
+  indulgent: "ちょっとごほうびの夜だね。ここ、ぴったりかも。",
+  budget: "気軽にいきたい日だね。ここ、お財布にやさしいよ。",
+  stylish: "おしゃれに過ごしたい夜だね。ここ、素敵だと思う。",
+  adventurous: "新しいお店に出会いたい日だね。ここ、ひらり的にわくわく。",
+  familyFun: "みんなで楽しみたい日だね。ここ、にぎやかにいけそう。",
+  quick: "サクッと済ませたい日だね。ここ、気軽にふらっと行けそう。"
+};
+const HIRARI_COPY_SOLO = {
+  calm: "ゆっくり過ごしたい夜だね。ここ、落ち着けそう。",
+  lively: "にぎやかな空気を浴びたい日だね。ここ、いい感じ。"
+};
+function hirariCopy(companion, mood){
+  if(mood.id === "familyFun") return HIRARI_COPY.familyFun;
+  if(companion.id === "solo" && HIRARI_COPY_SOLO[mood.id]) return HIRARI_COPY_SOLO[mood.id];
+  return companion.particle + (HIRARI_COPY[mood.id] || mood.copy);
 }
 
 function renderResult(){
@@ -858,7 +882,7 @@ function renderResult(){
     document.getElementById("r-pl-label").textContent = r.genre + " ・ " + r.area;
   }
   document.getElementById("r-name").textContent = r.name;
-  document.getElementById("r-copy").textContent = companion.particle + mood.copy;
+  document.getElementById("r-copy").textContent = hirariCopy(companion, mood);
 
   const meta = document.getElementById("r-meta");
   meta.innerHTML = "";
