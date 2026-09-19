@@ -143,8 +143,19 @@ header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-wi
   transition:opacity .18s ease, transform .18s ease;
 }
 .result-card.is-swapping{opacity:0; transform:translateY(4px) scale(.99);}
+/* 「別のお店をひらめく」: ひらりが考え中のあいだ、いまの提案を薄く残す(真っ白にしない) */
+.result-card.is-thinking{opacity:.4;}
+/* 自動スクロールの止まり位置: 店舗カードの上に少し余白を残す */
+.result-card{scroll-margin-top:16px;}
+/* 新しい提案が届いたとき、ひらりのひとことを軽くふわっと出す */
+@keyframes hirari-pop{
+  from{opacity:0; transform:translateY(6px);}
+  to{opacity:1; transform:none;}
+}
+.r-copy-row.is-new{animation:hirari-pop .35s ease-out;}
 @media (prefers-reduced-motion: reduce){
   .result-card{transition:none;}
+  .r-copy-row.is-new{animation:none;}
 }
 .plate{
   border-radius:16px; height:200px; position:relative; overflow:hidden;
@@ -383,9 +394,9 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
       <img class="r-photo" id="r-photo" alt="" hidden>
       <div class="r-body">
         <span class="pick-badge pick-badge-honban">🥇 本命</span>
-        <div class="r-name" id="r-name"></div>
+        <div class="r-name" id="r-name" aria-live="polite"></div>
         <div class="r-copy-row">
-          <img class="mascot mascot-inline" src="assets/character/hirameki-reveal.webp" width="240" height="244" alt="" loading="lazy">
+          <img class="mascot mascot-inline" id="r-mascot" src="assets/character/hirameki-reveal.webp" width="240" height="244" alt="" loading="lazy">
           <div class="r-copy" id="r-copy"></div>
         </div>
         <div class="r-meta" id="r-meta"></div>
@@ -399,7 +410,7 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
             <a class="btn-sub" id="r-tel" href="#" hidden></a>
             <a class="btn-sub" id="r-map" href="#" target="_blank" rel="noopener">地図で見る</a>
           </div>
-          <button class="btn-reroll" id="r-reroll"><span class="spin">↻</span> 別のお店をひらめく</button>
+          <button class="btn-reroll" id="r-reroll"><span class="spin">↻</span> <span class="rl">別のお店をひらめく</span></button>
         </div>
         <p class="cross-link-banner">
           <a href="https://hirameki-gakari.github.io/gohan-hirameki-gakari/">🍳 今日はやっぱり家で食べる、も選べます</a>
@@ -913,7 +924,60 @@ function hirariCopy(companion, mood){
   return companion.particle + (HIRARI_COPY[mood.id] || mood.copy);
 }
 
-function renderResult(){
+/* ひらり: 再提案のひとこと(「別のお店をひらめく」を押したあと)。
+   最初の提案は「誰と×気分」に合わせた文(hirariCopy)。再提案では「もうひとつひらめいた」感を出すため、
+   選ばれたお店のジャンルに合う文を優先し、無ければ汎用の文から選ぶ。直近3回と同じ文は出さない。
+   ジャンルの分類は genreVisual() の漢字をそのまま使う(判定を二重に持たない)。 */
+/* 1行(スマホ幅で約15字)に収まる長さにそろえてある。2行目に1〜2字だけ残る折り返しを避けるため */
+const HIRARI_REROLL_GENERIC = [
+  "こっちはどうかな？✨",
+  "もうひとつ見つけたよ！",
+  "気分を変えて、こんなお店は？",
+  "もう一軒ひらめいた！💡",
+  "こっちも気になるかも！",
+  "じゃあ、次はここ！",
+  "もうひとつ、ひらめいたよ。"
+];
+const HIRARI_REROLL_BY_GENRE = {
+  "肉": ["今日はガッツリ、こっちは？🔥", "お肉の気分なら、ここ！🔥"],
+  "豚": ["揚げたて、がっつりどう？", "サクッといくなら、ここ！"],
+  "鶏": ["香ばしい一軒、ひらめいた！🍢", "串で一杯なら、ここもいいよ🍢"],
+  "鰻": ["ちょっと贅沢に、ここはどう？"],
+  "酒": ["もう一杯なら、ここ良さそう🍻", "飲むなら、こっちもいいよ🍻"],
+  "立": ["ふらっと一杯なら、ここも🍻"],
+  "杯": ["静かに一杯なら、こんな店も🍸", "夜のひと息なら、こっちは？🍸"],
+  "茶": ["ゆっくりするなら、こっちは？☕", "ひと息つくなら、ここも☕"],
+  "菓": ["甘いもので休憩なら、ここ🍰", "甘いもの、ひらめいた！🍰"],
+  "麺": ["こんな一杯もひらめいた！🍜", "麺の気分なら、こっちは？🍜"],
+  "蕎": ["つるっといくなら、ここも！"],
+  "鮨": ["お魚なら、ここもひらめいた🍣"],
+  "魚": ["お魚の気分なら、こっちは？🐟", "海の幸なら、ここも良さそう🐟"],
+  "香": ["スパイスの気分なら、ここ！🍛", "カレーの気分、ひらめいた！🍛"],
+  "中": ["中華の気分なら、こっちも！", "ぱぱっと一皿、こっちは？"],
+  "韓": ["ぴりっといきたいなら、ここ！"],
+  "南": ["気分を変えて、こんな味は？"],
+  "伊": ["イタリアンなら、ここも素敵🍝", "おしゃれに、こっちはどう？"],
+  "仏": ["ちょっと特別に、ここはどう？"],
+  "洋": ["洋食の気分なら、ここも！"],
+  "窯": ["あつあつなら、こっちもいいよ🍕"],
+  "鉄": ["焼きたてなら、ここもどう？"]
+};
+let recentRerollLines = [];
+function hirariRerollCopy(r){
+  const own = HIRARI_REROLL_BY_GENRE[genreVisual(r.genre).kanji];
+  // ジャンルに合う文を優先(約7割)。無いジャンルや残りの3割は汎用の文から
+  const pool = own && Math.random() < 0.7 ? own : HIRARI_REROLL_GENERIC;
+  // 直近3回に出した文は避ける。候補が尽きたら汎用の文から、それでも無ければ直前の1回だけ避ける
+  let list = pool.filter(t => recentRerollLines.indexOf(t) === -1);
+  if(!list.length) list = HIRARI_REROLL_GENERIC.filter(t => recentRerollLines.indexOf(t) === -1);
+  if(!list.length) list = HIRARI_REROLL_GENERIC.filter(t => t !== recentRerollLines[recentRerollLines.length - 1]);
+  const line = list[Math.floor(Math.random() * list.length)];
+  recentRerollLines.push(line);
+  if(recentRerollLines.length > 3) recentRerollLines.shift();
+  return line;
+}
+
+function renderResult(opts){
   const {r} = currentPick;
   const companion = COMPANIONS.find(c => c.id === selectedCompanion);
   const mood = MOODS.find(m => m.id === selectedMood);
@@ -934,7 +998,7 @@ function renderResult(){
     document.getElementById("r-pl-label").textContent = r.genre + " ・ " + r.area;
   }
   document.getElementById("r-name").textContent = r.name;
-  document.getElementById("r-copy").textContent = hirariCopy(companion, mood);
+  document.getElementById("r-copy").textContent = opts && opts.reroll ? hirariRerollCopy(r) : hirariCopy(companion, mood);
 
   const meta = document.getElementById("r-meta");
   meta.innerHTML = "";
@@ -1043,7 +1107,7 @@ function renderResult(){
 
 let currentTriad = null;
 
-function hiramekiOnce(){
+function hiramekiOnce(opts){
   currentPool = computePool(selectedCompanion, selectedMood);
   currentTriad = pickThreePicks(selectedCompanion, selectedMood);
   if(!currentTriad){
@@ -1056,7 +1120,7 @@ function hiramekiOnce(){
   addShownGenre(currentPick.r.genre);
   if(currentTriad.anaba.r.id !== currentPick.r.id) addShownGenre(currentTriad.anaba.r.genre);
   if(currentTriad.boken.r.id !== currentPick.r.id) addShownGenre(currentTriad.boken.r.genre);
-  renderResult();
+  renderResult(opts);
 }
 
 /* =========================================================
@@ -1163,19 +1227,57 @@ document.getElementById("btn-hirameki").addEventListener("click", () => {
   window.scrollTo({top:0, behavior:"smooth"});
 });
 
-document.getElementById("r-reroll").addEventListener("click", (e) => {
-  const btn = e.currentTarget;
+/* 「別のお店をひらめく」: ひらりが考え中 → 新しい店に切り替え → ひとこと更新 → 店舗カードへ移動。
+   ボタンはページの下のほうで押すので、切り替えたあと自分で上へ戻らなくて済むよう、
+   考え中のあいだにカードの位置へなめらかに移動する。連打は、1回の切り替えが終わるまで受け付けない。 */
+const HIRARI_IMG_REVEAL = "assets/character/hirameki-reveal.webp";
+const HIRARI_IMG_THINKING = "assets/character/hirameki-thinking.webp";
+const REROLL_SWAP_MS = 260;
+let rerolling = false;
+
+function scrollToResultCard(){
   const card = document.querySelector(".result-card");
+  const top = card.getBoundingClientRect().top;
+  // 店名とひらりのひとこと(カード上部の約320px)がすでに画面内なら、動かさない(PCなど)
+  if(top >= 0 && top + 320 <= window.innerHeight) return;
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  card.scrollIntoView({behavior: reduce ? "auto" : "smooth", block: "start"});
+}
+
+document.getElementById("r-reroll").addEventListener("click", (e) => {
+  if(rerolling) return;
+  rerolling = true;
+  const btn = e.currentTarget;
+  const label = btn.querySelector(".rl");
+  const card = document.querySelector(".result-card");
+  const mascot = document.getElementById("r-mascot");
+  const copyEl = document.getElementById("r-copy");
+  const copyRow = document.querySelector(".r-copy-row");
   trackEvent("reroll", {companion:selectedCompanion, mood:selectedMood});
-  btn.classList.add("spinning");
+
   btn.disabled = true;
-  card.classList.add("is-swapping");
+  btn.classList.add("spinning");
+  label.textContent = "ひらり、考え中…";
+  card.classList.add("is-thinking");
+  mascot.src = HIRARI_IMG_THINKING;
+  copyEl.textContent = "ひらり、考え中…";
+  scrollToResultCard();
+
   setTimeout(() => {
-    hiramekiOnce();
-    card.classList.remove("is-swapping");
+    // 待っているあいだに「はじめから選び直す」が押された場合は、何も描かずに戻す
+    if(selectedCompanion && selectedMood){
+      hiramekiOnce({reroll:true});
+      copyRow.classList.remove("is-new");
+      void copyRow.offsetWidth;            // 連続でも毎回アニメーションが動くように
+      copyRow.classList.add("is-new");
+    }
+    mascot.src = HIRARI_IMG_REVEAL;
+    card.classList.remove("is-thinking");
+    label.textContent = "別のお店をひらめく";
+    btn.classList.remove("spinning");
     btn.disabled = false;
-  }, 220);
-  setTimeout(() => btn.classList.remove("spinning"), 400);
+    rerolling = false;
+  }, REROLL_SWAP_MS);
 });
 
 document.getElementById("r-go").addEventListener("click", () => {
