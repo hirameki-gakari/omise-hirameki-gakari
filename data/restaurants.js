@@ -86,7 +86,8 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-mensaibou", name:"麺彩房", genre:"ラーメン", area:"高円寺", vibe:"familyHearty",
+    id:"koenji-mensaibou", name:"めんさいぼう 五郎左", genre:"ラーメン", area:"南阿佐ヶ谷", vibe:"familyHearty",
+    reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13053725/",
     priceRange:{dinner:[900,1400]},
     companionFit:{solo:3,couple:2,family:4,friends:2,colleagues:2},
     moodFit:{hearty:3,drinking:1,indulgent:1,budget:4,stylish:1,calm:2,adventurous:1,familyFun:4,quick:4,lively:3},

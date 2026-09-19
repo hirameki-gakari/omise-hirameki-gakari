@@ -444,7 +444,10 @@ const STORE_INFO = {
   /* 小杉湯となり 食べログ3.02 */
   "koenji-kosugiyu-tonari":{hours:"月・火・水・金・土・日 09:00〜22:00", closedDays:"木曜日", closedWeekdays:[4], src:"tabelog"},
   /* おさかな定食屋さん 食べログ3.00 */
-  "koenji-osakana-teishoku":{hours:"月・水・木・金・土・日 11:00〜15:00", closedDays:"火曜日", closedWeekdays:[2], src:"tabelog"}
+  "koenji-osakana-teishoku":{hours:"月・水・木・金・土・日 11:00〜15:00", closedDays:"火曜日", closedWeekdays:[2], src:"tabelog"},
+
+  /* ── 麺彩房=めんさいぼう 五郎左(南阿佐ヶ谷)。ユーザー情報で店の所在を訂正 ── */
+  "koenji-mensaibou":{hours:"火・木 11:30〜14:30、18:00〜20:30 / 水・金 11:30〜14:30 / 土・日 11:30〜15:30(完売で早く終了する場合あり)", closedDays:"月曜日", seats:"10席(カウンター10席)", closedWeekdays:[1], src:"tabelog"}
 };
 
 /* 上の表を店舗データに重ね合わせる(未設定の項目だけ補い、既存の値は上書きしない) */
