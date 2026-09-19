@@ -44,6 +44,9 @@ const STORE_INFO = {
   "koenji-fujikawa":{closed:"閉店(2021年11月・食べログ表示と報道)"},
   /* 臨時休業中(2026-09-19 運営者確認)。再開したらこの行を消す */
   "koenji-marunaga":{closed:"臨時休業中(運営者確認)"},
+  /* 運営者の現地確認(2026-09-19) */
+  "asagaya-asian-diamond":{closed:"存在しない(運営者確認)"},
+  "koenji-nagafuji":{closed:"閉業(運営者確認)"},
 
   /* ── 移転: 焼肉あまねは2024年5月に高円寺から南阿佐ヶ谷へ移転(住所・最寄駅・予約URLは restaurants.js を更新済み) ── */
   "koenji-amane":{hours:"月・水〜日・祝 12:00〜15:00、17:00〜22:00(料理L.O.21:30) / 火 ランチのみ 11:30〜14:00", closedDays:"火曜日(ランチのみ営業)", seats:"14席(カウンター6席、テーブル8席)", closedWeekdays:[2], src:"tabelog"},
