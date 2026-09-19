@@ -18,34 +18,53 @@ const to = html.indexOf("const MOOD_DESCRIPTOR");
 if(from === -1 || to === -1) throw new Error("index.html の推薦ロジックの範囲が見つかりません");
 const logic = html.slice(from, to);
 
-const factory = new Function(`
+const OpenHours = require(path.join(ROOT, "lib/open-hours.js"));
+const factory = new Function("OpenHours", `
   ${data}
   const localStorage = {getItem(){ return null; }, setItem(){}, removeItem(){}};
   const sessionStorage = localStorage;
+  RESTAURANTS.forEach(r => { r.openSlots = OpenHours.parseHours(r.hours); });
   ${logic}
-  return {RESTAURANTS, STORE_INFO, computePool, pickThreePicks, isClosedToday, todayWeekday};
+  return {RESTAURANTS, STORE_INFO, computePool, pickThreePicks, isClosedToday, isUnavailable, isFinishedNow, todayWeekday};
 `);
-const S = factory();
+const S = factory(OpenHours);
 
 let failures = 0, checks = 0;
 const companions = ["solo","couple","family","friends","colleagues"];
 const moods = ["drinking","hearty","calm","lively","indulgent","budget","stylish","adventurous","familyFun","quick"];
 
+// 検証対象(index.html の isUnavailable)とは独立した判定基準。
+// 「除外された店」「今日が定休日」「今日の営業が終わった(閉店45分前を含む)」のどれかなら提案してはいけない。
+function oracleUnavailable(r, now){
+  if(r.closed) return true;
+  const wk = (now.getHours() < 4 ? now.getDay() + 6 : now.getDay()) % 7;
+  if(Array.isArray(r.closedWeekdays) && r.closedWeekdays.includes(wk)) return true;
+  const slots = OpenHours.parseHours(r.hours);
+  const st = OpenHours.statusAt(slots, now);
+  return !!st && st.state === "finished";
+}
+
+// 全曜日 × 時間帯(深夜3時・昼11時・15時・夜19時・23時)で、
+// 提案(本命・穴場・冒険・近くの店)に「定休日・閉店・今日の営業が終わった店」が混ざらないこと
+const HOURS = [3, 11, 15, 19, 23];
+const RealDate = Date;
 for(let wd = 0; wd < 7; wd++){
-  // 曜日を固定するため、その曜日の昼12時のDateを使う
-  const RealDate = Date;
-  const base = new RealDate(2026, 8, 20 + wd, 12, 0, 0); // 2026-09-20(日)〜
-  global.Date = class extends RealDate { constructor(...a){ return a.length ? new RealDate(...a) : new RealDate(base); } };
-  // extractした関数はDateを直接参照するため、Functionスコープにも反映
-  for(const c of companions) for(const m of moods){
-    for(let k = 0; k < 20; k++){
-      const picks = S.pickThreePicks(c, m);
-      const pool = S.computePool(c, m);
-      const shown = [picks.honban, picks.anaba, picks.boken].concat(pool).map(x => x.r);
-      shown.forEach(r => { checks++; if(S.isClosedToday(r, wd)){ failures++; console.log("NG", "曜日"+wd, c, m, r.id); } });
+  for(const hour of HOURS){
+    const base = new RealDate(2026, 8, 20 + wd, hour, 0, 0); // 2026-09-20(日)〜
+    global.Date = class extends RealDate { constructor(...a){ return a.length ? new RealDate(...a) : new RealDate(base); } };
+    for(const c of companions) for(const m of moods){
+      for(let k = 0; k < 6; k++){
+        const picks = S.pickThreePicks(c, m);
+        const pool = S.computePool(c, m);
+        const shown = [picks.honban, picks.anaba, picks.boken].concat(pool).map(x => x.r);
+        shown.forEach(r => {
+          checks++;
+          if(oracleUnavailable(r, base)){ failures++; console.log("NG", "曜日"+wd, hour+"時", c, m, r.id); }
+        });
+      }
     }
+    global.Date = RealDate;
   }
-  global.Date = RealDate;
 }
 
 // 除外リスト(STORE_CLOSED)の全店が実際に除外されていること。

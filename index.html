@@ -457,10 +457,13 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
 <script src="data/restaurants.js"></script>
 <script src="data/store-info.js"></script>
 <script src="data/store-contact.js"></script>
+<script src="lib/open-hours.js"></script>
 <script src="data/photos.js"></script>
 <script>
 /* 店舗データ(VIBES / BASE_RESTAURANTS / NEW_ROWS / RESTAURANTS)は
    data/restaurants.js に分離済み。ここから先はUIロジックのみ。 */
+/* 営業時間の文字列を営業枠に変換(読み取れない店は null=判定しない) */
+RESTAURANTS.forEach(r => { r.openSlots = OpenHours.parseHours(r.hours); });
 /* 自社撮影の写真(data/photos.js、scripts/sync-photos.jsで生成)を
    店舗データに重ね合わせる。写真が無い店は従来通りブランドプレート表示。 */
 if(typeof RESTAURANT_PHOTOS !== "undefined"){
@@ -636,6 +639,15 @@ function todayWeekday(now){
   const d = now || new Date();
   return (d.getHours() < 4 ? d.getDay() + 6 : d.getDay()) % 7;
 }
+/* 今この時刻で、その日の営業がもう終わっている(または閉店まで45分を切り、この後の営業もない)店 */
+function isFinishedNow(r, now){
+  const st = OpenHours.statusAt(r.openSlots, now);
+  return !!st && st.state === "finished";
+}
+/* 提案から外す店: 閉店・除外 / 今日が定休日 / 今日の営業がもう終わった */
+function isUnavailable(r, now){
+  return isClosedToday(r, todayWeekday(now)) || isFinishedNow(r, now);
+}
 function isClosedToday(r, weekday){
   if(r.closed) return true;
   return Array.isArray(r.closedWeekdays) && r.closedWeekdays.indexOf(weekday) !== -1;
@@ -645,9 +657,9 @@ function computePool(companionId, moodId){
   const history = getHistory();
   const lastId = history[0] ? history[0].id : null;
   const shownGenres = new Set(getShownGenres());
-  const today = todayWeekday();
+  const now = new Date();
 
-  const base = RESTAURANTS.filter(r => r.id !== lastId && !isClosedToday(r, today));
+  const base = RESTAURANTS.filter(r => r.id !== lastId && !isUnavailable(r, now));
 
   // Phase 1: Hard Filter(誰とMust + 気分Must)
   let candidates = base.filter(r => satisfiesCompanionMust(r, companionId) && satisfiesMoodMust(r, moodId));
@@ -726,9 +738,9 @@ function pickThreePicks(companionId, moodId){
   const anaba = takeFrom(anabaZone.length > 0 ? anabaZone : pool, 8) || takeFrom(pool, pool.length);
 
   const lastId = getHistory()[0] ? getHistory()[0].id : null;
-  const today = todayWeekday();
+  const now = new Date();
   const wideBase = RESTAURANTS
-    .filter(r => r.id !== lastId && !isClosedToday(r, today) && satisfiesCompanionMust(r, companionId))
+    .filter(r => r.id !== lastId && !isUnavailable(r, now) && satisfiesCompanionMust(r, companionId))
     .map(r => ({r, score: scoreRestaurant(r, companionId, moodId), bucket: priceBucket(r)}));
   const adventurous = wideBase.filter(x => !satisfiesMoodMust(x.r, moodId));
   const bokenSource = adventurous.length > 0 ? adventurous : pool;
@@ -926,6 +938,8 @@ function renderResult(){
   const meta = document.getElementById("r-meta");
   meta.innerHTML = "";
   const metaItems = [r.area, r.genre, priceLabel(r), distanceLabel(r)];
+  const openLabel = OpenHours.label(OpenHours.statusAt(r.openSlots, new Date()));
+  if(openLabel) metaItems.push(openLabel);
   if(r.hours) metaItems.push("営業時間 " + r.hours);
   if(r.closedDays) metaItems.push("定休日 " + r.closedDays);
   if(r.seats) metaItems.push(r.seats);
