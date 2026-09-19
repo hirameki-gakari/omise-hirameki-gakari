@@ -48,9 +48,24 @@ for(let wd = 0; wd < 7; wd++){
   global.Date = RealDate;
 }
 
-// 閉店が確認できた店は、曜日を問わず一度も出ない(上のループで isClosedToday が true の店が出たら失敗する)
-const closedIds = S.RESTAURANTS.filter(r => r.closed).map(r => r.id);
-checks++; if(closedIds.length < 4){ failures++; console.log("NG closed フラグの店が想定より少ない", closedIds); }
+// 除外リスト(STORE_CLOSED)の全店が実際に除外されていること。
+// (同じidが STORE_INFO 側にも別途あっても、除外が上書きされない)
+const closedTable = new Function(data + "; return STORE_CLOSED;")();
+const closedIds = Object.keys(closedTable);
+checks++; if(closedIds.length < 12){ failures++; console.log("NG STORE_CLOSED の件数が想定より少ない", closedIds.length); }
+closedIds.forEach(id => {
+  const r = S.RESTAURANTS.find(x => x.id === id);
+  checks++; if(!r){ failures++; console.log("NG STORE_CLOSED に存在しないid", id); return; }
+  checks++; if(!r.closed){ failures++; console.log("NG 除外が効いていない", id); }
+  checks++; if(!S.isClosedToday(r, 0)){ failures++; console.log("NG isClosedToday が false", id); }
+});
+
+// STORE_INFO 内のidの重複(後ろの定義が前を上書きして、意図しない値になる)を検出
+const infoSrc = fs.readFileSync(path.join(ROOT, "data/store-info.js"), "utf8");
+const infoBody = infoSrc.slice(infoSrc.indexOf("const STORE_INFO = {"));
+const keys = [...infoBody.matchAll(/^  "([a-z0-9\-]+)":\{/gm)].map(m => m[1]);
+const dup = keys.filter((k, i) => keys.indexOf(k) !== i);
+checks++; if(dup.length){ failures++; console.log("NG STORE_INFO にidの重複", [...new Set(dup)].join(", ")); }
 
 // 境界: 深夜3時台は前日扱い、4時以降は当日
 const eq = (a, b, msg) => { checks++; if(a !== b){ failures++; console.log("NG", msg, a, b); } };

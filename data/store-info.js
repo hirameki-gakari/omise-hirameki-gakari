@@ -7,11 +7,32 @@
    - closedWeekdays: 「毎週決まった曜日が定休」の店だけ設定する(0=日 … 6=土)。
        index.html が「今日が定休日の店」を候補から外すのに使う。
        不定休・第n週休み・祝日休みは、外れる日を誤るリスクがあるため入れない。
-   - closed: 閉店・臨時休業が確認できた店(理由の文字列)。データは残し、提案からだけ外す。再開したら行を消す。
+   - 提案から外す店は、下の STORE_CLOSED に書く(理由つき)。
    - src: 情報源。"tabelog"=食べログ掲載情報 / "web"=検索結果に出た公式・グルメサイト情報
    - 調査日: 2026-09-19。食べログ等に載る情報の転記であり、現地確認はしていない。
    - 推測での補完はしない。分からない項目は書かない。
    ========================================================= */
+/* 提案から外す店(id → 理由)。データは残し、提案からだけ外す。再開・復活させる場合は行を消す。
+   STORE_INFO とは別の表にしてあるのは、同じidが STORE_INFO に別途あっても、除外が上書きされないようにするため。 */
+const STORE_CLOSED = {
+  /* 閉店(食べログに【閉店】表示、または報道で確認) */
+  "koenji-jules-verne":"閉店(食べログ表示)",
+  "asagaya-bansho":"閉店(食べログ表示)",
+  "asagaya-tachimachi":"閉店(食べログ表示)",
+  "koenji-fujikawa":"閉店(2021年11月・食べログ表示と報道)",
+  /* 臨時休業中(再開したら行を消す) */
+  "koenji-marunaga":"臨時休業中(運営者確認)",
+  /* 運営者の現地確認(2026-09-19) */
+  "asagaya-asian-diamond":"存在しない(運営者確認)",
+  "koenji-nagafuji":"閉業(運営者確認)",
+  /* 運営者の指示で除外(2026-09-19)。閉店ではない */
+  "koenji-nostalgia-cafe":"提案から除外(野方エリアのため・運営者指示)",
+  "koenji-maruchan":"提案から除外(野方エリアのため・運営者指示)",
+  "koenji-umemura":"提案から除外(野方エリアのため・運営者指示)",
+  "asagaya-samshiseok":"提案から除外(運営者指示)",
+  "asagaya-toraya-tsubakiyama":"提案から除外(運営者指示)"
+};
+
 const STORE_INFO = {
   /* ── 既存58店: 定休曜日のみ(営業時間・定休日の文言は restaurants.js に既にある) ── */
   "asagaya-impronte":{closedWeekdays:[1,2]},
@@ -37,16 +58,6 @@ const STORE_INFO = {
   "koenji-poeme-mano":{closedWeekdays:[2]},
   "koenji-patissier-junhomma":{closedWeekdays:[1]},
 
-  /* ── 閉店(食べログに【閉店】表示、または報道で確認)。データは残し、提案から外す ── */
-  "koenji-jules-verne":{closed:"閉店(食べログ表示)"},
-  "asagaya-bansho":{closed:"閉店(食べログ表示)"},
-  "asagaya-tachimachi":{closed:"閉店(食べログ表示)"},
-  "koenji-fujikawa":{closed:"閉店(2021年11月・食べログ表示と報道)"},
-  /* 臨時休業中(2026-09-19 運営者確認)。再開したらこの行を消す */
-  "koenji-marunaga":{closed:"臨時休業中(運営者確認)"},
-  /* 運営者の現地確認(2026-09-19) */
-  "asagaya-asian-diamond":{closed:"存在しない(運営者確認)"},
-  "koenji-nagafuji":{closed:"閉業(運営者確認)"},
 
   /* ── 移転: 焼肉あまねは2024年5月に高円寺から南阿佐ヶ谷へ移転(住所・最寄駅・予約URLは restaurants.js を更新済み) ── */
   "koenji-amane":{hours:"月・水〜日・祝 12:00〜15:00、17:00〜22:00(料理L.O.21:30) / 火 ランチのみ 11:30〜14:00", closedDays:"火曜日(ランチのみ営業)", seats:"14席(カウンター6席、テーブル8席)", closedWeekdays:[2], src:"tabelog"},
@@ -459,12 +470,12 @@ const STORE_INFO = {
 (function applyStoreInfo(){
   if(typeof RESTAURANTS === "undefined") return;
   RESTAURANTS.forEach(function(r){
+    if(STORE_CLOSED[r.id]) r.closed = STORE_CLOSED[r.id];
     const info = STORE_INFO[r.id];
     if(!info) return;
     ["hours", "closedDays", "seats"].forEach(function(k){
       if(!r[k] && info[k]) r[k] = info[k];
     });
     if(Array.isArray(info.closedWeekdays)) r.closedWeekdays = info.closedWeekdays;
-    if(info.closed) r.closed = info.closed;
   });
 })();
