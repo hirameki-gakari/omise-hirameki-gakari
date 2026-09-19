@@ -198,6 +198,14 @@ header.top .sub{color:var(--text-muted); font-size:1rem; margin-top:12px; max-wi
   color:#fff; border-radius:12px; padding:15px; font-weight:700; font-size:.95rem; min-height:50px;
 }
 .btn-go:hover{background:var(--accent-strong);}
+.actions-sub{display:flex; gap:10px;}
+.btn-sub{
+  flex:1; display:flex; align-items:center; justify-content:center; text-align:center; text-decoration:none;
+  border:1px solid rgba(231,238,243,.35); color:var(--indigo-ink); border-radius:12px;
+  padding:11px 8px; font-size:.88rem; min-height:44px;
+}
+.btn-sub:hover{border-color:var(--accent);}
+.btn-sub:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 .btn-reroll{
   display:flex; align-items:center; justify-content:center; gap:8px;
   background:transparent; border:1px dashed rgba(231,238,243,.35); color:var(--indigo-ink);
@@ -387,6 +395,10 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
         </div>
         <div class="actions">
           <a class="btn-go" id="r-go" href="#" target="_blank" rel="noopener">ここに行ってみる</a>
+          <div class="actions-sub">
+            <a class="btn-sub" id="r-tel" href="#" hidden></a>
+            <a class="btn-sub" id="r-map" href="#" target="_blank" rel="noopener">地図で見る</a>
+          </div>
           <button class="btn-reroll" id="r-reroll"><span class="spin">↻</span> 別のお店をひらめく</button>
         </div>
         <p class="cross-link-banner">
@@ -444,6 +456,7 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
 
 <script src="data/restaurants.js"></script>
 <script src="data/store-info.js"></script>
+<script src="data/store-contact.js"></script>
 <script src="data/photos.js"></script>
 <script>
 /* 店舗データ(VIBES / BASE_RESTAURANTS / NEW_ROWS / RESTAURANTS)は
@@ -801,14 +814,25 @@ function buildReasons(r, companionId, moodId){
   return list.slice(0, 3);
 }
 
+/* 地図は店名+住所で検索する(店名+エリアだけだと同名の別店に当たることがある) */
 function mapsUrl(r){
-  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(r.name + " " + r.area);
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(r.name + " " + (r.address || r.area));
 }
 
+/* 「ここに行ってみる」の行き先: 予約 > 公式サイト > 食べログ > 地図 */
+function destinationOf(r){
+  if(r.reservationUrl) return "reservation";
+  if(r.officialUrl) return "official";
+  if(r.tabelogUrl) return "tabelog";
+  return "maps";
+}
 function goUrl(r){
-  if(r.reservationUrl) return r.reservationUrl;
-  if(r.officialUrl) return r.officialUrl;
-  return mapsUrl(r);
+  switch(destinationOf(r)){
+    case "reservation": return r.reservationUrl;
+    case "official": return r.officialUrl;
+    case "tabelog": return r.tabelogUrl;
+    default: return mapsUrl(r);
+  }
 }
 
 function priceLabel(r){
@@ -905,6 +929,7 @@ function renderResult(){
   if(r.hours) metaItems.push("営業時間 " + r.hours);
   if(r.closedDays) metaItems.push("定休日 " + r.closedDays);
   if(r.seats) metaItems.push(r.seats);
+  if(r.address) metaItems.push("住所 " + r.address);
   metaItems.filter(Boolean).forEach(t => {
     const span = document.createElement("span");
     span.textContent = t;
@@ -920,6 +945,15 @@ function renderResult(){
   });
 
   document.getElementById("r-go").href = goUrl(r);
+  const telEl = document.getElementById("r-tel");
+  if(r.tel){
+    telEl.href = "tel:" + r.tel.replace(/-/g, "");
+    telEl.textContent = "電話する " + r.tel;
+    telEl.hidden = false;
+  } else {
+    telEl.hidden = true;
+  }
+  document.getElementById("r-map").href = mapsUrl(r);
   logStoreEvent(r, "impression");
 
   const noticeEl = document.getElementById("store-notice");
@@ -959,7 +993,7 @@ function renderResult(){
       trackEvent("cta_click", {
         restaurant_id: pick.r.id, restaurant_name: pick.r.name, genre: pick.r.genre,
         pick_type: key,
-        destination: pick.r.reservationUrl ? "reservation" : (pick.r.officialUrl ? "official" : "maps")
+        destination: destinationOf(pick.r)
       });
       logStoreEvent(pick.r, "selection");
     });
@@ -984,7 +1018,7 @@ function renderResult(){
     a.addEventListener("click", function(){
       trackEvent("cta_click", {
         restaurant_id: x.r.id, restaurant_name: x.r.name, genre: x.r.genre, pick_type: "nearby",
-        destination: x.r.reservationUrl ? "reservation" : (x.r.officialUrl ? "official" : "maps")
+        destination: destinationOf(x.r)
       });
       logStoreEvent(x.r, "selection");
     });
@@ -1134,9 +1168,20 @@ document.getElementById("r-go").addEventListener("click", () => {
   if(!r) return;
   trackEvent("cta_click", {
     restaurant_id:r.id, restaurant_name:r.name, genre:r.genre,
-    destination: r.reservationUrl ? "reservation" : (r.officialUrl ? "official" : "maps")
+    destination: destinationOf(r)
   });
   logStoreEvent(r, "selection");
+});
+
+/* 電話・地図は「行く意思」のサブ導線。cta_clickとは別イベントで計測する */
+["r-tel", "r-map"].forEach(id => {
+  document.getElementById(id).addEventListener("click", () => {
+    const r = currentPick && currentPick.r;
+    if(!r) return;
+    trackEvent(id === "r-tel" ? "call_click" : "map_click", {
+      restaurant_id:r.id, restaurant_name:r.name, genre:r.genre
+    });
+  });
 });
 
 document.getElementById("r-restart").addEventListener("click", () => {
