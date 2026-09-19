@@ -616,7 +616,7 @@ function satisfiesMoodMust(r, moodId){
   return !check || check(r);
 }
 
-/* 今日が毎週の定休日にあたる店は提案しない(data/store-info.js の closedWeekdays)。
+/* 閉店が確認できた店(closed)と、今日が毎週の定休日にあたる店(closedWeekdays)は提案しない。
    深夜0〜3時台は前日の夜の続きとして、前日の曜日で判定する。
    不定休・第n週休みなど曜日で決まらない店は対象外(除外しない)。 */
 function todayWeekday(now){
@@ -624,6 +624,7 @@ function todayWeekday(now){
   return (d.getHours() < 4 ? d.getDay() + 6 : d.getDay()) % 7;
 }
 function isClosedToday(r, weekday){
+  if(r.closed) return true;
   return Array.isArray(r.closedWeekdays) && r.closedWeekdays.indexOf(weekday) !== -1;
 }
 

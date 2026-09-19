@@ -48,6 +48,10 @@ for(let wd = 0; wd < 7; wd++){
   global.Date = RealDate;
 }
 
+// 閉店が確認できた店は、曜日を問わず一度も出ない(上のループで isClosedToday が true の店が出たら失敗する)
+const closedIds = S.RESTAURANTS.filter(r => r.closed).map(r => r.id);
+checks++; if(closedIds.length < 4){ failures++; console.log("NG closed フラグの店が想定より少ない", closedIds); }
+
 // 境界: 深夜3時台は前日扱い、4時以降は当日
 const eq = (a, b, msg) => { checks++; if(a !== b){ failures++; console.log("NG", msg, a, b); } };
 eq(S.todayWeekday(new Date(2026, 8, 21, 2, 0)), 0, "月曜2時は日曜扱い");

@@ -39,8 +39,8 @@ const BASE_RESTAURANTS = [
     }
   },
   {
-    id:"koenji-amane", name:"焼肉 あまね", genre:"焼肉", area:"高円寺", station:"高円寺", walkMinutes:2, vibe:"familyHearty",
-    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131904/13134688/",
+    id:"koenji-amane", name:"焼肉 あまね", genre:"焼肉", area:"南阿佐ヶ谷", station:"南阿佐ヶ谷", walkMinutes:3, vibe:"familyHearty",
+    officialUrl:null, reservationUrl:"https://tabelog.com/tokyo/A1319/A131905/13293964/",
     priceRange:{dinner:[3000,4500]},
     companionFit:{solo:1,couple:2,family:4,friends:4,colleagues:3},
     moodFit:{hearty:5,drinking:3,indulgent:2,budget:4,stylish:1,calm:1,adventurous:1,familyFun:4,quick:2,lively:4},
@@ -335,10 +335,10 @@ const NEW_ROWS = [
     tags:["ランチが人気","気軽なイタリアン"], reasonSeeds:{friends:["気取らずに入れる、普段使いのイタリアン"], budget:["ランチの評価が高いから、コスパも安心"], solo:["ひとりでのふらっと利用もしやすそう"]}},
 
   // ── ラーメン(13) ──
-  {id:"asagaya-daishi-to-men-yuei", name:"だしと麺 遊泳", genre:"ラーメン(百名店)", area:"阿佐ヶ谷", price:[900,1500], vibe:"soloQuick",
+  {id:"asagaya-daishi-to-men-yuei", name:"だしと麺 遊泳", genre:"ラーメン(百名店)", area:"高円寺", price:[900,1500], vibe:"soloQuick",
     officialUrl:null, reservationUrl:"https://www.tablecheck.com/en/shops/dashi-to-menyuei/reserve",
     tags:["ラーメン百名店","太ちぢれ麺"], reasonSeeds:{quick:["百名店の一杯を、さっと食べてさっと出られる"], solo:["ひとりでふらっと入りやすいラーメン店"], adventurous:["ラーメン百名店に選ばれた、こだわりの一杯"]}},
-  {id:"asagaya-yamatoki", name:"らぁめん 山と樹", genre:"ラーメン(百名店)", area:"阿佐ヶ谷", price:[1000,2000], vibe:"soloQuick",
+  {id:"asagaya-yamatoki", name:"らぁめん 山と樹", genre:"ラーメン(百名店)", area:"高円寺", price:[1000,2000], vibe:"soloQuick",
     tags:["ラーメン百名店"], reasonSeeds:{quick:["行列ができる百名店の一杯を手早く"], solo:["ひとりでも並んででも食べたい、百名店の実力"], adventurous:["行列ができる名店を、まだ知らなければ狙い目"]}},
   {id:"asagaya-yokohama-iekei", name:"横濱ラーメン あさが家 本店", genre:"家系ラーメン", area:"阿佐ヶ谷", price:[1000,2000], vibe:"familyHearty",
     tags:["家系","ボリューム"], reasonSeeds:{hearty:["家系らしいがっつりスープとボリューム"], family:["がっつりスープと麺量で、育ち盛りにも満足感"], budget:["家系らしい、コスパのいいボリューム"]}},
@@ -639,7 +639,7 @@ const NEW_ROWS3 = [
     tags:["チャーシュー評判","評価3.64"], reasonSeeds:{adventurous:["個性的な店名の通り、いつもと違うつけ麺を試したい日に"]}},
   {id:"asagaya-irohaya", name:"らーめん いろはや", genre:"ラーメン", area:"阿佐ヶ谷", price:[700,999], vibe:"soloQuick",
     tags:["評価3.61"], reasonSeeds:{budget:["標準的なラーメンを、手頃な価格でしっかりと"]}},
-  {id:"koenji-abura-fukuho", name:"濃口背脂味噌らーめんと餃子 大福帳", genre:"ラーメン", area:"高円寺", price:[700,999], vibe:"familyHearty",
+  {id:"koenji-abura-fukuho", name:"濃口背脂味噌らーめんと餃子 大福帳", genre:"ラーメン", area:"阿佐ヶ谷", price:[700,999], vibe:"familyHearty",
     tags:["背脂味噌","餃子","評価3.60"], reasonSeeds:{hearty:["背脂の効いた濃厚味噌で、しっかりお腹を満たせる"], family:["餃子もセットで頼めるから、家族での一杯にも"]}},
   {id:"koenji-rokkumen", name:"六九麺", genre:"ラーメン", area:"高円寺", price:[700,999], vibe:"soloQuick",
     tags:["鶏白湯","評価3.59"], reasonSeeds:{quick:["鶏白湯のやさしいスープを、さっと一杯"]}},
@@ -744,7 +744,7 @@ const NEW_ROWS3 = [
     tags:["鳥取系","スナック風食堂"], reasonSeeds:{solo:["肩肘張らずに入れる、スナック風の食堂"]}},
   {id:"asagaya-shinya-shokudo", name:"しんや食堂", genre:"食堂", area:"阿佐ヶ谷", price:[1000,1999], vibe:"soloQuick",
     tags:["食堂"], reasonSeeds:{quick:["昔ながらの食堂で、さっと済ませたい日に"]}},
-  {id:"koenji-nagafuji", name:"ながふじ", genre:"食堂", area:"高円寺", price:[700,999], vibe:"budgetCasual",
+  {id:"koenji-nagafuji", name:"ながふじ", genre:"食堂", area:"阿佐ヶ谷", price:[700,999], vibe:"budgetCasual",
     tags:["日替わり定食700円"], reasonSeeds:{budget:["日替わり定食が700円という、驚きの価格設定"]}},
   {id:"koenji-agemonya", name:"あげもんや", genre:"食堂", area:"高円寺", price:[1000,1999], vibe:"soloQuick",
     tags:["食堂"], reasonSeeds:{quick:["揚げ物中心の定食で、さっと満足感を得られる"]}},

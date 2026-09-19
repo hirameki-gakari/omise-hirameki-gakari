@@ -7,6 +7,7 @@
    - closedWeekdays: 「毎週決まった曜日が定休」の店だけ設定する(0=日 … 6=土)。
        index.html が「今日が定休日の店」を候補から外すのに使う。
        不定休・第n週休み・祝日休みは、外れる日を誤るリスクがあるため入れない。
+   - closed: 閉店が確認できた店(理由の文字列)。データは残し、提案からだけ外す。
    - src: 情報源。"tabelog"=食べログ掲載情報 / "web"=検索結果に出た公式・グルメサイト情報
    - 調査日: 2026-09-19。食べログ等に載る情報の転記であり、現地確認はしていない。
    - 推測での補完はしない。分からない項目は書かない。
@@ -35,6 +36,15 @@ const STORE_INFO = {
   "asagaya-hachicafe":{closedWeekdays:[2]},
   "koenji-poeme-mano":{closedWeekdays:[2]},
   "koenji-patissier-junhomma":{closedWeekdays:[1]},
+
+  /* ── 閉店(食べログに【閉店】表示、または報道で確認)。データは残し、提案から外す ── */
+  "koenji-jules-verne":{closed:"閉店(食べログ表示)"},
+  "asagaya-bansho":{closed:"閉店(食べログ表示)"},
+  "asagaya-tachimachi":{closed:"閉店(食べログ表示)"},
+  "koenji-fujikawa":{closed:"閉店(2021年11月・食べログ表示と報道)"},
+
+  /* ── 移転: 焼肉あまねは2024年5月に高円寺から南阿佐ヶ谷へ移転(住所・最寄駅・予約URLは restaurants.js を更新済み) ── */
+  "koenji-amane":{hours:"月・水〜日・祝 12:00〜15:00、17:00〜22:00(料理L.O.21:30) / 火 ランチのみ 11:30〜14:00", closedDays:"火曜日(ランチのみ営業)", seats:"14席(カウンター6席、テーブル8席)", closedWeekdays:[2], src:"tabelog"},
 
   /* ── 食べログ掲載情報から追加(評価の高い店から調査) ── */
   "asagaya-daishi-to-men-yuei":{hours:"水・木 17:00〜21:00 / 土・日 11:00〜15:30", closedDays:"月曜・火曜・金曜", seats:"8席(カウンター6席、テーブル2〜3席)", closedWeekdays:[1,2,5], src:"tabelog"},
@@ -117,5 +127,6 @@ const STORE_INFO = {
       if(!r[k] && info[k]) r[k] = info[k];
     });
     if(Array.isArray(info.closedWeekdays)) r.closedWeekdays = info.closedWeekdays;
+    if(info.closed) r.closed = info.closed;
   });
 })();
