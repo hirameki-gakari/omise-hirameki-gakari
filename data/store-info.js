@@ -8,6 +8,8 @@
        index.html が「今日が定休日の店」を候補から外すのに使う。
        不定休・第n週休み・祝日休みは、外れる日を誤るリスクがあるため入れない。
    - 提案から外す店は、下の STORE_CLOSED に書く(理由つき)。
+   - infoNote: 営業時間などが確認できない・情報源同士で食い違うときの、利用者向けの注意書き。
+   - checked: 最終確認日(YYYY-MM-DD)。srcUrl: 出典URL。
    - src: 情報源。"tabelog"=食べログ掲載情報 / "web"=検索結果に出た公式・グルメサイト情報
    - 調査日: 2026-09-19。食べログ等に載る情報の転記であり、現地確認はしていない。
    - 推測での補完はしない。分からない項目は書かない。
@@ -130,7 +132,7 @@ const STORE_INFO = {
   "koenji-chuka-isshin":{hours:"平日 11:30〜15:30 / 土日祝 11:30〜16:00", closedDays:"月曜日", closedWeekdays:[1], src:"web"},
   "asagaya-yokohama-iekei":{hours:"11:00〜翌1:00(16:00〜17:00は休憩)", closedDays:"年中無休", closedWeekdays:[], src:"web"},
   "koenji-taikiya-akatsuki":{hours:"11:00〜15:00、17:00〜23:00", closedDays:"無休", closedWeekdays:[], src:"web"},
-  "koenji-tomochin":{hours:"月〜木 10:00〜22:00 / 金 10:00〜翌5:00 / 土 8:00〜翌5:00 / 日 8:00〜21:00", closedDays:"不定休", src:"web"},
+  "koenji-tomochin":{seats:"14席", infoNote:"食べログに「営業時間変更のお知らせ」があり、掲載の営業時間(24時間営業)と過去の情報が食い違うため、営業時間は確認できていません。最新は公式X(@bantam26)でご確認ください。", src:"tabelog", checked:"2026-09-20"},
 
   /* ── 食べログ掲載情報から一括追加(2026-09-19取得。食べログ評価の高い店の順) ── */
   /* とんかつ成蔵 食べログ4.27 */
@@ -142,7 +144,7 @@ const STORE_INFO = {
   /* 中洲屋台長浜ラーメン初代 健太 東京高円寺本店 食べログ3.77 */
   "koenji-nakasu-yatai":{hours:"火・水・木・金・土・日 12:00〜15:00", closedDays:"月曜日", seats:"9席（カウンター9席）", closedWeekdays:[1], src:"tabelog"},
   /* 豚骨 蒼翔 食べログ3.74 */
-  "koenji-tonkotsu-souten":{hours:"月・水・木・金・土 11:00〜15:00、17:00〜21:00(L.O.料理20:45) / 日 11:00〜15:00(L.O.料理14:55)、17:00〜21:00(L.O.料理20:45)", closedDays:"火曜日", seats:"11席（カウンター10席 4人テーブル1卓）", closedWeekdays:[2], src:"tabelog"},
+  "koenji-tonkotsu-souten":{hours:"月〜土 11:00〜15:00、17:00〜21:00 / 日 11:00〜15:00(ランチのみ)", closedDays:"公式サイトは定休日なし・食べログは火曜", seats:"14席(カウンター10席、4人テーブル1卓)", closedWeekdays:[2], infoNote:"公式サイトと食べログで、定休日と日曜のディナー営業の記載が異なります。念のため火曜は提案していません。最新は公式X(@patapataramen)でご確認ください。", src:"official", srcUrl:"https://pattapata.jp/", checked:"2026-09-20"},
   /* 麺屋 はやしまる 食べログ3.73 */
   "koenji-hayashimaru":{hours:"月・火・金・土・日 10:56〜15:00", closedDays:"水曜日・木曜日", seats:"10席（2026年7月12日時点 朝一並び11人目で ファーストロッドならず。席数10人。 ）", closedWeekdays:[3,4], src:"tabelog"},
   /* アサガキタ 食べログ3.72 */
@@ -463,19 +465,34 @@ const STORE_INFO = {
   "koenji-osakana-teishoku":{hours:"月・水・木・金・土・日 11:00〜15:00", closedDays:"火曜日", closedWeekdays:[2], src:"tabelog"},
 
   /* ── 麺彩房=めんさいぼう 五郎左(南阿佐ヶ谷)。ユーザー情報で店の所在を訂正 ── */
-  "koenji-mensaibou":{hours:"火・木 11:30〜14:30、18:00〜20:30 / 水・金 11:30〜14:30 / 土・日 11:30〜15:30(完売で早く終了する場合あり)", closedDays:"月曜日", seats:"10席(カウンター10席)", closedWeekdays:[1], src:"tabelog"}
+  "koenji-mensaibou":{hours:"火・木 11:30〜14:30、18:00〜20:30 / 水・金 11:30〜14:30 / 土・日 11:30〜15:30(完売で早く終了する場合あり)", closedDays:"月曜日", seats:"10席(カウンター10席)", closedWeekdays:[1], src:"tabelog"},
+
+  /* ── 営業時間が確認できない店(利用者に「営業時間未確認」と示す) ── */
+  "asagaya-curry-kankan":{infoNote:"阿佐ヶ谷北口スター・ロード「VOLVER」での間借り営業のため、営業日・営業時間が決まっていません(食べログにも記載がありません)。行く前に公式SNSなどでご確認ください。", src:"tabelog", checked:"2026-09-20"}
 };
 
 /* 上の表を店舗データに重ね合わせる(未設定の項目だけ補い、既存の値は上書きしない) */
+/* 営業情報の出典と最終確認日。src: "official"=公式サイト / "tabelog"=食べログ掲載情報 / "web"=検索結果に出た公式・グルメサイト情報。
+   src を持たない店(restaurants.js に営業時間が元からある店)は、2026-09-16 に公式サイト・食べログ等で確認したもの。 */
+const STORE_INFO_CHECKED_DEFAULT = "2026-09-19";
+const STORE_INFO_CHECKED_BASE = "2026-09-16";
+
 (function applyStoreInfo(){
   if(typeof RESTAURANTS === "undefined") return;
   RESTAURANTS.forEach(function(r){
     if(STORE_CLOSED[r.id]) r.closed = STORE_CLOSED[r.id];
     const info = STORE_INFO[r.id];
-    if(!info) return;
-    ["hours", "closedDays", "seats"].forEach(function(k){
-      if(!r[k] && info[k]) r[k] = info[k];
-    });
-    if(Array.isArray(info.closedWeekdays)) r.closedWeekdays = info.closedWeekdays;
+    const hadBaseHours = !!r.hours;
+    if(info){
+      ["hours", "closedDays", "seats"].forEach(function(key){
+        if(!r[key] && info[key]) r[key] = info[key];
+      });
+      if(Array.isArray(info.closedWeekdays)) r.closedWeekdays = info.closedWeekdays;
+      if(info.infoNote) r.infoNote = info.infoNote;
+    }
+    if(r.hours || r.seats || r.infoNote){
+      if(info && info.src) r.infoSrc = {type: info.src, url: info.srcUrl || r.tabelogUrl || null, checked: info.checked || STORE_INFO_CHECKED_DEFAULT};
+      else if(hadBaseHours) r.infoSrc = {type: "mixed", url: r.officialUrl || r.tabelogUrl || null, checked: STORE_INFO_CHECKED_BASE};
+    }
   });
 })();

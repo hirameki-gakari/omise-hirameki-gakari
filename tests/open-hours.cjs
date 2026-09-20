@@ -52,10 +52,10 @@ eq(OH.statusAt(late, at(2, 3, 0)).state, "later", "火曜3:00は今夜の開店�
 eq(OH.statusAt(late, at(0, 1, 0)).state, "open", "日曜1:00は土曜夜の続きで open(日曜自体の営業枠がなくても)");
 eq(OH.statusAt(late, at(0, 12, 0)), null, "日曜昼は営業枠が無い曜日なので判定しない(null)");
 eq(OH.statusAt(null, at(1, 12, 0)), null, "営業時間が読み取れない店は判定しない(null)");
-eq(OH.label(OH.statusAt(store, at(1, 15))), "17:00から営業", "ラベル(開店前)");
-eq(OH.label(OH.statusAt(store, at(1, 19))), "営業中(〜23:00)", "ラベル(営業中)");
-eq(OH.label(OH.statusAt(late, at(2, 1))), "営業中(〜2:00)", "ラベル(深夜・翌日表記にしない)");
-eq(OH.label(OH.statusAt(OH.parseHours("月〜土 17:30〜24:00"), at(1, 19))), "営業中(〜24:00)", "ラベル(24時閉店は24:00)");
+eq(OH.label(OH.statusAt(store, at(1, 15))), "通常は17:00から営業", "ラベル(開店前)");
+eq(OH.label(OH.statusAt(store, at(1, 19))), "通常は営業中(〜23:00)", "ラベル(営業中)");
+eq(OH.label(OH.statusAt(late, at(2, 1))), "通常は営業中(〜2:00)", "ラベル(深夜・翌日表記にしない)");
+eq(OH.label(OH.statusAt(OH.parseHours("月〜土 17:30〜24:00"), at(1, 19))), "通常は営業中(〜24:00)", "ラベル(24時閉店は24:00)");
 
 // ---- 実データ ----
 const data = ["restaurants", "store-info", "store-contact"].map(f => fs.readFileSync(path.join(__dirname, "..", "data", f + ".js"), "utf8")).join("\n");
