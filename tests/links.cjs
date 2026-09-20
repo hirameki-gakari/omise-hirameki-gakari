@@ -39,7 +39,7 @@ S.RESTAURANTS.filter(r => !r.closed).forEach(r => {
   else if(r.tabelogUrl) ok(dest === "tabelog" && url === r.tabelogUrl, r.id + " 食べログURLが3番手でない");
   else ok(dest === "maps" && url.includes("google.com/maps"), r.id + " 最後は地図になる");
   if(r.tabelogUrl) ok(/^https:\/\/tabelog\.com\/tokyo\/A\d+\/A\d+\/\d+\/$/.test(r.tabelogUrl), r.id + " 食べログURLの形式: " + r.tabelogUrl);
-  if(r.tel) ok(/^0\d{1,4}-\d{1,4}-\d{3,4}$/.test(r.tel) && !r.tel.startsWith("050"), r.id + " 電話番号の形式: " + r.tel);
+  if(r.tel) ok(/^0\d{1,4}-\d{1,4}-\d{3,4}$/.test(r.tel) && !/^0[5789]0-/.test(r.tel), r.id + " 電話番号の形式(携帯・IP電話は載せない): " + r.tel);
   if(r.address){
     ok(/^(杉並区|中野区)/.test(r.address), r.id + " 住所の形式: " + r.address);
     ok(decodeURIComponent(S.mapsUrl(r)).includes(r.address), r.id + " 地図検索に住所が入っていない");

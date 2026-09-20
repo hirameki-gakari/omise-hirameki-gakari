@@ -61,6 +61,8 @@ active.forEach(r => { if(r.tel) (tel[r.tel] = tel[r.tel] || []).push(r.name); })
 const TEL_SHARED_OK = {"03-5913-8303": "アガリコ餃子楼 阿佐ヶ谷店 と マミーメンチ(食べログ上は別ページ・別店舗。同じ番号が掲載されている)"};
 Object.entries(tel).forEach(([t, names]) => ok(names.length === 1 || (TEL_SHARED_OK[t] && names.length === 2), "電話番号が複数店で重複: " + t + " " + names.join(" / ")));
 active.forEach(r => { if(r.tel) ok(/^0\d{1,4}-\d{1,4}-\d{3,4}$/.test(r.tel), r.name + " 電話番号の形式: " + r.tel); });
+// 携帯電話(070/080/090)・IP電話(050)は、お店の個人の番号の可能性があるため載せない(運営者判断)
+active.forEach(r => ok(!/^0[5789]0-/.test(r.tel || ""), r.name + " 携帯・IP電話番号を載せている: " + r.tel));
 
 // ---- 営業情報の出典・最終確認日・注意書き ----
 active.filter(r => r.hours).forEach(r => {
