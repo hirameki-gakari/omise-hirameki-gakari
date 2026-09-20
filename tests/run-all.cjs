@@ -8,7 +8,7 @@
 const path = require("path");
 const { spawnSync } = require("child_process");
 
-const tests = ["closed-today", "open-hours", "links", "privacy", "reroll-copy", "check-store-status"];
+const tests = ["closed-today", "open-hours", "links", "privacy", "seo", "reroll-copy", "check-store-status"];
 let failed = 0;
 for(const t of tests){
   const res = spawnSync(process.execPath, [path.join(__dirname, t + ".cjs")], {encoding: "utf8"});

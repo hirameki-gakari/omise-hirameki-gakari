@@ -41,6 +41,8 @@ node tests/run-all.cjs          # すべて実行(データやコードを変え
 | `open-hours.cjs` | 営業時間の読み取りと今の営業判定(日またぎ・昼夜2部・曜日の並記など)。実データの読み取り率 |
 | `links.cjs` | 行き先の優先順位、電話番号・住所・食べログURLの形式 |
 | `privacy.cjs` | プライバシーポリシーの記載と、サイトの実際の挙動が一致している |
+| `reroll-copy.cjs` | 「別のお店をひらめく」後のひらりのセリフ選び(直近3回を避ける・ジャンル別) |
+| `seo.cjs` | title・description・canonical・OGP・構造化データ・見出し・sitemap・robots・サイト内リンク。実態と違う表現(位置情報の「近く」など)や架空の評価を入れていないこと |
 | `check-store-status.cjs` | 下記の確認スクリプトの検知ロジック(通信はモック) |
 
 推薦理由の使い回しの監査は `node scripts/audit-reasons.js`。
@@ -60,6 +62,28 @@ node scripts/check-store-status.js --out report.md
 3. **電話番号・住所が変わった店** → `data/store-contact.js` を更新(移転なら店名・エリア・最寄駅も見直す)
 
 終了コードは、1か3があれば2、なければ0です。食べログの表示は遅れることがあるので、閉店の最終判断は、現地・公式SNS・電話などで確認してください。
+
+## 検索エンジン(SEO)
+
+| 項目 | 内容 |
+|---|---|
+| 公開URL | `https://hirameki-gakari.github.io/omise-hirameki-gakari/`(canonical もこのURL。ルートドメインやごはんのひらめき係とは別のURL) |
+| title / description | サービス名で始め、対象エリア(阿佐ヶ谷・高円寺)と何のサービスかが分かる文にする。このサービスは現在地(位置情報)を使わないので、「近くの」などとは書かない |
+| 初期HTML | JavaScriptを実行しなくても、`h1`(サービス名を含む)と「お店のひらめき係とは？」の説明が読める。店舗データはJavaScriptで描画されるため、検索エンジンに読ませたい説明は初期HTMLに書く |
+| OGP画像 | `assets/og-image.png`(1200x630)。ファビコン・ホーム画面アイコンは `assets/favicon-*.png` `assets/apple-touch-icon.png`。いずれも現行デザインのひらり |
+| 構造化データ | `WebSite` と `WebApplication` のみ。評価・レビュー・運営会社情報など、裏付けのない項目は入れない(`tests/seo.cjs` が検査) |
+| sitemap.xml | インデックスさせるURLだけ(トップとprivacy.html)。ページを増やしたら追記する |
+| robots.txt | GitHub Pagesのプロジェクトサイトでは、検索エンジンが読むのは**ホスト直下**(`hirameki-gakari.github.io/robots.txt`)だけで、このファイルは読まれない(直下は404=制限なし扱い)。sitemapは Google Search Console から送信する |
+
+公開の前後に:
+
+```
+node tests/seo.cjs                                   # 設定の静的チェック(公開前)
+node scripts/check-live-seo.js                       # 公開サイトを実際に取得して確認(公開後。反映に数分かかる)
+node scripts/check-live-seo.js --base http://127.0.0.1:8765/   # ローカルサーバーで公開前に確認
+```
+
+Google Search Console での登録・sitemap送信などは、人が行う作業です(所有権確認にGoogleアカウントでのログインが必要)。
 
 ## データの取り扱い
 
