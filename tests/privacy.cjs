@@ -27,7 +27,8 @@ ok(!/document\.cookie/.test(index), "独自にCookieを書き込んでいる(ポ
 const events = new Set();
 [...index.matchAll(/trackEvent\(\s*"([a-z_]+)"/g)].forEach(m => events.add(m[1]));
 ["call_click", "map_click"].forEach(e => { ok(index.includes(e), e + " の計測が見つからない"); });
-ok(/電話する/.test(privacy) && /地図で見る/.test(privacy), "電話・地図ボタンの計測が、ポリシーに記載されていない");
+ok(/電話する/.test(privacy) && /Googleマップで見る/.test(privacy), "電話・地図ボタンの計測が、ポリシーに記載されていない");
+ok(/条件を変える/.test(privacy), "「条件を変える」の計測が、ポリシーに記載されていない");
 ok(/ひらめきを見る/.test(privacy) && /別のお店をひらめく/.test(privacy), "ひらめき・再提案の計測が、ポリシーに記載されていない");
 // 問い合わせ先と導線
 ok(/x\.com\/hirameki365/.test(privacy), "お問い合わせ先(X)が記載されていない");
