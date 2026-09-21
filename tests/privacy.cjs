@@ -33,6 +33,7 @@ ok(/ひらめきを見る/.test(privacy) && /別のお店をひらめく/.test(p
 // 問い合わせ先と導線
 ok(/x\.com\/hirameki365/.test(privacy), "お問い合わせ先(X)が記載されていない");
 ok(/href="privacy\.html"/.test(index), "フッターからプライバシーポリシーへのリンクがない");
+ok(/<a href="https:\/\/hirameki-gakari\.github\.io\/">ひらめき係トップへ<\/a>/.test(index), "フッターから「ひらめき係トップ」へのリンクがない");
 ok(/privacy\.html<\/loc>/.test(sitemap), "sitemap.xml にプライバシーポリシーがない");
 ok(/canonical" href="https:\/\/hirameki-gakari\.github\.io\/omise-hirameki-gakari\/privacy\.html"/.test(privacy), "canonical URLが正しくない");
 
