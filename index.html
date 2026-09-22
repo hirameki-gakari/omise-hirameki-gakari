@@ -565,6 +565,7 @@ table.stats-table{border-collapse:collapse; width:100%; min-width:520px; backgro
           <div class="actions-sub">
             <a class="btn-sub" id="r-tel" href="#" hidden></a>
             <a class="btn-sub" id="r-map" href="#" target="_blank" rel="noopener">Googleマップで見る<span class="sr-only">(新しいタブで開きます)</span></a>
+            <a class="btn-sub" id="r-xshare" href="#" target="_blank" rel="noopener">Xでシェア<span class="sr-only">(新しいタブで開きます)</span></a>
           </div>
           <button class="btn-reroll" id="r-reroll"><span class="spin">↻</span> <span class="rl">別のお店をひらめく</span></button>
         </div>
@@ -1043,6 +1044,12 @@ function renderResult(opts){
   mapEl.href = mapsUrl(r);
   mapEl.hidden = destinationOf(r) === "maps";   // 主ボタンがすでにGoogleマップのときは重複させない
 
+  const xShareEl = document.getElementById("r-xshare");
+  const xShareText = "今夜はここにしました。\n\n" + r.name + "(" + r.genre + ")\n\n" + "お店のひらめき係で決めました。";
+  xShareEl.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(xShareText)
+    + "&url=" + encodeURIComponent(location.href)
+    + "&via=hirameki365";
+
   // 詳細(折りたたみ): 営業時間・定休日・住所・席数・出典
   const dl = document.getElementById("r-more-list");
   dl.innerHTML = "";
@@ -1344,13 +1351,14 @@ document.getElementById("r-go").addEventListener("click", () => {
   logStoreEvent(r, "selection");
 });
 
-/* 電話・地図は「行く意思」のサブ導線。cta_clickとは別イベントで計測する */
-["r-tel", "r-map"].forEach(id => {
+/* 電話・地図・Xシェアは「行く意思」のサブ導線。cta_clickとは別イベントで計測する */
+["r-tel", "r-map", "r-xshare"].forEach(id => {
   document.getElementById(id).addEventListener("click", () => {
     const r = currentPick && currentPick.r;
     if(!r) return;
-    trackEvent(id === "r-tel" ? "call_click" : "map_click", {
-      restaurant_id:r.id, restaurant_name:r.name, genre:r.genre
+    trackEvent(id === "r-tel" ? "call_click" : id === "r-map" ? "map_click" : "share_click", {
+      restaurant_id:r.id, restaurant_name:r.name, genre:r.genre,
+      method: id === "r-xshare" ? "x_intent" : undefined
     });
   });
 });
