@@ -93,7 +93,7 @@ const STORE_INFO = {
   "koenji-byanbyan-chengdu":{hours:"月〜日・祝 11:00〜16:00(L.O.15:30)、18:00〜23:00(L.O.22:30)", closedDays:"なし", seats:"40席", closedWeekdays:[], src:"tabelog"},
   "koenji-futaba":{hours:"月〜土 11:30〜14:30、17:00〜21:00", closedDays:"日曜日", seats:"11席(カウンター9席、テーブル2席)", closedWeekdays:[0], src:"tabelog"},
   "koenji-matsunaga":{hours:"月・水〜日 12:00〜15:00、17:00〜21:00", closedDays:"火曜日", closedWeekdays:[2], src:"tabelog"},
-  "koenji-fuji-tonkatsu":{hours:"月〜水・金〜日 17:00〜22:00(L.O.21:30)", closedDays:"木曜日", closedWeekdays:[4], src:"tabelog"},
+  "koenji-fuji-tonkatsu":{closedDays:"木曜日", closedWeekdays:[4], infoNote:"Googleマップで営業状況を確認できていません。閉店・移転の可能性があるため、行く前にご確認ください。", src:"tabelog", checked:"2026-09-23"},
   "asagaya-kushishinbo":{hours:"月〜土・祝 17:00〜24:00 / 日 15:30〜23:00", seats:"28席(カウンター8席、テーブル20席)", src:"tabelog"},
   "koenji-shichisuke":{hours:"月〜土 17:30〜24:00", closedDays:"日曜日・祝日", closedWeekdays:[0], src:"tabelog"},
   "asagaya-toriyoshi-second":{hours:"月〜金 15:00〜23:00(L.O.22:30) / 土 14:00〜23:00 / 日・祝 14:00〜23:00", seats:"36席(カウンター14席、テーブル22席)", src:"tabelog"},
@@ -342,7 +342,7 @@ const STORE_INFO = {
   /* 大ちゃん 食べログ3.14 */
   "koenji-daichan":{seats:"26席（テーブル席、カウンター席）", src:"tabelog"},
   /* 漬物BAR4328 参号店 食べログ3.14 */
-  "koenji-tsukemono-bar":{hours:"月・水・木・金・土・祝 18:00〜05:00 / 火 18:00〜00:00 / 日 18:00〜02:00", src:"tabelog"},
+  "koenji-tsukemono-bar":{infoNote:"Googleマップで営業状況を確認できていません。閉店・移転の可能性があるため、行く前にご確認ください。", src:"tabelog", checked:"2026-09-23"},
   /* ハコ バー 食べログ3.14 */
   "koenji-hako-bar":{seats:"20席", src:"tabelog"},
   /* RUVI 食べログ3.14 */
@@ -398,7 +398,7 @@ const STORE_INFO = {
   /* chawan ビーンズ阿佐ヶ谷店 食べログ3.08 */
   "asagaya-chawan-beans":{hours:"07:00〜22:00", seats:"32席（カウンター席11席、テーブル席21席）", src:"tabelog"},
   /* アンプール 食べログ3.08 */
-  "koenji-ampoule":{hours:"月〜日・祝 20:00〜04:00", closedDays:"無休", seats:"30席（カウンター12席、テーブル18席）", src:"tabelog"},
+  "koenji-ampoule":{closedDays:"無休", seats:"30席（カウンター12席、テーブル18席）", infoNote:"Googleマップで営業状況を確認できていません。閉店・移転の可能性があるため、行く前にご確認ください。", src:"tabelog", checked:"2026-09-23"},
   /* uroko 食べログ3.08 */
   "koenji-uroko":{hours:"月・火・水・金 16:00〜22:30(L.O.22:00) / 土・日・祝 14:00〜22:30(L.O.22:00)", closedDays:"木曜日", closedWeekdays:[4], src:"tabelog"},
   /* ゴールデンスランバー 食べログ3.08 */
@@ -416,13 +416,13 @@ const STORE_INFO = {
   /* A WINE HOUSE 食べログ3.07 */
   "koenji-a-wine-house":{hours:"火・水・木・金・土・日・祝 15:00〜00:00(L.O.料理23:00ドリンク23:30)", closedDays:"月曜日", seats:"18席（最大8名掛けの大きなテーブルはご相席の可能性もございます。）", closedWeekdays:[1], src:"tabelog"},
   /* 夜カフェ ポポット 食べログ3.07 */
-  "asagaya-yoru-cafe-popotto":{seats:"7席（カウンター席のみ）", src:"tabelog"},
+  "asagaya-yoru-cafe-popotto":{seats:"7席（カウンター席のみ）", infoNote:"Googleマップで営業状況を確認できていません。閉店・移転の可能性があるため、行く前にご確認ください。", src:"tabelog", checked:"2026-09-23"},
   /* Junction 食べログ3.06 */
   "koenji-junction":{hours:"月 12:00〜15:00、18:00〜00:00 / 火・木・金・土・日 18:00〜00:00", closedDays:"水曜日", seats:"14席（カウンター8席、スタンディング6席）", closedWeekdays:[3], src:"tabelog"},
   /* 炭火 焼とん 焼鳥 出陣 食べログ3.06 */
   "koenji-shutsujin":{hours:"火・水・木・金・土・日 16:00〜00:00(L.O.23:00)", closedDays:"月曜日", seats:"28席（1F / 12席（カウンター8席） 2F / 25席（貸切り可））", closedWeekdays:[1], src:"tabelog"},
   /* バー チコ 高円寺店 食べログ3.06 */
-  "koenji-bar-chico":{hours:"18:00〜02:00", src:"tabelog"},
+  "koenji-bar-chico":{infoNote:"Googleマップで営業状況を確認できていません。閉店・移転の可能性があるため、行く前にご確認ください。", src:"tabelog", checked:"2026-09-23"},
   /* ポスト 食べログ3.06 */
   "koenji-post":{seats:"12席", src:"tabelog"},
   /* ALBA 圓 食べログ3.06 */
